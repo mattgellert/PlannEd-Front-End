@@ -1,0 +1,18 @@
+
+
+
+.dashboard-calendar {
+  margin: auto;
+  position: absolute;
+  right: 450px;
+  text-align: center;
+  top: 100px;
+  width: 400px;
+}
+
+.rbc-calendar {
+  display: inline-block;
+  z-index: 0;
+  width: 170%;
+  height: 550px;
+}
