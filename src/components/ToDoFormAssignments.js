@@ -26,6 +26,8 @@ export default class ToDoFormAssignments extends Component {
             <br/>
             End Time:
             <input type="time" value={this.props.selectedSlot.endTime} onChange={this.props.handleEndChange}/>
+            Description:
+            <input type="textbox" value={this.props.selectedSlot.description} onChange={this.props.handleDescChange}/> 
             <br/>
             <input type="submit" value="Create To Do!"/>
             <p onClick={this.props.handleCloseForm}>X</p>

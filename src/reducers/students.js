@@ -56,7 +56,8 @@ export default function studentReducer(
       startTime: null,
       endTime: null,
       info: null,
-      title: null
+      title: null,
+      description: null
     },
     calendarClick: {
       x: null,
@@ -835,6 +836,14 @@ export default function studentReducer(
           title: action.payload
         }
       }
+    case "DESC_CHANGE":
+      return {
+        ...state,
+        selectedSlot: {
+          ...state.selectedSlot,
+          description: action.payload
+        }
+      }
     case "SUBMITTED_TO_DO":
       return {
         ...state,
@@ -847,7 +856,8 @@ export default function studentReducer(
           startTime: null,
           endTime: null,
           info: null,
-          title: null
+          title: null,
+          description: null
         },
         selectedForToDo: 0
       }

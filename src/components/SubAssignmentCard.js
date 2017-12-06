@@ -21,21 +21,21 @@ export default class SubAssignmentCard extends Component {
   };
 
   handleAddToDo = () => {
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
     this.props.onDeselectForToDo();
     this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   };
 
   handleShowAssignmentDetails = () => {
+    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   }
 
   handleHideAssignmentDetails = () => {
+    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onHideAssignmentDetails();
   };
 
-  handleSeeToDos = () => {
-    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
-  };
 
   render() {
     let show = false;
@@ -47,7 +47,7 @@ export default class SubAssignmentCard extends Component {
     });
     const dueDate = new Date(assignment.dueDate);
     const seeToDo = this.props.seeToDoFor === assignment.studentAssignmentId;
-    
+
     return (
       <div className="sub-assignment-card">
         <h3>{assignment.subject} {assignment.catalogNbr} HW</h3>
@@ -63,7 +63,6 @@ export default class SubAssignmentCard extends Component {
           :
             <button onClick={this.handleShowAssignmentDetails}>Show Details</button>
         }
-        <button onClick={this.handleSeeToDos}>{seeToDo ? "Hide To Do Items" : "See To Do Items"}</button>
         <button onClick={this.handleAddToDo}>{this.props.selectedForToDo === assignment.studentAssignmentId ? "Choose A Date >" : "+ To Do"}</button>
         {assignment.hasSubAssignments
           ?

@@ -16,7 +16,7 @@ export default class DashboardCalendar extends Component {
 
   getEventColor = (event) => {
     const color = event.color;
-    const boxShadow = this.props.calendar.seeToDoFor === event.studentAssignmentId && event.eventType == "to do"? "0px 0px 4px 4px #888888" : null;
+    const boxShadow = this.props.calendar.seeToDoFor === event.studentAssignmentId ? "0px 0px 4px 4px #888888" : null;
     const completedFilter = this.props.completedFilter;
 
     if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {

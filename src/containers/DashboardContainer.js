@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import DashboardCalendar from '../components/DashboardCalendar';
 import AssignmentContainer from './AssignmentContainer';
 import NavBar from '../components/NavBar';
-import { deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students';
+import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students';
 import ToDoFormAssignments from '../components/ToDoFormAssignments';
 import './DashboardContainer.css';
 
@@ -18,19 +18,17 @@ class DashboardContainer extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submit to do", this.props.selectedSlot)
     const selectedSlot = this.props.selectedSlot;
     const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
-    this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title);
+    this.props.onSeeToDos(this.props.seeToDoFor);
+    this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
   };
 
   handleStartChange = (event) => {
-    console.log(event.target.value)
     this.props.onStartChange(event.target.value);
   }
 
   handleEndChange = (event) => {
-    console.log(event.target.value)
     this.props.onEndChange(event.target.value);
   }
 
@@ -40,6 +38,10 @@ class DashboardContainer extends Component {
 
   handleCloseForm = (event) => {
     this.props.onDeselectForToDo();
+  };
+
+  handleDescChange = (event) => {
+    this.props.onDescChange(event.target.value)
   };
 
   render() {
@@ -85,7 +87,8 @@ function mapStateToProps(state) {
     calendarClick: state.calendarClick,
     defaultDate: state.calendar.defaultDate,
     courseFilter: state.studentAssignments.courseFilter,
-    completedFilter: state.studentAssignments.completedFilter
+    completedFilter: state.studentAssignments.completedFilter,
+    seeToDoFor: state.calendar.seeToDoFor
   }
 };
 
@@ -111,6 +114,12 @@ function mapDispatchToProps(dispatch) {
     },
     onDeselectForToDo: () => {
       dispatch(deselectForToDo());
+    },
+    onDescChange: (description) => {
+      dispatch(descChange(description));
+    },
+    onSeeToDos: (studentAssignmentId) => {
+      dispatch(seeToDos(studentAssignmentId));
     }
   }
 };

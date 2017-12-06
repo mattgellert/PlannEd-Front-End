@@ -377,6 +377,13 @@ export function endChange(endTime) {
   }
 }
 
+export function descChange(description) {
+  return {
+    type: "DESC_CHANGE",
+    payload: description
+  }
+}
+
 export function titleChange(title) {
   return {
     type: "TITLE_CHANGE",
@@ -384,7 +391,7 @@ export function titleChange(title) {
   }
 }
 
-export function submitToDo(date, time, studentAssignmentId, title) {
+export function submitToDo(date, time, studentAssignmentId, title, description) {
   return (dispatch) => {
     dispatch({ type: "LOADING" })
     return fetch('http://localhost:3000/api/v1/students/add_assignment_to_do', {
@@ -393,7 +400,7 @@ export function submitToDo(date, time, studentAssignmentId, title) {
         "Content-Type": "application/json",
         "Accept": "application/json"
       },
-      body: JSON.stringify({ date, time, studentAssignmentId, title })
+      body: JSON.stringify({ date, time, studentAssignmentId, title, description })
     })
       .then(resp => resp.json())
       .then(json => {

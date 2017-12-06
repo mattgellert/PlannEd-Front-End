@@ -16,10 +16,12 @@ class AssignmentCard extends Component {
   };
 
   handleShowAssignmentDetails = () => {
+    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   };
 
   handleHideAssignmentDetails = () => {
+    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onHideAssignmentDetails();
   };
 
@@ -39,12 +41,23 @@ class AssignmentCard extends Component {
   };
 
   handleAddToDo = () => {
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
     this.props.onDeselectForToDo()
     this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   };
 
-  handleSeeToDos = () => {
-    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
+  getToDoItems = () => {
+    const assigmentToShowToDo = this.props.assignment;
+    const today = new Date();
+    this.props.toDoItems.filter(todo => todo.studentAssignmentId === assigmentToShowToDo.studentAssignmentId).map(todo => {
+      return (
+        <div className="assignment-to-do">
+          <h4>{todo.title}</h4>
+          <p>{todo.startDate} - {todo.endDate} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
+          <p>{todo.description}</p>
+        </div>
+      )
+    });
   };
 
   render() {
@@ -52,29 +65,29 @@ class AssignmentCard extends Component {
     const selectedAssignment = this.props.selectedAssignment;
     const dueDate = new Date(assignment.dueDate);
     const seeToDo = this.props.seeToDoFor === assignment.studentAssignmentId;
+    let showDetails = false;
+    let toDoItems = [];
+    if (selectedAssignment.showDetails === assignment.studentAssignmentId ) {
+      showDetails = true
+      toDoItems = this.getToDoItems();
+    }
 
-    //click completed > post >
-      //response includes completed
-      //if (to dos) open modal "delete to do(s)?" w/list
-        //yes > post, update to do events
-        //no > get, to do events
-      //else response includes completed & updated events
     return (
       <div>
         <h3>{assignment.subject} {assignment.catalogNbr} HW</h3>
         <p>{assignment.courseTitle}</p>
         <p>{assignment.title}</p>
         <p>Due: {dueDate.toLocaleString()}</p>
-        {selectedAssignment.showDetails === assignment.studentAssignmentId
+        {showDetails
           ?
             <div>
               <button onClick={this.handleHideAssignmentDetails}>Hide Details</button>
               <p>{assignment.description}</p>
+              {toDoItems}
             </div>
           :
             <button onClick={this.handleShowAssignmentDetails}>Show Details</button>
         }
-        <button onClick={this.handleSeeToDos}>{seeToDo ? "Hide To Do Items" : "See To Do Items"}</button>
         <button onClick={this.handleAddToDo}>{this.props.selectedForToDo === assignment.studentAssignmentId ? "Choose A Date >" : "+ To Do"}</button>
         {assignment.hasSubAssignments
           ?
@@ -107,7 +120,8 @@ function mapStateToProps(state) {
     studentAssignments: state.studentAssignments,
     selectedAssignment: state.selectedAssignment,
     selectedForToDo: state.selectedForToDo,
-    seeToDoFor: state.calendar.seeToDoFor
+    seeToDoFor: state.calendar.seeToDoFor,
+    toDoItems: state.calendar.toDoItems
   };
 };
 
