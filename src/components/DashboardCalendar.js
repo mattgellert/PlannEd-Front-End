@@ -35,7 +35,17 @@ export default class DashboardCalendar extends Component {
         }
       }
     } else {
-      return { style: { backgroundColor: color } }
+      const showCourseDetailsFor = this.props.selectedStudentCourse ? this.props.selectedStudentCourse.showDetails : null;
+      if (seeToDoFor === event.studentCourseId && event.eventType === "course to do") {
+        return { style: { backgroundColor: color, border: "2px solid #000000" } }
+      }
+      if (showCourseDetailsFor === event.studentCourseId && event.eventType === "course") {
+        return { style: { backgroundColor: color, boxShadow: "0px 0px 4px 4px #888888" } }
+      } else {
+        return { style: { backgroundColor: color } }
+      }
+
+
     }
   };
 
@@ -54,8 +64,8 @@ export default class DashboardCalendar extends Component {
       completed: date.completed
     }));
 
-    !this.props.courseFilter ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
-
+    !this.props.courseFilter && !this.props.inDirectory ? calEvents = calEvents.filter(ev => (ev.eventType === "course" || ev.eventType === "course to do")) : null;
+    !this.props.courseFilter && !!this.props.inDirectory ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
     // ["month", "week", "work_week", "day", "agenda"]
     const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("9/04/2017")
     return (

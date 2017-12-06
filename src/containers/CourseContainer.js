@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
+import { seeToDos, selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
 import CourseList from '../components/CourseList';
 
 class CourseContainer extends Component {
@@ -17,7 +17,7 @@ class CourseContainer extends Component {
           ?
             <div className="course-list-container">
               <button onClick={this.handleSeeCourseDirectory}>Add Course</button>
-              <CourseList courses={this.props.studentCourses} onSelectForToDo={this.props.onSelectForToDo} seletectedForToDo={this.props.selectedForToDo} onDeselectForToDo={this.props.onDeselectForToDo} onSubmitCourseColorChange={this.props.onSubmitCourseColorChange} onCourseToChangeColor={this.props.onCourseToChangeColor} selectedCourse={this.props.selectedCourse} onSelectCourseColor={this.props.onSelectCourseColor} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} selectedStudentCourse={this.props.selectedStudentCourse} onSelectStudentCourse={this.props.onSelectStudentCourse} onDeselectStudentCourse={this.props.onDeselectStudentCourse} onShowStudentCourseDetails={this.props.onShowStudentCourseDetails} onHideStudentCourseDetails={this.props.onHideStudentCourseDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails} onHideStudentCompDetails={this.props.onHideStudentCompDetails}/>
+              <CourseList courses={this.props.studentCourses} courseEvents={this.props.courseEvents} onSeeToDoFor={this.props.onSeeToDoFor} seeToDoFor={this.props.seeToDoFor} onSelectForToDo={this.props.onSelectForToDo} seletectedForToDo={this.props.selectedForToDo} onDeselectForToDo={this.props.onDeselectForToDo} onSubmitCourseColorChange={this.props.onSubmitCourseColorChange} onCourseToChangeColor={this.props.onCourseToChangeColor} selectedCourse={this.props.selectedCourse} onSelectCourseColor={this.props.onSelectCourseColor} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} selectedStudentCourse={this.props.selectedStudentCourse} onSelectStudentCourse={this.props.onSelectStudentCourse} onDeselectStudentCourse={this.props.onDeselectStudentCourse} onShowStudentCourseDetails={this.props.onShowStudentCourseDetails} onHideStudentCourseDetails={this.props.onHideStudentCourseDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails} onHideStudentCompDetails={this.props.onHideStudentCompDetails}/>
             </div>
           :
           <Redirect to="/"/>
@@ -28,13 +28,16 @@ class CourseContainer extends Component {
 };
 
 function mapStateToProps(state) {
+  console.log("course container state", state)
   return {
     studentCourses: state.studentCourses,
     selectedStudentCourse: state.selectedStudentCourse,
     student: state.student,
     courseToRemove: state.courseToRemove,
     selectedCourse: state.selectedCourse,
-    selectedForToDo: state.selectedForToDo
+    selectedForToDo: state.selectedForToDo,
+    courseEvents: state.calendar.courses,
+    seeToDoFor: state.calendar.seeToDoFor
   }
 };
 
@@ -81,6 +84,9 @@ function mapDispatchToProps(dispatch) {
     },
     onSelectForToDo: (studentCourseId) => {
       dispatch(selectForToDo(studentCourseId));
+    },
+    onSeeToDoFor: (studentCourseId) => {
+      dispatch(seeToDos(studentCourseId));
     }
   }
 }

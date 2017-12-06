@@ -5,6 +5,7 @@ import { HuePicker } from 'react-color'
 class CourseCard extends Component {
 
   handleHideStudentCourseDetails = () => {
+    this.props.onSeeToDoFor(null)
     this.props.onHideStudentCourseDetails();
   };
 
@@ -13,7 +14,7 @@ class CourseCard extends Component {
   };
 
   showComponents = () => {
-    console.log("show course card components")
+
     return this.props.course.components.map(comp => {
       return <ComponentCard key={comp.studentComponentId} comp={comp} selectedStudentCourse={this.props.selectedStudentCourse} onHideStudentCompDetails={this.props.onHideStudentCompDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails}/>
     })
@@ -49,11 +50,33 @@ class CourseCard extends Component {
     this.props.onSubmitCourseColorChange(this.props.course.studentCourseId, this.props.selectedCourse.courseColor);
   }
 
+  getToDoItems = () => {
+    const courseToShowToDo = this.props.course;
+    const today = new Date();
+    console.log("get to do items")
+    const toDoItems = this.props.courseEvents;
+
+    return toDoItems.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do"))).map(todo => {
+      return (
+        <div className="course-to-do">
+          <h4>{todo.title}</h4>
+          <p>{`${(new Date(...todo.startDate)).toString().slice(0,21)}`} - {`${(new Date(...todo.endDate)).toString().slice(0,21)}`} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
+          <p>{todo.description}</p>
+        </div>
+      )
+    });
+  };
+
+  handleSeeToDos = () => {
+    this.props.onSeeToDoFor(this.props.course.studentCourseId);
+  };
+
   render() {
     const course = this.props.course;
     const selectedStudentCourse = this.props.selectedStudentCourse;
     const isCourseToRemove = course.studentCourseId === this.props.courseToRemove;
     const courseColor = this.props.selectedCourse.data === course.studentCourseId;
+    const seeToDoFor = this.props.seeToDoFor;
 
     return(
       <div className="course-card-wrapper">
@@ -93,6 +116,14 @@ class CourseCard extends Component {
               <button onClick={this.handleHideStudentCourseDetails}>Hide Details</button>
               <p>{course.description}</p>
               {this.showComponents()}
+              <button onClick={this.handleSeeToDos}>{seeToDoFor === course.studentCourseId ? "Hide To Do Items" : "See To Do Items"}</button>
+              {seeToDoFor === course.studentCourseId
+                ?
+                  <div>
+                    {this.getToDoItems()}
+                  </div>
+                : null
+              }
             </div>
           :
             <button onClick={this.handleShowStudentCourseDetails}>Show Details</button>

@@ -31,7 +31,7 @@ class DirectoryContainer extends Component {
             <div className="content-container">
               <DirectoryCourseList history={this.props.history} courses={this.props.directoryCourses} studentCourses={this.props.studentCourses} student={this.props.student}/>
               <div className="dashboard-calendar-wrapper main-content">
-                <DashboardCalendar defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
+                <DashboardCalendar inDirectory={true} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
               </div>
             </div>
           </div>

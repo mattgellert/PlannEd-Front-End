@@ -6,7 +6,7 @@ import AssignmentContainer from './AssignmentContainer';
 import AssignmentSearchForm from '../components/AssignmentSearchForm';
 import MainNavBar from '../components/MainNavBar';
 import NavBar from '../components/NavBar';
-import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
+import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitCourseToDo, startChange, endChange } from '../actions/students'; ///KEEP
 import ToDoForm from '../components/ToDoForm';
 import './DashboardContainer.css';
 import CourseContainer from './CourseContainer';
@@ -19,14 +19,14 @@ class CourseListContainer extends Component {
     this.props.onSelectSlot(slotInfo)
   }
 
-  // handleSubmit = (event) => {
-  //   event.preventDefault();
-  //   // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
-  //   const selectedSlot = this.props.selectedSlot;
-  //   const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
-  //   this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
-  //   this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
-  // };
+  handleSubmit = (event) => {
+    event.preventDefault();
+    // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
+    const selectedSlot = this.props.selectedSlot;
+    const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
+    this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
+    this.props.onSubmitCourseToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
+  };
 
   handleStartChange = (event) => {
     this.props.onStartChange(event.target.value);
@@ -76,7 +76,7 @@ class CourseListContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
+              <DashboardCalendar selectedStudentCourse={this.props.selectedStudentCourse} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
             </div>
           :
             <Redirect to="/"/>
@@ -105,7 +105,8 @@ function mapStateToProps(state) {
     completedFilter: state.studentAssignments.completedFilter,
     seeToDoFor: state.calendar.seeToDoFor,
     selectedAssignment: state.selectedAssignment,
-    studentCourses: state.studentCourses
+    studentCourses: state.studentCourses,
+    selectedStudentCourse: state.selectedStudentCourse
   }
 };
 
@@ -114,8 +115,8 @@ function mapDispatchToProps(dispatch) {
     onSelectSlot: (slotInfo) => {
       dispatch(selectSlot(slotInfo));
     },
-    onSubmitToDo: (date, time, studentAssignmentId, title) => {
-      dispatch(submitToDo(date, time, studentAssignmentId, title));
+    onSubmitCourseToDo: (date, time, studentCourseId, title, description) => {
+      dispatch(submitCourseToDo(date, time, studentCourseId, title, description));
     },
     onStartChange: (startTime) => {
       dispatch(startChange(startTime));

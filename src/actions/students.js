@@ -409,6 +409,24 @@ export function submitToDo(date, time, studentAssignmentId, title, description) 
   }
 }
 
+export function submitCourseToDo(date, time, studentCourseId, title, description) {
+  return (dispatch) => {
+    dispatch({ type: "LOADING" })
+    return fetch('http://localhost:3000/api/v1/students/add_course_to_do', {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ date, time, studentCourseId, title, description })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        dispatch({ type: "SUBMITTED_TO_DO", payload: json })
+      })
+  }
+}
+
 export function calendarClick(xPos, yPos) {
   return {
     type: "CALENDAR_CLICK",
