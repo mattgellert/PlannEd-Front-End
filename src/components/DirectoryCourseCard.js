@@ -79,19 +79,23 @@ class DirectoryCourseCard extends Component {
     this.props.course.enrollGroups.forEach(group => {
       group.classSections.forEach(section => {
         section.meetings.forEach((meeting, idx) => {
-          courseDetails.push(<DirectoryCourseDetails key={idx} selectedCourse={this.props.selectedCourse} ssrComponent={section.ssrComponent} section={section.section} data={meeting} onSelectComponent={this.props.onSelectComponent} />);
+          courseDetails.push(<DirectoryCourseDetails key={idx} description={this.props.course.description} selectedCourse={this.props.selectedCourse} ssrComponent={section.ssrComponent} section={section.section} data={meeting} onSelectComponent={this.props.onSelectComponent} />);
         });
       });
     });
 
     const courseColor = !!this.props.courseColor ? this.props.courseColor : "#fff"
 
-    console.log("course card color:", this.props.courseColor)
     return (
       <div>
         <h3>{this.props.course.subject} {this.props.course.catalogNbr}: {this.props.course.titleLong}</h3>
-        <p>{this.props.course.description}</p>
-        {this.props.studentCourseIds.includes(this.props.course.crseId) ? "Enrolled" : <button onClick={this.handleDetails}>See Details</button>}
+        {this.props.studentCourseIds.includes(this.props.course.crseId) ? "Enrolled" : <button onClick={this.handleDetails}>{(this.props.selectedCourse.data && (this.props.selectedCourse.data.crseId === this.props.course.crseId)) ? "Hide Details" : "See Details"}</button>}
+        {this.props.selectedCourse.data && (this.props.selectedCourse.data.crseId === this.props.course.crseId)
+          ?
+            null
+          :
+            <p>{this.props.course.description.slice(0,100) + "..."}</p>
+        }
         {this.props.selectedCourse.data ? this.props.selectedCourse.data.crseId === this.props.course.crseId
           ?
             <div>

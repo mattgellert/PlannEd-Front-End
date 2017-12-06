@@ -594,10 +594,11 @@ export default function studentReducer(
         }
       }
     case "SELECT_DIRECTORY_COURSE":
+      const directoryCourse = state.selectedCourse.data === action.payload ? null : action.payload;
       return {
         ...state,
         selectedCourse: {
-          data: action.payload,
+          data: directoryCourse,
           selectedLEC: null,
           selectedDIS: null,
           selectedSEM: null,
