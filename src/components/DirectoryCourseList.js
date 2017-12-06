@@ -9,9 +9,11 @@ export default class DirectoryCourseList extends Component {
     ))
 
     return (
-      <div>
-        {courses}
-      </div>
-    );
+     <div className="directory-container-wrapper sidebar-wrapper">
+       <div className="directory-list-container">
+         {courses}
+       </div>
+     </div>
+   );
   };
 };

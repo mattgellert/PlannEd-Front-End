@@ -3,8 +3,10 @@ import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import DashboardCalendar from '../components/DashboardCalendar';
 import AssignmentContainer from './AssignmentContainer';
+import AssignmentSearchForm from '../components/AssignmentSearchForm';
+import MainNavBar from '../components/MainNavBar';
 import NavBar from '../components/NavBar';
-import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students';
+import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
 import ToDoFormAssignments from '../components/ToDoFormAssignments';
 import './DashboardContainer.css';
 
@@ -48,9 +50,17 @@ class DashboardContainer extends Component {
   render() {
 
     const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
-    return (
-      <div className="dashboard-container">
+    let MainNavChildren;
+     if (this.props.student.id) {
+       MainNavChildren = (
+         <AssignmentSearchForm courses={this.props.studentCourses} assignments={this.props.studentAssignments}/>
+       );
+     }
 
+
+    return (
+      <div className="home-wrapper">
+        <MainNavBar children={MainNavChildren}/>
           {this.props.slotSelected && (this.props.selectedForToDo !== 0)
             ?
               <div className="to-do-form-assignment-container" >
@@ -58,17 +68,21 @@ class DashboardContainer extends Component {
               </div>
             : null
           }
-        <NavBar {...this.props} activeTab="dashboard" />
+          <div className="content-wrapper">
+            <NavBar {...this.props} activeTab="dashboard" />
+            <div className="content-container">
         {this.props.student.id ? <AssignmentContainer /> : <Redirect to="/"/>}
         {this.props.addConflict ? <Redirect to="/course-directory"/> : null}
         {this.props.student.id
           ?
-            <div className="dashboard-calendar-wrapper">
+            <div className="dashboard-calendar-wrapper main-content">
               <DashboardCalendar selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
             </div>
           :
             <Redirect to="/"/>
         }
+      </div>
+      </div>
       </div>
     );
   };
@@ -90,7 +104,8 @@ function mapStateToProps(state) {
     courseFilter: state.studentAssignments.courseFilter,
     completedFilter: state.studentAssignments.completedFilter,
     seeToDoFor: state.calendar.seeToDoFor,
-    selectedAssignment: state.selectedAssignment
+    selectedAssignment: state.selectedAssignment,
+    studentCourses: state.studentCourses
   }
 };
 
