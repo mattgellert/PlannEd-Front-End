@@ -18,12 +18,18 @@ class AssignmentCard extends Component {
   handleShowAssignmentDetails = () => {
     this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onDeselectForToDo() : null;
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
+    // this.props.selectedAssignment.showDetails !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   };
 
+
+    // showDetails:
+    // if showDetails != ass &&
+    // seeSubAss == ass > showDetails & !closeSubAss
+
   handleHideAssignmentDetails = () => {
     this.props.onDeselectForToDo()
-    this.props.onSeeToDos(this.props.seeToDoFor);
+    this.props.onSeeToDos(null);
     this.props.onHideAssignmentDetails();
   };
 
@@ -33,9 +39,10 @@ class AssignmentCard extends Component {
 
   handleDeselectAssignment = () => {
     this.props.onHideAssignmentDetails();
-    this.props.onSeeToDos(this.props.seeToDoFor);
+    this.props.onSeeToDos(null);
     this.props.onDeselectAssignment();
   };
+
 
   showSubAssignments = () => {
     const arr = this.props.selectedAssignment.subAssignments.map((subAss, idx) => {
@@ -45,7 +52,13 @@ class AssignmentCard extends Component {
   };
 
   handleAddToDo = () => {
+
+//     +ToDo:
+// if showDetails != assId > showDetails(assId) & selectForToDo(assId)
+
+
     this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : this.props.onSeeToDos(null);
+    this.props.selectedAssignment.showDetails === this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
     this.props.onDeselectForToDo()
     this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   };

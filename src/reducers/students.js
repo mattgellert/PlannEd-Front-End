@@ -507,14 +507,23 @@ export default function studentReducer(
           }
         }
       } else {
+        console.log("hide sub assignments on show details")
         return {
           ...state,
           selectedAssignment: {
-            subAssignments: [],
+            ...state.selectedAssignment,
             showDetails: assignmentToShowId,
-            id: []
+            id: [[assignmentToShowId]]
           }
         }
+        // return {
+        //   ...state,
+        //   selectedAssignment: {
+        //     subAssignments: [],
+        //     showDetails: assignmentToShowId,
+        //     id: []
+        //   }
+        // }
       }
     case "DELETE_TO_DO_ON_COMPLETE":  //CREATE MODAL FOR THIS!!
       return {
