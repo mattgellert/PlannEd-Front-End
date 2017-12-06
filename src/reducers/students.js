@@ -523,9 +523,13 @@ export default function studentReducer(
         loading: false
       }
     case "HIDE_ASSIGNMENT_DETAILS":
-
+    console.log("hide assignment details")
       return {
         ...state,
+        calendar: {
+          ...state.calendar,
+          selectedForToDo: null
+        },
         selectedAssignment: {
           ...state.selectedAssignment,
           showDetails: null
@@ -608,6 +612,14 @@ export default function studentReducer(
         selectedCourse: {
           ...state.selectedCourse,
           courseColor: action.payload
+        }
+      }
+    case "COURSE_TO_CHANGE_COLOR":
+      return {
+        ...state,
+        selectedCourse: {
+          ...state.selectedCourse,
+          data: action.payload
         }
       }
     case "SUBMIT_COURSE_COLOR":
@@ -914,9 +926,19 @@ export default function studentReducer(
         courseToRemove: null
       }
     case "UPDATED_COURSES":
+      console.log("updated courses", action.payload)
       return {
         ...state,
         studentCourses: action.payload,
+        selectedCourse: {
+          data: null,
+          selectedLEC: null,
+          selectedDIS: null,
+          selectedSEM: null,
+          selectedTA: null,
+          courseColor: null,
+          colorSelected: null
+        },
         loading: false
       }
     case "SEE_TO_DOS":

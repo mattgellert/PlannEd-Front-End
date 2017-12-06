@@ -18,9 +18,10 @@ class DashboardContainer extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
     const selectedSlot = this.props.selectedSlot;
     const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
-    this.props.onSeeToDos(this.props.seeToDoFor);
+    this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
     this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
   };
 
@@ -88,7 +89,8 @@ function mapStateToProps(state) {
     defaultDate: state.calendar.defaultDate,
     courseFilter: state.studentAssignments.courseFilter,
     completedFilter: state.studentAssignments.completedFilter,
-    seeToDoFor: state.calendar.seeToDoFor
+    seeToDoFor: state.calendar.seeToDoFor,
+    selectedAssignment: state.selectedAssignment
   }
 };
 

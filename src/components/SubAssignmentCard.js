@@ -32,6 +32,7 @@ export default class SubAssignmentCard extends Component {
   }
 
   handleHideAssignmentDetails = () => {
+    // if showDetails & selectedForToDo, hideDetails --> deselect assignment & deselectForToDo
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onHideAssignmentDetails();
   };
@@ -47,7 +48,6 @@ export default class SubAssignmentCard extends Component {
     });
     const dueDate = new Date(assignment.dueDate);
     const seeToDo = this.props.seeToDoFor === assignment.studentAssignmentId;
-
     return (
       <div className="sub-assignment-card">
         <h3>{assignment.subject} {assignment.catalogNbr} HW</h3>

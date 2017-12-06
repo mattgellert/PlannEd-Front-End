@@ -16,11 +16,14 @@ class AssignmentCard extends Component {
   };
 
   handleShowAssignmentDetails = () => {
+    // if click showDetails & selectedForToDo != assignment --> deselectForToDo
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onDeselectForToDo() : null;
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   };
 
   handleHideAssignmentDetails = () => {
+    this.props.onDeselectForToDo()
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onHideAssignmentDetails();
   };

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ComponentCard from './ComponentCard';
+import { HuePicker } from 'react-color'
 
 class CourseCard extends Component {
 
@@ -10,16 +11,6 @@ class CourseCard extends Component {
   handleShowStudentCourseDetails = () => {
     this.props.onShowStudentCourseDetails(this.props.course.studentCourseId);
   };
-
-//INCLUDE COURSE COMPONENT CARDS IF SELECTED
-  //
-  // handleSelectStudentCourse = () => {
-  //   this.props.onSelectStudentCourse(this.props.course.studentCourseId);
-  // };
-  //
-  // handleDeselectStudentCourse = () => {
-  //   this.props.onDeselectStudentCourse();
-  // };
 
   showComponents = () => {
     console.log("show course card components")
@@ -46,17 +37,44 @@ class CourseCard extends Component {
   //   this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   // };
 
+  handleChangeCourseColor = () => {
+    this.props.onCourseToChangeColor(this.props.course.studentCourseId)
+  }
+
+  handleCourseColorChange = (event) => {
+    this.props.onSelectCourseColor(event.hex)
+  }
+
+  handleSubmitCourseColorChange = () => {
+    this.props.onSubmitCourseColorChange(this.props.course.studentCourseId, this.props.selectedCourse.courseColor);
+  }
+
   render() {
     const course = this.props.course;
     const selectedStudentCourse = this.props.selectedStudentCourse;
     const isCourseToRemove = course.studentCourseId === this.props.courseToRemove;
-console.log("course card to remove?",course, this.props, isCourseToRemove)
+    const courseColor = this.props.selectedCourse.data === course.studentCourseId;
+
     return(
       <div className="course-card-wrapper">
+        <p>Course Color: {course.color}</p>
         <h1>{course.subject} {course.catalogNbr}: {course.title}</h1>
         <p>{course.facilityDescr}</p>
         <p>{course.timeStart} - {course.timeEnd} ({course.pattern})</p>
         <p onClick={this.handleAddToDo}>+ To Do</p>
+        <button onClick={this.handleChangeCourseColor}>Change Color</button>
+        {!!courseColor
+          ?
+            <div>
+              <p>Pick a color for your course!</p>
+              <HuePicker
+                color={courseColor}
+                onChangeComplete={this.handleCourseColorChange}
+              />
+              <button onClick={this.handleSubmitCourseColorChange}>Select Color</button>
+            </div>
+          : null
+        }
         <button onClick={this.handleShowRemovePrompt}>Remove Course</button>
         {isCourseToRemove
           ?
