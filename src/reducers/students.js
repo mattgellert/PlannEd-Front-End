@@ -610,6 +610,14 @@ export default function studentReducer(
           courseColor: action.payload
         }
       }
+    case "COURSE_TO_CHANGE_COLOR":
+      return {
+        ...state,
+        selectedCourse: {
+          ...state.selectedCourse,
+          data: action.payload
+        }
+      }
     case "SUBMIT_COURSE_COLOR":
       return {
         ...state,
@@ -914,9 +922,19 @@ export default function studentReducer(
         courseToRemove: null
       }
     case "UPDATED_COURSES":
+      console.log("updated courses", action.payload)
       return {
         ...state,
         studentCourses: action.payload,
+        selectedCourse: {
+          data: null,
+          selectedLEC: null,
+          selectedDIS: null,
+          selectedSEM: null,
+          selectedTA: null,
+          courseColor: null,
+          colorSelected: null
+        },
         loading: false
       }
     case "SEE_TO_DOS":

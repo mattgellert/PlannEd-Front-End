@@ -508,3 +508,30 @@ export function seeToDos(studentAssignmentId) {
     payload: studentAssignmentId
   }
 }
+
+export function submitCourseColorChange(studentCourseId, color) {
+  return (dispatch) => {
+    console.log("submit color change", color)
+    dispatch({ type: "LOADING" })
+    return fetch("http://localhost:3000/api/v1/students/update_course_color", {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ studentCourseId, color })
+    })
+    .then(resp => resp.json())
+    .then(json => {
+      dispatch({ type: "UPDATED_COURSES", payload: json.studentCourses })
+    })
+  }
+}
+
+
+export function courseToChangeColor(studentCourseId) {
+  return {
+    type: "COURSE_TO_CHANGE_COLOR",
+    payload: studentCourseId
+  }
+}
