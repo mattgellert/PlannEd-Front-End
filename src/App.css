@@ -1,28 +1,122 @@
-.App {
-  text-align: center;
+/* animations */
+@-webkit-keyframes slide-in {
+  0%   { opacity: 0; margin-top: -50%; }
+  100% { opacity: 1; margin-top: 0; }
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+@keyframes fade-in {
+  0%   { opacity: 0; margin-top: -50%; }
+  100% { opacity: 1; margin-top: 0; }
 }
 
-.App-header {
-  background-color: #222;
-  height: 150px;
+.body {
+  height: 100%;
+  overflow: hidden;
+  width: 100%;
+
+  background-color: #ebeced;
+  color: #3f4652;
+  line-height: 1.4;
+  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 14px;
+  text-align: left;
+  -webkit-overflow-scrolling: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+h2 {
+  margin: 0;
+}
+
+.app-wrapper {
+  bottom: 0;
+  display: flex;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.assignment-container-wrapper,
+.course-container-wrapper,
+.dashboard-container,
+.signin-container,
+.signup-container {
+  display: flex;
+  flex-grow: 1;
+}
+
+/* DirectoryCourses */
+.course-container {
+  background: #5a0202;
+  flex-grow: 1;
+  height: 70px;
+  margin: 0 0 50px;
+}
+
+.course-form-select {
+  height: 30px;
+  margin-right: 10px;
+  width: 100px;
+}
+
+.course-form-label {
+  margin-right: 10px;
+}
+
+.course-form-input {
+  border: 1px solid #ddd;
+  height: 25px;
+  width: 150px;
+}
+
+.directory-search-form-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+/* Assignments */
+/*.nav-assignments {
+  background: #8BC34A;
+  height: 100%;
+  left: 90px;
+  position: absolute;
+  top: 0;
+  width: 500px;
+}*/
+
+.assignment-container {
+  width: 100%;
+}
+
+.assignment-form-container {
+  background: #5a0202;
+  height: 70px;
+  width: 100%;
+}
+
+.assignment-form {
+  align-items: center;
+  color: rgba(238, 238, 238, 0.51);
+  display: flex;
+  height: 100%;
+  justify-content: center;
+}
+
+.assignment-list-container {
+  background: #333;
+  display: block;
+  height: 100%;
+  max-width: 350px;
+  overflow-y: scroll;
+  position: absolute;
+  top: 70px;
+}
+
+.assignment-list-container-inner {
+  animation: slide-in .3s;
   padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
