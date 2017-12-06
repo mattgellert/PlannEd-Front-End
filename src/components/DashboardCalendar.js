@@ -19,14 +19,7 @@ export default class DashboardCalendar extends Component {
     const seeToDoFor = this.props.calendar.seeToDoFor;
     let boxShadow = seeToDoFor === event.studentAssignmentId ? "0px 0px 4px 4px #888888" : null;
     const completedFilter = this.props.completedFilter;
-
-    //get ids of subassignments of seeToDoFor
-    // console.log("get event color subassignments", this.props.selectedAssignment.subAssignments)
-    // const subAssIds = this.props.selectedAssignment.subAssignments.map(subAss => subAss.id);
-    // if (subAssIds.includes(event.studentAssignmentId)) {
-    //   boxShadow = "0px 0px 4px 4px #888888";
-    // }
-
+    
     if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {
       if (completedFilter === "Incomplete") {
         return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
