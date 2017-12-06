@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
 import ComponentCard from './ComponentCard';
 import { HuePicker } from 'react-color'
+import CourseToDo from './CourseToDo';
 
 class CourseCard extends Component {
 
   handleHideStudentCourseDetails = () => {
+    this.props.selectedForToDo === this.props.course.studentCourseId ? this.props.onDeselectForToDo() : null;
     this.props.onSeeToDoFor(null)
     this.props.onHideStudentCourseDetails();
   };
 
   handleShowStudentCourseDetails = () => {
+    this.props.selectedForToDo !== this.props.course.studentCourseId ? this.props.onDeselectForToDo() : null;
     this.props.onShowStudentCourseDetails(this.props.course.studentCourseId);
   };
 
   showComponents = () => {
-
     return this.props.course.components.map(comp => {
       return <ComponentCard key={comp.studentComponentId} comp={comp} selectedStudentCourse={this.props.selectedStudentCourse} onHideStudentCompDetails={this.props.onHideStudentCompDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails}/>
     })
@@ -34,8 +36,15 @@ class CourseCard extends Component {
 
   // get these functions for props
   handleAddToDo = () => {
+    // + To Do: if showDetails != courseId > hideDetails
+    // + To Do: if seeToDoFor == courseId > hideToDos
+    console.log("show to do hide?",this.props.selectedForToDo === this.props.course.studentCourseId)
+
+    this.props.selectedStudentCourse.showDetails !== this.props.course.studentCourseId ? this.props.onHideStudentCourseDetails() : null;
     this.props.onDeselectForToDo()
     this.props.selectedForToDo !== this.props.course.studentCourseId ? this.props.onSelectForToDo(this.props.course.studentCourseId) : null;
+    this.props.selectedForToDo === this.props.course.studentCourseId ? this.props.onSeeToDoFor(null) : this.props.onSeeToDoFor(this.props.course.studentCourseId);
+    this.props.onShowStudentCourseDetails(this.props.course.studentCourseId);
   };
 
   handleChangeCourseColor = () => {
@@ -52,19 +61,8 @@ class CourseCard extends Component {
 
   getToDoItems = () => {
     const courseToShowToDo = this.props.course;
-    const today = new Date();
-    console.log("get to do items")
-    const toDoItems = this.props.courseEvents;
-
-    return toDoItems.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do"))).map(todo => {
-      return (
-        <div className="course-to-do">
-          <h4>{todo.title}</h4>
-          <p>{`${(new Date(...todo.startDate)).toString().slice(0,21)}`} - {`${(new Date(...todo.endDate)).toString().slice(0,21)}`} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
-          <p>{todo.description}</p>
-        </div>
-      )
-    });
+    const toDoItems = this.props.courseEvents.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do"))).map(todo => <CourseToDo key={todo.id} todo={todo} onCompleteCourseToDo={this.props.onCompleteCourseToDo}/>)
+    return toDoItems.length > 0 ? toDoItems : <p>You've yet to create any To Do items!</p>;
   };
 
   handleSeeToDos = () => {
@@ -77,7 +75,7 @@ class CourseCard extends Component {
     const isCourseToRemove = course.studentCourseId === this.props.courseToRemove;
     const courseColor = this.props.selectedCourse.data === course.studentCourseId;
     const seeToDoFor = this.props.seeToDoFor;
-    console.log(this.props.selectedForToDo,course.studentCourseId)
+    console.log("selected for to do:",this.props.selectedForToDo,"course id:",course.studentCourseId)
     return(
       <div className="course-card-wrapper">
         <p>Course Color: {course.color}</p>

@@ -11,13 +11,15 @@ class CourseContainer extends Component {
   };
 
   render() {
+    const props = this.props;
+
     return(
       <div className="course-container-wrapper sidebar-wrapper">
         {this.props.student.id
           ?
             <div className="course-list-container">
               <button onClick={this.handleSeeCourseDirectory}>Add Course</button>
-              <CourseList courses={this.props.studentCourses} courseEvents={this.props.courseEvents} onSeeToDoFor={this.props.onSeeToDoFor} seeToDoFor={this.props.seeToDoFor} onSelectForToDo={this.props.onSelectForToDo} selectedForToDo={this.props.selectedForToDo} onDeselectForToDo={this.props.onDeselectForToDo} onSubmitCourseColorChange={this.props.onSubmitCourseColorChange} onCourseToChangeColor={this.props.onCourseToChangeColor} selectedCourse={this.props.selectedCourse} onSelectCourseColor={this.props.onSelectCourseColor} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} selectedStudentCourse={this.props.selectedStudentCourse} onSelectStudentCourse={this.props.onSelectStudentCourse} onDeselectStudentCourse={this.props.onDeselectStudentCourse} onShowStudentCourseDetails={this.props.onShowStudentCourseDetails} onHideStudentCourseDetails={this.props.onHideStudentCourseDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails} onHideStudentCompDetails={this.props.onHideStudentCompDetails}/>
+              <CourseList courses={this.props.studentCourses} {...props}/>
             </div>
           :
           <Redirect to="/"/>
