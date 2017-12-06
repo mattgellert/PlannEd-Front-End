@@ -1,0 +1,4 @@
+.react-datepicker-popper {
+  position: absolute;
+  z-index: 1000;
+}
