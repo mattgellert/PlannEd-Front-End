@@ -27,12 +27,14 @@ export default class SubAssignmentCard extends Component {
   };
 
   handleShowAssignmentDetails = () => {
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onDeselectForToDo() : null;
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   }
 
   handleHideAssignmentDetails = () => {
     // if showDetails & selectedForToDo, hideDetails --> deselect assignment & deselectForToDo
+    this.props.onDeselectForToDo()
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
     this.props.onHideAssignmentDetails();
   };

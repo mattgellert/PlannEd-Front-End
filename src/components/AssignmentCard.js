@@ -33,6 +33,8 @@ class AssignmentCard extends Component {
   };
 
   handleDeselectAssignment = () => {
+    this.props.onHideAssignmentDetails();
+    this.props.onSeeToDos(this.props.seeToDoFor);
     this.props.onDeselectAssignment();
   };
 

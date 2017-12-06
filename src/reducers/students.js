@@ -243,7 +243,6 @@ export default function studentReducer(
       })
 
       const selectedIdsWithFetched = [...state.selectedAssignment.id, fetchedIds];
-
       let updatedSubAssignments = [];
       if (!hasParent) {
         return {
@@ -926,7 +925,6 @@ export default function studentReducer(
         courseToRemove: null
       }
     case "UPDATED_COURSES":
-      console.log("updated courses", action.payload)
       return {
         ...state,
         studentCourses: action.payload,

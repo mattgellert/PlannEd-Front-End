@@ -64,7 +64,7 @@ class DashboardContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper">
-              <DashboardCalendar completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
+              <DashboardCalendar selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
             </div>
           :
             <Redirect to="/"/>

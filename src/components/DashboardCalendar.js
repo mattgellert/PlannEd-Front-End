@@ -16,8 +16,16 @@ export default class DashboardCalendar extends Component {
 
   getEventColor = (event) => {
     const color = event.color;
-    const boxShadow = this.props.calendar.seeToDoFor === event.studentAssignmentId ? "0px 0px 4px 4px #888888" : null;
+    const seeToDoFor = this.props.calendar.seeToDoFor;
+    let boxShadow = seeToDoFor === event.studentAssignmentId ? "0px 0px 4px 4px #888888" : null;
     const completedFilter = this.props.completedFilter;
+
+    //get ids of subassignments of seeToDoFor
+    // console.log("get event color subassignments", this.props.selectedAssignment.subAssignments)
+    // const subAssIds = this.props.selectedAssignment.subAssignments.map(subAss => subAss.id);
+    // if (subAssIds.includes(event.studentAssignmentId)) {
+    //   boxShadow = "0px 0px 4px 4px #888888";
+    // }
 
     if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {
       if (completedFilter === "Incomplete") {
@@ -39,9 +47,7 @@ export default class DashboardCalendar extends Component {
   render() {
     BigCalendar.momentLocalizer(moment);
     const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
-    console.log("calendar to dos:", this.props.calendar.toDoItems)
     const toDoItems = this.props.calendar.toDoItems.filter(todo => !todo.completed)
-    console.log("calendar to dos filtered:", toDoItems)
     const calEvents = [...this.props.calendar.courses, ...this.props.calendar.dueDates, ...toDoItems].map(date => ({
       title: date.title,
       eventType: date.eventType,
