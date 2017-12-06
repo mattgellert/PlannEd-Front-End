@@ -5,7 +5,8 @@ export default function studentReducer(
       dueDates: [],
       toDoItems: [],
       selectedEvent: {},
-      defaultDate: null
+      defaultDate: null,
+      seeToDoFor: null
     },
     directory: {
       subjects: [],
@@ -112,7 +113,8 @@ export default function studentReducer(
           courses: [],
           toDoItems: [],
           selectedEvent: {},
-          dueDates: []
+          dueDates: [],
+          seeToDoFor: null
         },
         directory: {
           subjects: [],
@@ -902,11 +904,19 @@ export default function studentReducer(
         courseToRemove: null
       }
     case "UPDATED_COURSES":
-      debugger
       return {
         ...state,
         studentCourses: action.payload,
         loading: false
+      }
+    case "SEE_TO_DOS":
+      const seeToDoFor = state.calendar.seeToDoFor === action.payload ? null : action.payload
+      return {
+        ...state,
+        calendar: {
+          ...state.calendar,
+          seeToDoFor: seeToDoFor
+        }
       }
       //REFACTOR TO USE FOR SELECTING WHEN CREATING COMPONENT TO DO
     // case "SHOW_STUDENT_COMP_DETAILS":

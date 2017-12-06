@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SubAssignmentCard from './SubAssignmentCard';
-import { hideAssignmentDetails, deselectForToDo, selectForToDo, completeParent, fetchSubAssignments, completeAssignment, completeSubAssignment, showAssignmentDetails, deselectAssignment, deselectSubAssignment } from '../actions/students';
+import { seeToDos, hideAssignmentDetails, deselectForToDo, selectForToDo, completeParent, fetchSubAssignments, completeAssignment, completeSubAssignment, showAssignmentDetails, deselectAssignment, deselectSubAssignment } from '../actions/students';
 // import PriorityIcon from './svgs/PriorityIcon.js';
 
 
@@ -33,7 +33,7 @@ class AssignmentCard extends Component {
 
   showSubAssignments = () => {
     const arr = this.props.selectedAssignment.subAssignments.map((subAss, idx) => {
-      return <SubAssignmentCard key={subAss.studentAssignmentId} onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
+      return <SubAssignmentCard key={subAss.studentAssignmentId} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos}onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
     });
     return arr;
   };
@@ -43,10 +43,15 @@ class AssignmentCard extends Component {
     this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   };
 
+  handleSeeToDos = () => {
+    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
+  };
+
   render() {
     const assignment = this.props.assignment;
     const selectedAssignment = this.props.selectedAssignment;
     const dueDate = new Date(assignment.dueDate);
+    const seeToDo = this.props.seeToDoFor === assignment.studentAssignmentId;
 
     //click completed > post >
       //response includes completed
@@ -69,6 +74,7 @@ class AssignmentCard extends Component {
           :
             <button onClick={this.handleShowAssignmentDetails}>Show Details</button>
         }
+        <button onClick={this.handleSeeToDos}>{seeToDo ? "Hide To Do Items" : "See To Do Items"}</button>
         <button onClick={this.handleAddToDo}>{this.props.selectedForToDo === assignment.studentAssignmentId ? "Choose A Date >" : "+ To Do"}</button>
         {assignment.hasSubAssignments
           ?
@@ -100,7 +106,8 @@ function mapStateToProps(state) {
     studentCourses: state.studentCourses,
     studentAssignments: state.studentAssignments,
     selectedAssignment: state.selectedAssignment,
-    selectedForToDo: state.selectedForToDo
+    selectedForToDo: state.selectedForToDo,
+    seeToDoFor: state.calendar.seeToDoFor
   };
 };
 
@@ -135,6 +142,9 @@ function mapDispatchToProps(dispatch) {
     },
     onHideAssignmentDetails: () => {
       dispatch(hideAssignmentDetails());
+    },
+    onSeeToDos: (studentAssignmentId) => {
+      dispatch(seeToDos(studentAssignmentId));
     }
   }
 };

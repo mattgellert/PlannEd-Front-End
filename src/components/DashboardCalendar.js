@@ -16,19 +16,21 @@ export default class DashboardCalendar extends Component {
 
   getEventColor = (event) => {
     const color = event.color;
+    const boxShadow = this.props.calendar.seeToDoFor === event.studentAssignmentId && event.eventType == "to do"? "0px 0px 4px 4px #888888" : null;
     const completedFilter = this.props.completedFilter;
+
     if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {
       if (completedFilter === "Incomplete") {
-        return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000" } } : { style: { backgroundColor: color } };
+        return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
       } else {
-        return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000" } } : { style: { backgroundColor: color } };
+        return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
       }
 
     } else {
       if (completedFilter === "Incomplete") {
-        return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", opacity: 0.5 } } : { style: { backgroundColor: color, opacity: 0.5 } };
+        return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow, opacity: 0.5 } } : { style: { backgroundColor: color, boxShadow: boxShadow, opacity: 0.5 } };
       } else {
-        return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", opacity: 0.5 } } : { style: { backgroundColor: color, opacity: 0.5 } };
+        return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow, opacity: 0.5 } } : { style: { backgroundColor: color, boxShadow: boxShadow, opacity: 0.5 } };
       }
 
     }

@@ -494,3 +494,10 @@ export function removeCourse(studentCourseId) {
       });
   }
 }
+
+export function seeToDos(studentAssignmentId) {
+  return {
+    type: "SEE_TO_DOS",
+    payload: studentAssignmentId
+  }
+}
