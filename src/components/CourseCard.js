@@ -77,14 +77,14 @@ class CourseCard extends Component {
     const isCourseToRemove = course.studentCourseId === this.props.courseToRemove;
     const courseColor = this.props.selectedCourse.data === course.studentCourseId;
     const seeToDoFor = this.props.seeToDoFor;
-
+    console.log(this.props.selectedForToDo,course.studentCourseId)
     return(
       <div className="course-card-wrapper">
         <p>Course Color: {course.color}</p>
         <h3>{course.subject} {course.catalogNbr}: {course.title}</h3>
         <p>{course.facilityDescr}</p>
         <p>{course.timeStart} - {course.timeEnd} ({course.pattern})</p>
-        <button onClick={this.handleAddToDo}>+ To Do</button>
+        <button onClick={this.handleAddToDo}>{this.props.selectedForToDo === course.studentCourseId ? "Choose A Date>" : "+ To Do"}</button>
         <button onClick={this.handleChangeCourseColor}>Change Color</button>
         {!!courseColor
           ?
