@@ -79,6 +79,7 @@ class NavBar extends Component {
               <li onClick={this.setPrevTab} className={`navlink ${directoryActiveClass}`}><NavLink activeClassName="active" className="link" to="/course-directory" exact>Course Directory</NavLink></li>
               <li className="navlink" onClick={this.handleSignOut}><NavLink className="link sign-out" to="/" exact>Sign Out</NavLink></li>
               <li onClick={this.setPrevTab} className="navlink" ><NavLink className="link my-courses" to="/my-courses" exact>My Courses</NavLink></li>
+              <li onClick={this.setPrevTab} className="navlink" ><NavLink className="link my-study-items" to="/my-study-items" exact>Study Items</NavLink></li>
             </div>
             :
             <div>

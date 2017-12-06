@@ -39,7 +39,7 @@ class AssignmentCard extends Component {
 
   showSubAssignments = () => {
     const arr = this.props.selectedAssignment.subAssignments.map((subAss, idx) => {
-      return <SubAssignmentCard key={subAss.studentAssignmentId} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos}onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
+      return <SubAssignmentCard key={subAss.studentAssignmentId} toDoItems={this.props.toDoItems} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos}onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
     });
     return arr;
   };
@@ -53,11 +53,11 @@ class AssignmentCard extends Component {
   getToDoItems = () => {
     const assigmentToShowToDo = this.props.assignment;
     const today = new Date();
-    this.props.toDoItems.filter(todo => todo.studentAssignmentId === assigmentToShowToDo.studentAssignmentId).map(todo => {
+    return this.props.toDoItems.filter(todo => todo.studentAssignmentId === assigmentToShowToDo.studentAssignmentId).map(todo => {
       return (
         <div className="assignment-to-do">
           <h4>{todo.title}</h4>
-          <p>{todo.startDate} - {todo.endDate} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
+          <p>{`${(new Date(...todo.startDate)).toString().slice(0,21)}`} - {`${(new Date(...todo.endDate)).toString().slice(0,21)}`} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
           <p>{todo.description}</p>
         </div>
       )
@@ -71,6 +71,7 @@ class AssignmentCard extends Component {
     const seeToDo = this.props.seeToDoFor === assignment.studentAssignmentId;
     let showDetails = false;
     let toDoItems = [];
+
     if (selectedAssignment.showDetails === assignment.studentAssignmentId ) {
       showDetails = true
       toDoItems = this.getToDoItems();
