@@ -219,6 +219,15 @@ export default function studentReducer(
           display: fetchedAssignments,
           data: fetchedAssignments
         },
+        selectedCourse: {
+          data: null,
+          selectedLEC: null,
+          selectedDIS: null,
+          selectedSEM: null,
+          selectedTA: null,
+          courseColor: null,
+          colorSelected: null
+        },
         calendar: {
           ...state.calendar,
           courses: fetchedCourseDates,

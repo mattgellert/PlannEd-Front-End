@@ -58,7 +58,7 @@ class CourseCard extends Component {
     return(
       <div className="course-card-wrapper">
         <p>Course Color: {course.color}</p>
-        <h1>{course.subject} {course.catalogNbr}: {course.title}</h1>
+        <h3>{course.subject} {course.catalogNbr}: {course.title}</h3>
         <p>{course.facilityDescr}</p>
         <p>{course.timeStart} - {course.timeEnd} ({course.pattern})</p>
         <button onClick={this.handleAddToDo}>+ To Do</button>

@@ -522,8 +522,8 @@ export function submitCourseColorChange(studentCourseId, color) {
       body: JSON.stringify({ studentCourseId, color })
     })
     .then(resp => resp.json())
-    .then(json => {
-      dispatch({ type: "UPDATED_COURSES", payload: json.studentCourses })
+    .then(data => {
+      dispatch({ type: "FETCHED_ASSIGNMENTS", payload: { studentAssignments: data.studentAssignments, dueDates: data.dueDates, courseDates: data.courseDates, toDoItems: data.toDoItems }})
     })
   }
 }

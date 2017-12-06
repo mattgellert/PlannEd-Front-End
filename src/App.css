@@ -152,6 +152,10 @@ h2 {
  animation: slide-out .3s;
 }
 
+.course-list-container {
+  animation: slide-out .3s;
+}
+
 /* Assignments */
 .assignment-form-container {
  background: #026082;

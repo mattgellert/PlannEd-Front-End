@@ -19,21 +19,23 @@ export default class DashboardCalendar extends Component {
     const seeToDoFor = this.props.calendar.seeToDoFor;
     let boxShadow = seeToDoFor === event.studentAssignmentId ? "0px 0px 4px 4px #888888" : null;
     const completedFilter = this.props.completedFilter;
-    
-    if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {
-      if (completedFilter === "Incomplete") {
-        return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
-      } else {
-        return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
-      }
 
+    if (!!this.props.courseFilter) {
+      if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {
+        if (completedFilter === "Incomplete") {
+          return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
+        } else {
+          return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
+        }
+      } else {
+        if (completedFilter === "Incomplete") {
+          return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow, opacity: 0.5 } } : { style: { backgroundColor: color, boxShadow: boxShadow, opacity: 0.5 } };
+        } else {
+          return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow, opacity: 0.5 } } : { style: { backgroundColor: color, boxShadow: boxShadow, opacity: 0.5 } };
+        }
+      }
     } else {
-      if (completedFilter === "Incomplete") {
-        return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow, opacity: 0.5 } } : { style: { backgroundColor: color, boxShadow: boxShadow, opacity: 0.5 } };
-      } else {
-        return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow, opacity: 0.5 } } : { style: { backgroundColor: color, boxShadow: boxShadow, opacity: 0.5 } };
-      }
-
+      return { style: { backgroundColor: color } }
     }
   };
 
@@ -41,7 +43,7 @@ export default class DashboardCalendar extends Component {
     BigCalendar.momentLocalizer(moment);
     const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
     const toDoItems = this.props.calendar.toDoItems.filter(todo => !todo.completed)
-    const calEvents = [...this.props.calendar.courses, ...this.props.calendar.dueDates, ...toDoItems].map(date => ({
+    let calEvents = [...this.props.calendar.courses, ...this.props.calendar.dueDates, ...toDoItems].map(date => ({
       title: date.title,
       eventType: date.eventType,
       startDate: new Date(...date.startDate),
@@ -51,6 +53,8 @@ export default class DashboardCalendar extends Component {
       studentAssignmentId: date.studentAssignmentId,
       completed: date.completed
     }));
+
+    !this.props.courseFilter ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
 
     // ["month", "week", "work_week", "day", "agenda"]
     const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("9/04/2017")
