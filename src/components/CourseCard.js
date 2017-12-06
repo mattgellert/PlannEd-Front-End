@@ -32,10 +32,10 @@ class CourseCard extends Component {
   };
 
   // get these functions for props
-  // handleAddToDo = () => {
-  //   this.props.onDeselectForToDo()
-  //   this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
-  // };
+  handleAddToDo = () => {
+    this.props.onDeselectForToDo()
+    this.props.selectedForToDo !== this.props.course.studentCourseId ? this.props.onSelectForToDo(this.props.course.studentCourseId) : null;
+  };
 
   handleChangeCourseColor = () => {
     this.props.onCourseToChangeColor(this.props.course.studentCourseId)
@@ -61,7 +61,7 @@ class CourseCard extends Component {
         <h1>{course.subject} {course.catalogNbr}: {course.title}</h1>
         <p>{course.facilityDescr}</p>
         <p>{course.timeStart} - {course.timeEnd} ({course.pattern})</p>
-        <p onClick={this.handleAddToDo}>+ To Do</p>
+        <button onClick={this.handleAddToDo}>+ To Do</button>
         <button onClick={this.handleChangeCourseColor}>Change Color</button>
         {!!courseColor
           ?

@@ -12,21 +12,21 @@ import './DashboardContainer.css';
 import CourseContainer from './CourseContainer';
 
 
-class DashboardContainer extends Component {
+class CourseListContainer extends Component {
 
   slotSelected = (slotInfo) => {
     console.log("slotSelected", slotInfo)
     this.props.onSelectSlot(slotInfo)
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
-    const selectedSlot = this.props.selectedSlot;
-    const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
-    this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
-    this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
-  };
+  // handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
+  //   const selectedSlot = this.props.selectedSlot;
+  //   const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
+  //   this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
+  //   this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
+  // };
 
   handleStartChange = (event) => {
     this.props.onStartChange(event.target.value);
@@ -52,11 +52,11 @@ class DashboardContainer extends Component {
 
     const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
     let MainNavChildren;
-     if (this.props.student.id) {
-       MainNavChildren = (
-         <AssignmentSearchForm courses={this.props.studentCourses} assignments={this.props.studentAssignments}/>
-       );
-     }
+     // if (this.props.student.id) {
+     //   MainNavChildren = (
+     //     <AssignmentSearchForm courses={this.props.studentCourses} assignments={this.props.studentAssignments}/>
+     //   );
+     // }
 
 
     return (
@@ -72,8 +72,7 @@ class DashboardContainer extends Component {
           <div className="content-wrapper">
             <NavBar {...this.props} activeTab="dashboard" />
             <div className="content-container">
-        {this.props.student.id ? <AssignmentContainer /> : <Redirect to="/"/>}
-        {this.props.addConflict ? <Redirect to="/course-directory"/> : null}
+        {this.props.student.id ? <CourseContainer history={this.props.history}/> : <Redirect to="/"/>}
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
@@ -142,4 +141,4 @@ function mapDispatchToProps(dispatch) {
   }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DashboardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(CourseListContainer);

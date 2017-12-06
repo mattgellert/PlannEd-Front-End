@@ -6,7 +6,7 @@ import DashboardContainer from './containers/DashboardContainer';
 import SignInForm from './components/SignInForm';
 import SignUpForm from './components/SignUpForm';
 import Home from './components/Home';
-import CourseContainer from './containers/CourseContainer';
+import CourseListContainer from './containers/CourseListContainer';
 import StudyContainer from './containers/StudyContainer';
 
 class App extends Component {
@@ -19,7 +19,7 @@ class App extends Component {
         <Route exact path="/sign-up" render={props => <SignUpForm {...props}/>} />
         <Route exact path="/dashboard" render={props => <DashboardContainer {...props}/>} />
         <Route exact path="/course-directory" render={props => <DirectoryContainer {...props}/>} />
-        <Route exact path="/my-courses" render={props => <CourseContainer {...props}/>} />
+        <Route exact path="/my-courses" render={props => <CourseListContainer {...props}/>} />
         <Route exact path="/my-study-items" render={props => <StudyContainer {...props}/>} />
       </div>
     );

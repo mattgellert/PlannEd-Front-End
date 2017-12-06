@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-export default class ToDoFormAssignments extends Component {
+export default class ToDoForm extends Component {
   render() {
     const formCss = `
     .to-do-form-assignment-wrapper {
@@ -27,7 +27,7 @@ export default class ToDoFormAssignments extends Component {
             End Time:
             <input type="time" value={this.props.selectedSlot.endTime} onChange={this.props.handleEndChange}/>
             Description:
-            <input type="textbox" value={this.props.selectedSlot.description} onChange={this.props.handleDescChange}/> 
+            <input type="textbox" value={this.props.selectedSlot.description} onChange={this.props.handleDescChange}/>
             <br/>
             <input type="submit" value="Create To Do!"/>
             <p onClick={this.props.handleCloseForm}>X</p>

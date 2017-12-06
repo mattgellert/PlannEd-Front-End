@@ -89,34 +89,6 @@ class AssignmentSearchForm extends Component {
 };
 
 
-// <div className="assignment-form-container">
-//   <form className="assignment-form">
-//     Incomplete: <input onChange={this.handleCompletedFilter} type="radio" name="complete-filter" checked={this.props.incompleteFilter ? "checked" : ""} value="Incomplete"/>
-//     Completed: <input onChange={this.handleCompletedFilter} type="radio" name="complete-filter" value="Completed"/>
-//     All: <input onChange={this.handleCompletedFilter} type="radio" name="complete-filter" value="All" />
-//     Course:
-//     <select onChange={this.handleCourseChange}>
-//       <option value="All Courses">All Courses</option>
-//       {courseOptions}
-//     </select>
-//     Asc:
-//     <input onChange={this.handleSortDirection} type="radio" name="sort" value="Ascending" checked={this.props.ascendingFilter ? "checked" : ""}/>
-//     Desc:
-//     <input onChange={this.handleSortDirection} type="radio" name="sort" value="Descending"/>
-//     Date Range:
-//     <DatePicker
-//       className="assignment-search-date-picker"
-//       selected={this.props.limitStart ? moment(this.props.limitStart) : aMoment}
-//       onChange={this.handleLimitStartChange}
-//     />
-//     <DatePicker
-//       className="assignment-search-date-picker"
-//       selected={this.props.limitEnd ? moment(this.props.limitEnd) : aMoment}
-//       onChange={this.handleLimitEndChange}
-//     />
-//   </form>
-// </div>
-
 function mapStateToProps(state) {
   return {
     incompleteFilter: state.studentAssignments.completedFilter === "Incomplete",

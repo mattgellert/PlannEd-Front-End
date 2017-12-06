@@ -89,7 +89,7 @@ class DirectoryCourseCard extends Component {
     console.log("course card color:", this.props.courseColor)
     return (
       <div>
-        <h1>{this.props.course.subject} {this.props.course.catalogNbr}: {this.props.course.titleLong}</h1>
+        <h3>{this.props.course.subject} {this.props.course.catalogNbr}: {this.props.course.titleLong}</h3>
         <p>{this.props.course.description}</p>
         {this.props.studentCourseIds.includes(this.props.course.crseId) ? "Enrolled" : <button onClick={this.handleDetails}>See Details</button>}
         {this.props.selectedCourse.data ? this.props.selectedCourse.data.crseId === this.props.course.crseId

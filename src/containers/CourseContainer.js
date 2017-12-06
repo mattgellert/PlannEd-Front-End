@@ -1,19 +1,23 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
+import { selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
 import CourseList from '../components/CourseList';
 
 class CourseContainer extends Component {
 
+  handleSeeCourseDirectory = () => {
+    this.props.history.push("/course-directory")
+  };
+
   render() {
-    console.log("course contianer props", this.props)
     return(
-      <div className="course-container-wrapper">
+      <div className="course-container-wrapper sidebar-wrapper">
         {this.props.student.id
           ?
-            <div className="course-container">
-              <CourseList courses={this.props.studentCourses} onSubmitCourseColorChange={this.props.onSubmitCourseColorChange} onCourseToChangeColor={this.props.onCourseToChangeColor} selectedCourse={this.props.selectedCourse} onSelectCourseColor={this.props.onSelectCourseColor} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} selectedStudentCourse={this.props.selectedStudentCourse} onSelectStudentCourse={this.props.onSelectStudentCourse} onDeselectStudentCourse={this.props.onDeselectStudentCourse} onShowStudentCourseDetails={this.props.onShowStudentCourseDetails} onHideStudentCourseDetails={this.props.onHideStudentCourseDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails} onHideStudentCompDetails={this.props.onHideStudentCompDetails}/>
+            <div className="course-list-container">
+              <button onClick={this.handleSeeCourseDirectory}>Add Course</button>
+              <CourseList courses={this.props.studentCourses} onSelectForToDo={this.props.onSelectForToDo} seletectedForToDo={this.props.selectedForToDo} onDeselectForToDo={this.props.onDeselectForToDo} onSubmitCourseColorChange={this.props.onSubmitCourseColorChange} onCourseToChangeColor={this.props.onCourseToChangeColor} selectedCourse={this.props.selectedCourse} onSelectCourseColor={this.props.onSelectCourseColor} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} selectedStudentCourse={this.props.selectedStudentCourse} onSelectStudentCourse={this.props.onSelectStudentCourse} onDeselectStudentCourse={this.props.onDeselectStudentCourse} onShowStudentCourseDetails={this.props.onShowStudentCourseDetails} onHideStudentCourseDetails={this.props.onHideStudentCourseDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails} onHideStudentCompDetails={this.props.onHideStudentCompDetails}/>
             </div>
           :
           <Redirect to="/"/>
@@ -29,7 +33,8 @@ function mapStateToProps(state) {
     selectedStudentCourse: state.selectedStudentCourse,
     student: state.student,
     courseToRemove: state.courseToRemove,
-    selectedCourse: state.selectedCourse
+    selectedCourse: state.selectedCourse,
+    selectedForToDo: state.selectedForToDo
   }
 };
 
@@ -70,6 +75,12 @@ function mapDispatchToProps(dispatch) {
     },
     onCourseToChangeColor: (studentCourseId) => {
         dispatch(courseToChangeColor(studentCourseId));
+    },
+    onDeselectForToDo: () => {
+      dispatch(deselectForToDo());
+    },
+    onSelectForToDo: (studentCourseId) => {
+      dispatch(selectForToDo(studentCourseId));
     }
   }
 }

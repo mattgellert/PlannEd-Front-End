@@ -6,7 +6,7 @@ const MainNavBar = ({ children }) => {
    <div className="main-nav-bar">
      <NavLink className="link home" to="/" exact>
        <div className="logo">
-         plannEd
+         PlannEd
        </div>
      </NavLink>
      {children}

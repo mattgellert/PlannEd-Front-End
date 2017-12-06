@@ -129,14 +129,14 @@ h2 {
  width: 100%;
 }
 
-.assignment-container-wrapper, .directory-container-wrapper {
+.assignment-container-wrapper, .directory-container-wrapper, .course-container-wrapper {
  background: #26282e;
  height: 100%;
  position: relative;
  width: 100%;
 }
 
-.assignment-list-container, .directory-list-container {
+.assignment-list-container, .directory-list-container, .course-list-container {
  background: #26282e;
  display: block;
  height: 100%;
@@ -177,3 +177,5 @@ h2 {
  margin: auto;
  padding-left: 90px;
 }
+
+/* Courses */
