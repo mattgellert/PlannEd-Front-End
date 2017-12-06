@@ -21,7 +21,7 @@ export default class SubAssignmentCard extends Component {
   };
 
   handleAddToDo = () => {
-    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId && this.props.selectedAssignment.showDetails !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
     this.props.onDeselectForToDo();
     this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   };
