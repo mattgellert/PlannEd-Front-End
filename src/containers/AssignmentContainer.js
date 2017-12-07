@@ -9,7 +9,6 @@ import NavBar from '../components/NavBar';
 class AssignmentContainer extends Component {
 
  componentDidMount() {
-   console.log("assignment container CDM")
    this.props.onFetchAssignments(this.props.student.id);
  };
 

@@ -14,23 +14,23 @@ export default class ToDoForm extends Component {
     }
     `
     return (
-      <div>
+      <div className="event-details-window" id="event-details-window">
         <style>{formCss}</style>
-        <div className="to-do-form-assignment-wrapper">
-          <form onSubmit={this.props.handleSubmit}>
+        <div className="to-do-form-assignment-wrapper" id="event-details-window">
+          <form onSubmit={this.props.handleSubmit} id="event-details-window">
             Title:
-            <input type="text" value={this.props.selectedSlot.title} onChange={this.props.handleTitleChange}/>
+            <input id="event-details-window" className="event-form-input" type="text" value={this.props.selectedSlot.title} onChange={this.props.handleTitleChange}/>
             <br/>
             Start Time:
-            <input type="time" value={this.props.selectedSlot.startTime} onChange={this.props.handleStartChange}/>
+            <input id="event-details-window" className="event-form-input" type="time" value={this.props.selectedSlot.startTime} onChange={this.props.handleStartChange}/>
             <br/>
             End Time:
-            <input type="time" value={this.props.selectedSlot.endTime} onChange={this.props.handleEndChange}/>
+            <input id="event-details-window" className="event-form-input" type="time" value={this.props.selectedSlot.endTime} onChange={this.props.handleEndChange}/>
             Description:
-            <input type="textbox" value={this.props.selectedSlot.description} onChange={this.props.handleDescChange}/>
+            <input id="event-details-window" className="event-form-input" type="textbox" value={this.props.selectedSlot.description} onChange={this.props.handleDescChange}/>
             <br/>
-            <input type="submit" value="Create To Do!"/>
-            <p onClick={this.props.handleCloseForm}>X</p>
+            <input id="event-details-window" type="submit" value="Create To Do!"/>
+            <p id="event-details-window" onClick={this.props.handleCloseForm}>X</p>
           </form>
         </div>
       </div>

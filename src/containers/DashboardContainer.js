@@ -56,6 +56,7 @@ class DashboardContainer extends Component {
 
 
   handleSelectEvent = (event) => {
+    console.log('select evnet', event)
     this.props.onSelectEvent(event)
     this.windowListener = document.body.addEventListener("click", (event) => {
       event.target.id !== "event-details-window" ? this.handleCloseEventWindow() : null;
@@ -90,7 +91,7 @@ class DashboardContainer extends Component {
     this.props.onDeselectEvent();
     this.windowListener = null;
     const updatedEventDate = this.props.selectedSlot.date;
-    debugger// const updatedEventDate = eventSelected.startDate
+    // const updatedEventDate = eventSelected.startDate
     this.props.onUpdateEventDetails(updatedEventDate, updatedEventTime, eventSelected.id, this.props.selectedSlot.title, this.props.selectedSlot.description, eventSelected.eventType);
   };
 
@@ -109,11 +110,11 @@ class DashboardContainer extends Component {
        );
      }
 
-
+     console.log('show assignment to do form?', (this.props.slotSelected && (this.props.selectedForToDo !== 0) && !!this.props.selectedSlot.info))
     return (
       <div className="home-wrapper">
         <MainNavBar children={MainNavChildren}/>
-          {this.props.slotSelected && (this.props.selectedForToDo !== 0)
+          {(this.props.selectedForToDo !== 0) && !!this.props.selectedSlot.info
             ?
               <div className="to-do-form-assignment-container" >
                 <ToDoForm calendarClick={this.props.calendarClick} handleSubmit={this.handleSubmit} selectedSlot={this.props.selectedSlot} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleCloseForm={this.handleCloseForm} handleDescChange={this.handleDescChange}/>
@@ -140,7 +141,7 @@ class DashboardContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar slotSelected={this.SlotSelected} handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
+              <DashboardCalendar slotSelected={this.slotSelected} handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
             </div>
           :
             <Redirect to="/"/>

@@ -679,6 +679,7 @@ export default function studentReducer(
     case "CHANGE_ASSIGNMENTS_DISPLAY":
       let assignmentsDisplay = state.studentAssignments.data;
       let subAssignmentsDisplay = state.selectedAssignment.subAssignments;
+      console.log("sub assignments display before filter", subAssignmentsDisplay)
       switch (state.studentAssignments.completedFilter) {
         case "None":
           break;
@@ -714,7 +715,10 @@ export default function studentReducer(
       later.setDate(later.getDate() + 30);
       const limitEnd = !!state.studentAssignments.limitEnd ? state.studentAssignments.limitEnd : later;
       assignmentsDisplay = assignmentsDisplay.filter(assignment => (new Date(assignment.dueDate)) < limitEnd && (new Date(assignment.dueDate)) > limitStart);
-
+      console.log("student assignments display", assignmentsDisplay)
+      assignmentsDisplay = assignmentsDisplay.filter(assignment => {
+         return (typeof assignment.parentStudentAssignmentId !== "number")
+      })
       if (state.studentAssignments.prevCompletedFilter !== state.studentAssignments.completedFilter) {
 
         return {
@@ -737,6 +741,7 @@ export default function studentReducer(
           }
         }
       } else {
+        console.log("subassignments to display:", subAssignmentsDisplay)
         return {
           ...state,
           calendar: {

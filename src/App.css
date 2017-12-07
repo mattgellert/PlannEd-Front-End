@@ -1,32 +1,33 @@
 
+
 /* animations */
 @-webkit-keyframes fade-in {
-  0%   { opacity: 0; }
+  0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
 @keyframes fade-in {
-  0%   { opacity: 0; }
+  0% { opacity: 0; }
   100% { opacity: 1; }
 }
 
 @-webkit-keyframes slide-in {
-  0%   { margin-top: -50%; }
+  0% { margin-top: -50%; }
   100% { margin-top: 0; }
 }
 
 @keyframes slide-in {
-  0%   { margin-top: -50%; }
+  0% { margin-top: -50%; }
   100% { margin-top: 0; }
 }
 
 @-webkit-keyframes slide-out {
-  0%   { margin-top: 150%; }
+  0% { margin-top: 150%; }
   100% { margin-top: 0; }
 }
 
 @keyframes slide-out {
-  0%   { margin-top: 150%; }
+  0% { margin-top: 150%; }
   100% { margin-top: 0; }
 }
 
@@ -67,9 +68,6 @@ h2 {
 }
 
 .content-wrapper {
-  background-image: url("https://i.imgur.com/2WBGc77.jpg");
-  height: 100%;
-  background-size: cover;
   display: flex;
   height: calc(100% - 70px);
   width: 100%;
@@ -120,6 +118,16 @@ h2 {
   border: 1px solid #ddd;
   height: 25px;
   width: 150px;
+}
+
+.event-form-input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  height: 19px;
+  margin: 0;
+  padding: 0;
 }
 
 .button-search {
@@ -205,6 +213,43 @@ h2 {
   margin: 0;
   padding: 5px 0;
   text-align: left;
+}
+
+.title-label-primary.courses {
+  display: flex;
+  align-items: center;
+}
+
+.color-dot {
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  margin: 0 0 0 5px;
+}
+
+.view-todo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e5e5e5;
+  outline: none;
+  padding: 0;
+}
+
+.course-todo-wrapper, .course-select-wrapper {
+  color: #727890;
+}
+
+.course-select-wrapper {
+  font-size: 12px;
+}
+
+.todo-radio-buttons {
+  display: flex;
+  border-top: 1px solid #025f81;
+  padding: 15px 0 0;
+  font-size: 14px;
+  color: #727890;
 }
 
 .title-label-secondary {
@@ -323,6 +368,7 @@ h2 {
 }
 
 .details-button {
+  cursor: pointer;
   margin: 0;
   margin-top: 10px;
   margin-left: auto;
@@ -343,19 +389,8 @@ h2 {
   padding-bottom: 5px;
 }
 
-.courses-button.bottom {
-  cursor: pointer;
-  margin-left: auto;
-  height: 20px;
-  background: #747a90;
-  opacity: 0.5;
-  border: none;
-  border-radius: 3px;
-  transition: all .3s;
-  margin-right: 30px;
-}
-
 .details-drawer {
+  animation: fade-in 0.3s;
   background: #1e2127;
   padding: 10px;
   transition: all 0.3s;
@@ -365,6 +400,7 @@ h2 {
   background: #1e2127;
   color: #747a90;
   font-size: 14px;
+  margin-top: 0;
 }
 
 .assignment-to-do {
@@ -384,11 +420,13 @@ h2 {
 }
 
 .courses-button {
+  color: #e5e5e5;
   cursor: pointer;
   margin-left: auto;
   height: 20px;
   background: #747a90;
   opacity: 0.5;
+  outline: none;
   border: none;
   border-radius: 3px;
   transition: all .3s;
@@ -396,4 +434,23 @@ h2 {
 
 .courses-button:hover {
   opacity: 1;
+}
+
+.component-card-wrapper {
+  color: #737990;
+  font-size: 12px;
+  border-top: 1px solid #025f81;
+}
+
+.course-card-wrapper {
+  color: #737990;
+}
+
+.hue-picker {
+  width: auto !important;
+}
+
+.description-short {
+  color: #747a90;
+  font-size: 12px;
 }

@@ -70,9 +70,10 @@ class CourseListContainer extends Component {
   //////ADDED////
 
   handleSelectEvent = (event) => {
-    console.log("event selected", event)
+
     this.props.onSelectEvent(event)
     this.windowListener = document.body.addEventListener("click", (event) => {
+      console.log("event selected", event)
       event.target.id !== "event-details-window" ? this.handleCloseEventWindow() : null;
     });
   }
@@ -131,10 +132,10 @@ class CourseListContainer extends Component {
     return (
       <div className="home-wrapper">
         <MainNavBar children={MainNavChildren}/>
-          {this.props.slotSelected && (this.props.selectedForToDo !== 0)
+          {(this.props.selectedForToDo !== 0) && !!this.props.selectedSlot.info
             ?
               <div className="to-do-form-assignment-container" >
-                <ToDoForm calendarClick={this.props.calendarClick} handleSubmit={this.handleSubmit} selectedSlot={this.props.selectedSlot} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleCloseForm={this.handleCloseForm}/>
+                <ToDoForm calendarClick={this.props.calendarClick} handleSubmit={this.handleSubmit} selectedSlot={this.props.selectedSlot} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleCloseForm={this.handleCloseForm} handleDescChange={this.handleDescChange}/>
               </div>
             : null
           }

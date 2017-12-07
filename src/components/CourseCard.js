@@ -94,8 +94,7 @@ class CourseCard extends Component {
 
     return(
       <div className="course-card-wrapper">
-        <p>Course Color: {course.color}</p>
-        <p className="title-label-primary">{course.subject} {course.catalogNbr}</p>
+        <p className="title-label-primary courses">{course.subject} {course.catalogNbr} <div className="color-dot" style={{ background: course.color }}></div></p>
         <p className="title-label-secondary">
           <span className="title"> {course.title} </span>
           <CalendarAddIcon className={this.props.selectedForToDo === course.studentCourseId ? 'calendar-add-icon clicked' : 'calendar-add-icon'} onClick={this.handleAddToDo} />
@@ -107,15 +106,17 @@ class CourseCard extends Component {
                 <p className="description">{course.timeStart} - {course.timeEnd} ({course.pattern})</p>
                 <p className="description">{course.description}</p>
                 {this.showComponents()}
-                <button className="courses-button" onClick={this.handleSeeToDos}>{seeToDoFor === course.studentCourseId ? "Hide To Do Items" : "See To Do Items"}</button>
+                <button className="view-todo-button" onClick={this.handleSeeToDos}>{seeToDoFor === course.studentCourseId ? "Hide To Do Items" : "See To Do Items"}</button>
                 {seeToDoFor === course.studentCourseId
                   ?
-                  <div>
+                  <div className="course-todo-wrapper">
+                    <div className="todo-radio-buttons">
                      <input onClick={this.handleIncompleteFilter} type="radio" id="complete-filter-1" name="complete-course-filter" checked={incompleteFilter ? "checked" : ""} value="Incomplete"/>
                      <label for="complete-filter-1">Incomplete</label>
                      <input onClick={this.handleCompletedFilter} type="radio" id="complete-filter-2" name="complete-course-filter" checked={!incompleteFilter ? "checked" : ""} value="Completed"/>
                      <label for="complete-filter-2">Completed</label>
-                     {this.getToDoItems()}
+                    </div>
+                    {this.getToDoItems()}
                    </div>
                   : null
                 }
@@ -149,8 +150,8 @@ class CourseCard extends Component {
             <div className="remove-course-modal">
               <div className="remove-course-modal-content">
                 <p className="remove-course-modal-text">Are you sure you want to remove this course?</p>
-                <button className="remove" onClick={this.handleRemoveCourse}>Remove</button>
-                <button className="cancel" onClick={this.handleHideRemovePrompt}>Cancel</button>
+                <button className="courses-button" onClick={this.handleRemoveCourse}>Remove</button>
+                <button className="courses-button" onClick={this.handleHideRemovePrompt}>Cancel</button>
               </div>
             </div>
           : null

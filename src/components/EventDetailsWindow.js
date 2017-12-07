@@ -18,7 +18,7 @@ class EventDetailsWindow extends Component {
     `
 
     return (
-      <div id="event-details-window">
+      <div className="event-details-window" id="event-details-window">
         <style>{windowCss}</style>
         <div className="event-details-window-wrapper" id="event-details-window">
           <h4 id="event-details-window">{eventInfo.title}</h4>

@@ -36,7 +36,7 @@ class EventDetailsForm extends Component {
 
 
     return (
-      <div id="event-details-window" >
+      <div className="event-details-window" id="event-details-window">
         <style>{windowCss}</style>
         <div id="event-details-window" className="event-details-form-wrapper">
           <form id="event-details-window" onSubmit={this.props.handleEventDetailsUpdate}>

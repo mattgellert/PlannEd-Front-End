@@ -15,7 +15,7 @@ class ComponentCard extends Component {
     const comp = this.props.comp;
 
     return (
-      <div className="compenet-card-wrapper">
+      <div className="component-card-wrapper">
         <h3>{comp.component}: {comp.title}</h3>
         <p>{comp.facilityDescr}</p>
         <p>{comp.timeStart} - {comp.timeEnd} ({comp.pattern})</p>

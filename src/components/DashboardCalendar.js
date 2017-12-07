@@ -66,6 +66,17 @@ export default class DashboardCalendar extends Component {
       studentAssignmentId: date.studentAssignmentId,
       completed: date.completed
     }));
+    console.log("cal events", calEvents)
+    
+    !this.props.courseFilter && !!this.props.inDirectory ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
+    // !!this.props.inMyCourses ? calEvents = calEvents.filter(ev => ev.eventType === "course" ? true : !ev.completed) : null;
+    calEvents = calEvents.filter(ev => {
+      if (ev.eventType === "course" || ev.eventType === "due date") {
+        return true
+      } else {
+          return !ev.completed
+      }
+    })
 
     // !this.props.courseFilter && !this.props.inDirectory ? calEvents = calEvents.filter(ev => (ev.eventType === "course" || ev.eventType === "course to do")) : null;
     if (!this.props.courseFilter && !this.props.inDirectory) {
@@ -80,10 +91,8 @@ export default class DashboardCalendar extends Component {
         }
       })
     }
-    !this.props.courseFilter && !!this.props.inDirectory ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
-    !!this.props.inMyCourses ? calEvents = calEvents.filter(ev => ev.eventType === "course" ? true : !ev.completed) : null;
 
-    const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("9/04/2017")
+    const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("8/28/2017")
     return (
       <div className="dashboard-calendar">
         <BigCalendar
