@@ -67,6 +67,9 @@ h2 {
 }
 
 .content-wrapper {
+  background-image: url("https://i.imgur.com/2WBGc77.jpg");
+  height: 100%;
+  background-size: cover;
   display: flex;
   height: calc(100% - 70px);
   width: 100%;
@@ -338,6 +341,18 @@ h2 {
   border-bottom: 1px solid #025f81;
   border-radius: 0;
   padding-bottom: 5px;
+}
+
+.courses-button.bottom {
+  cursor: pointer;
+  margin-left: auto;
+  height: 20px;
+  background: #747a90;
+  opacity: 0.5;
+  border: none;
+  border-radius: 3px;
+  transition: all .3s;
+  margin-right: 30px;
 }
 
 .details-drawer {

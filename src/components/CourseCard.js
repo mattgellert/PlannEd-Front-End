@@ -107,7 +107,7 @@ class CourseCard extends Component {
                 <p className="description">{course.timeStart} - {course.timeEnd} ({course.pattern})</p>
                 <p className="description">{course.description}</p>
                 {this.showComponents()}
-                <button onClick={this.handleSeeToDos}>{seeToDoFor === course.studentCourseId ? "Hide To Do Items" : "See To Do Items"}</button>
+                <button className="courses-button" onClick={this.handleSeeToDos}>{seeToDoFor === course.studentCourseId ? "Hide To Do Items" : "See To Do Items"}</button>
                 {seeToDoFor === course.studentCourseId
                   ?
                   <div>
@@ -130,7 +130,7 @@ class CourseCard extends Component {
                 <button className="details-button" onClick={this.handleShowStudentCourseDetails}>Show Details</button>
             }
         </div>
-        <button onClick={this.handleChangeCourseColor}>Change Color</button>
+        <button className="courses-button bottom" onClick={this.handleChangeCourseColor}>Change Color</button>
         {!!showColor
           ?
             <div>
@@ -139,11 +139,11 @@ class CourseCard extends Component {
                 color={courseColor}
                 onChangeComplete={this.handleCourseColorChange}
               />
-              <button onClick={this.handleSubmitCourseColorChange}>Select Color</button>
+              <button className="courses-button bottom" onClick={this.handleSubmitCourseColorChange}>Select Color</button>
             </div>
           : null
         }
-        <button onClick={this.handleShowRemovePrompt}>Remove Course</button>
+        <button className="courses-button" onClick={this.handleShowRemovePrompt}>Remove Course</button>
         {isCourseToRemove
           ?
             <div className="remove-course-modal">

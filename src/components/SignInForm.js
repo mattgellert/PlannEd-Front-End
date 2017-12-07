@@ -25,6 +25,7 @@ class SignInForm extends Component {
        <MainNavBar />
        <div className="content-wrapper">
          <NavBar {...this.props} activeTab="signin" />
+         <h1>Welcome Back to PlannEd!</h1>
          <form className="signin-form-container" onSubmit={this.handleSubmit}>
            Email: <input onChange={this.handleEmailChange} type="text" value={this.props.student.email}/>
            <input type="submit" value="sign in"/>
