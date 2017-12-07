@@ -8,9 +8,8 @@ export default class ToDoForm extends Component {
       height: 200px;
       width: 200px;
       left: ${this.props.calendarClick.x}px;
-      top: ${this.props.calendarClick.y}px;
+      top: ${this.props.calendarClick.y - 200}px;
       z-index: 100;
-      background: red;
     }
     `
     return (
@@ -18,19 +17,24 @@ export default class ToDoForm extends Component {
         <style>{formCss}</style>
         <div className="to-do-form-assignment-wrapper" id="event-details-window">
           <form onSubmit={this.props.handleSubmit} id="event-details-window">
-            Title:
+            <label className="event-details-window-label">Title:</label>
+            <br/>
             <input id="event-details-window" className="event-form-input" type="text" value={this.props.selectedSlot.title} onChange={this.props.handleTitleChange}/>
             <br/>
-            Start Time:
+            <label className="event-details-window-label">Start:</label>
+            <br/>
             <input id="event-details-window" className="event-form-input" type="time" value={this.props.selectedSlot.startTime} onChange={this.props.handleStartChange}/>
             <br/>
-            End Time:
+            <label className="event-details-window-label">End:</label>
+            <br/>
             <input id="event-details-window" className="event-form-input" type="time" value={this.props.selectedSlot.endTime} onChange={this.props.handleEndChange}/>
-            Description:
+            <br/>
+            <label className="event-details-window-label">Desc:</label>
+            <br/>
             <input id="event-details-window" className="event-form-input" type="textbox" value={this.props.selectedSlot.description} onChange={this.props.handleDescChange}/>
             <br/>
-            <input id="event-details-window" type="submit" value="Create To Do!"/>
-            <p id="event-details-window" onClick={this.props.handleCloseForm}>X</p>
+            <input className="courses-button event" id="event-details-window" type="submit" value="Create To Do!"/><p className="close-event-details-window" id="event-details-window" onClick={this.props.handleCloseForm}>X</p>
+
           </form>
         </div>
       </div>

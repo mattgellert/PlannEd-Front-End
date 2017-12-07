@@ -85,7 +85,7 @@ class NavBar extends Component {
               </NavLink>
             </li>
              <li onClick={this.setPrevTab} className="navlink">
-              <NavLink className="link sign-out" to="/" exact>
+              <NavLink onClick={this.handleSignOut} className="link sign-out" to="/" exact>
                 <SignoutIcon />
               </NavLink>
             </li>

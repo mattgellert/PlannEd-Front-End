@@ -23,7 +23,7 @@ class SignInForm extends Component {
    return (
      <div className="signin-container">
        <MainNavBar />
-       <div className="content-wrapper">
+       <div className="content-wrapper home">
          <NavBar {...this.props} activeTab="signin" />
          <h1>Welcome Back to PlannEd!</h1>
          <form className="signin-form-container" onSubmit={this.handleSubmit}>

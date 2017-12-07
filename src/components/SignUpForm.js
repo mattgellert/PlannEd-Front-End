@@ -31,7 +31,7 @@ class SignUpForm extends Component {
    return (
      <div className="signup-container">
        <MainNavBar />
-       <div className="content-wrapper">
+       <div className="content-wrapper home">
          <NavBar {...this.props} activeTab="signup" />
          <h1>Welcome to PlannEd!</h1>
          <h3>Sure to make college a breeze</h3>

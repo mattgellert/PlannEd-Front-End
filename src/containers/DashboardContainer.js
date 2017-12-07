@@ -114,7 +114,7 @@ class DashboardContainer extends Component {
     return (
       <div className="home-wrapper">
         <MainNavBar children={MainNavChildren}/>
-          {(this.props.selectedForToDo !== 0) && !!this.props.selectedSlot.info
+          {(this.props.selectedForToDo !== 0) && !!this.props.selectedSlot && !!this.props.selectedSlot.info
             ?
               <div className="to-do-form-assignment-container" >
                 <ToDoForm calendarClick={this.props.calendarClick} handleSubmit={this.handleSubmit} selectedSlot={this.props.selectedSlot} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleCloseForm={this.handleCloseForm} handleDescChange={this.handleDescChange}/>

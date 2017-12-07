@@ -24,46 +24,56 @@ class EventDetailsForm extends Component {
     const windowCss = `
     .event-details-form-wrapper {
       position: absolute;
-      height: 200px;
+      height: 250px;
       width: 200px;
       left: ${this.props.calendarClick.x}px;
-      top: ${this.props.calendarClick.y}px;
+      top: ${this.props.calendarClick.y - 230}px;
       z-index: 100;
-      background: red;
+      background: #025f81;
+      border-radius: 5px;
+      padding: 4px;
+      color: #eff5f7;
+      font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
     }
     `
 
 
 
     return (
-      <div className="event-details-window" id="event-details-window">
+      <div className="event-details-window-wrapper" id="event-details-window">
         <style>{windowCss}</style>
         <div id="event-details-window" className="event-details-form-wrapper">
           <form id="event-details-window" onSubmit={this.props.handleEventDetailsUpdate}>
             Title:
-            <input id="event-details-window" type="text" value={eventInfo.title} onChange={this.props.handleTitleChange}/>
+            <br/>
+            <input className="event-form-input" id="event-details-window" type="text" value={eventInfo.title} onChange={this.props.handleTitleChange}/>
             <br/>
             Date:
-            <input id="event-details-window" type="date" value={dateVal} onChange={this.props.onDateChange}/>
             <br/>
-            Start Time:
-            <input id="event-details-window" type="time" value={startVal} onChange={this.props.handleStartChange}/>
+            <input className="event-form-input" id="event-details-window" type="date" value={dateVal} onChange={this.props.onDateChange}/>
             <br/>
-            End Time:
-            <input id="event-details-window" type="time" value={endVal} onChange={this.props.handleEndChange}/>
-            Description:
-            <input id="event-details-window" type="textbox" value={eventInfo.description} onChange={this.props.handleDescChange}/>
+            Start:
             <br/>
-            <input id="event-details-window" type="submit" value="Update To Do!"/>
+            <input className="event-form-input" id="event-details-window" type="time" value={startVal} onChange={this.props.handleStartChange}/>
+            <br/>
+            End:
+            <br/>
+            <input className="event-form-input" id="event-details-window" type="time" value={endVal} onChange={this.props.handleEndChange}/>
+            <br/>
+            Desc:
+            <br/>
+            <input className="event-form-input" id="event-details-window" type="textfield" value={eventInfo.description} onChange={this.props.handleDescChange}/>
+            <br/>
+            <input className="courses-button event" id="event-details-window" type="submit" value="Update To Do!"/>
             {this.props.toDelete
               ?
                 <div id="event-details-window" >
                   <p id="event-details-window" >Are you sure?</p>
-                  <button id="event-details-window" onClick={this.props.handleEventCancelDelete}>Cancel</button>
-                  <button id="event-details-window" onClick={this.props.handleEventDelete}>Delete</button>
+                  <button className="courses-button event" id="event-details-window" onClick={this.props.handleEventCancelDelete}>Cancel</button>
+                  <button className="courses-button event" id="event-details-window" onClick={this.props.handleEventDelete}>Delete</button>
                 </div>
               :
-                <button id="event-details-window" onClick={this.props.handleEventDeleteWarning}>Delete</button>
+                <button className="courses-button event" id="event-details-window" onClick={this.props.handleEventDeleteWarning}>Delete</button>
             }
             <p id="event-details-window" onClick={this.props.handleCloseEventWindow}>X</p>
           </form>

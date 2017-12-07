@@ -291,6 +291,12 @@ h2 {
   margin-bottom: 10px;
 }
 
+.calendar-svg.home {
+  fill: #000000;
+  height: 100px;
+  margin-bottom: 0px;
+}
+
 .due {
   align-items: center;
   color: #757b90;
@@ -453,4 +459,85 @@ h2 {
 .description-short {
   color: #747a90;
   font-size: 12px;
+}
+
+.to-do-form-assignment-wrapper, .event-details-window-wrapper {
+    border-radius: 5px;
+    padding: 4px;
+    color: #eff5f7;
+    background: #025f81;
+    box-shadow: 3px 3px 3px #888888;
+}
+
+.event-form-input {
+  background-color: #4988a2;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+.event-details-title {
+  padding: 1px;
+  font-weight: bold;
+}
+
+.event-details-time {
+  background: #4988a2;
+  border-radius: 4px;
+  padding-left: 4px;
+}
+
+
+.event-details-window-label {
+  padding-bottom: 2px;
+}
+
+.courses-button.event {
+  margin-top: 4px;
+}
+
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.content-container.home {
+  background-image: url(https://i.imgur.com/2i4KbxF.jpg);
+  display: -ms-flexbox;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.content-wrapper.home {
+  background-image: url(https://i.imgur.com/2i4KbxF.jpg);
+  display: -ms-flexbox;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.home-title {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+h2.home-title.subA {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 50px;
+}
+
+h2.home-title.subB {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 50px;
+  margin-bottom: 350px;
+}
+
+.home-icon {
+  height: 100px;
+  width: 100px;
 }
