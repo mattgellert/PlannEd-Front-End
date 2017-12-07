@@ -94,7 +94,7 @@ export default class DashboardCalendar extends Component {
           startAccessor='startDate'
           endAccessor='endDate'
           step={60}
-          onSelectSlot={this.props.calSlotSelected}
+          onSelectSlot={this.props.slotSelected}
           onSelectEvent={this.props.handleSelectEvent}
           views={["month", "week", "day"]}
           defaultDate={defaultDate}

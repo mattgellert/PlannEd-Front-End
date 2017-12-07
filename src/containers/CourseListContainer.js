@@ -27,7 +27,7 @@ class CourseListContainer extends Component {
     this.setState({ showDirectoryContainer: !this.state.showDirectoryContainer });
   }
 
-  calSlotSelected = (slotInfo) => {
+  slotSelected = (slotInfo) => {
     console.log("cal slot selected:",slotInfo)
     this.props.onSelectSlot(slotInfo)
   }
@@ -157,7 +157,7 @@ class CourseListContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar slotSelected={this.props.slotSelected} calSlotSelected={this.calSlotSelected} handleSelectEvent={this.handleSelectEvent} inMyCourses={true} selectedStudentCourse={this.props.selectedStudentCourse} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
+              <DashboardCalendar slotSelected={this.slotSelected} handleSelectEvent={this.handleSelectEvent} inMyCourses={true} selectedStudentCourse={this.props.selectedStudentCourse} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
             </div>
           :
             <Redirect to="/"/>

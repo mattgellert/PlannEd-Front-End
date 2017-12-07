@@ -15,7 +15,7 @@ import EventDetailsForm from '../components/EventDetailsForm';
 
 class DashboardContainer extends Component {
 
-  calSlotSelected = (slotInfo) => {
+  slotSelected = (slotInfo) => {
     this.props.onSelectSlot(slotInfo)
   }
 
@@ -140,7 +140,7 @@ class DashboardContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar calSlotSelected={this.calSlotSelected} handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
+              <DashboardCalendar slotSelected={this.SlotSelected} handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
             </div>
           :
             <Redirect to="/"/>

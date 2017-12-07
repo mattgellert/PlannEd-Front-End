@@ -68,8 +68,8 @@ function mapDispatchToProps(dispatch) {
     onDeselectRemoveCourse: () => {
       dispatch(deselectRemoveCourse());
     },
-    onRemoveCourse: (studentCourseId) => {
-      dispatch(removeCourse(studentCourseId));
+    onRemoveCourse: (studentCourseId, studentId) => {
+      dispatch(removeCourse(studentCourseId, studentId));
     },
     onSelectCourseColor: (color) => {
       dispatch(selectCourseColor(color));

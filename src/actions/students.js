@@ -586,7 +586,7 @@ export function deselectRemoveCourse(studentCourseId) {
   }
 }
 
-export function removeCourse(studentCourseId) {
+export function removeCourse(studentCourseId, studentId) {
   return (dispatch) => {
     dispatch({ type: "LOADING" })
     //post studentCourseId --> remove all associated objects
@@ -601,6 +601,11 @@ export function removeCourse(studentCourseId) {
       .then(resp => resp.json())
       .then(json => {
         dispatch({ type: "UPDATED_COURSES", payload: json.studentCourses })
+        fetch(`http://localhost:3000/api/v1/students/student_assignments?studentId=${studentId}`)
+          .then(resp => resp.json())
+          .then(data => {
+            dispatch({ type: "FETCHED_ASSIGNMENTS", payload: { studentAssignments: data.studentAssignments, dueDates: data.dueDates, courseDates: data.courseDates, toDoItems: data.toDoItems }})
+          });
       });
   }
 }

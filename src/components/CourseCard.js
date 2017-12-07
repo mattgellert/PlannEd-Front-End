@@ -37,7 +37,7 @@ class CourseCard extends Component {
   };
 
   handleRemoveCourse = () => {
-    this.props.onRemoveCourse(this.props.course.studentCourseId);
+    this.props.onRemoveCourse(this.props.course.studentCourseId, this.props.student.id);
   };
 
   handleAddToDo = () => {
@@ -113,7 +113,7 @@ class CourseCard extends Component {
                   <div>
                      <input onClick={this.handleIncompleteFilter} type="radio" id="complete-filter-1" name="complete-course-filter" checked={incompleteFilter ? "checked" : ""} value="Incomplete"/>
                      <label for="complete-filter-1">Incomplete</label>
-                     <input onClick={this.handleCompletedFilter} type="radio" id="complete-filter-2" name="complete-course-filter" value="Completed"/>
+                     <input onClick={this.handleCompletedFilter} type="radio" id="complete-filter-2" name="complete-course-filter" checked={!incompleteFilter ? "checked" : ""} value="Completed"/>
                      <label for="complete-filter-2">Completed</label>
                      {this.getToDoItems()}
                    </div>
