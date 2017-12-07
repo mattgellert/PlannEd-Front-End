@@ -12,9 +12,20 @@ import './DashboardContainer.css';
 import CourseContainer from './CourseContainer';
 import EventDetailsWindow from '../components/EventDetailsWindow';
 import EventDetailsForm from '../components/EventDetailsForm';
+import DirectoryContainer from './DirectoryContainer';
 
 
 class CourseListContainer extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = { showDirectoryContainer: false };
+  }
+
+  toggleDirectoryContainer = () => {
+    this.setState({ showDirectoryContainer: !this.state.showDirectoryContainer });
+  }
 
   calSlotSelected = (slotInfo) => {
     console.log("cal slot selected:",slotInfo)
@@ -112,6 +123,9 @@ class CourseListContainer extends Component {
      //     <AssignmentSearchForm courses={this.props.studentCourses} assignments={this.props.studentAssignments}/>
      //   );
      // }
+     if (this.state.showDirectoryContainer) {
+       return <DirectoryContainer history={this.props.history} toggleDirectoryContainer={this.toggleDirectoryContainer} />;
+     }
 
 
     return (
@@ -137,9 +151,9 @@ class CourseListContainer extends Component {
             : null
           }
           <div className="content-wrapper">
-            <NavBar {...this.props} activeTab="dashboard" />
+            <NavBar {...this.props} activeTab="directory" />
             <div className="content-container">
-        {this.props.student.id ? <CourseContainer history={this.props.history}/> : <Redirect to="/"/>}
+        {this.props.student.id ? <CourseContainer history={this.props.history} toggleDirectoryContainer={this.toggleDirectoryContainer}/> : <Redirect to="/"/>}
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">

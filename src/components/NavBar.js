@@ -22,8 +22,12 @@ const tabPositions = {
 class NavBar extends Component {
 
    getActiveTabStyle = () => {
-     const { activeTab } = this.props;
+     const { activeTab, forcePrevTab } = this.props;
+     if (!!forcePrevTab) {
+       prevTab = forcePrevTab;
+     }
      if (prevTab) {
+       console.log("***********: ", prevTab, activeTab)
        generateKeyFrames(tabPositions[prevTab], tabPositions[activeTab]);
 
        return {
@@ -71,7 +75,7 @@ class NavBar extends Component {
                  </div>
                </NavLink>
              </li>
-             <li onClick={this.setPrevTab} className={`navlink ${directoryActiveClass}`}><NavLink activeClassName="active" className="link" to="/course-directory" exact>Courses Directory</NavLink></li>
+             <li onClick={this.setPrevTab} className={`navlink ${directoryActiveClass}`}><NavLink activeClassName="active" className="link" to="/my-courses" exact>Courses Directory</NavLink></li>
              <li onClick={this.setPrevTab} className="navlink"><NavLink className="link sign-out" to="/" exact>Sign Out</NavLink></li>
              <li onClick={this.setPrevTab} className="navlink" ><NavLink className="link my-courses" to="/my-courses" exact>My Courses</NavLink></li>
              <li onClick={this.setPrevTab} className="navlink" ><NavLink className="link my-study-items" to="/my-study-items" exact>Study Items</NavLink></li>

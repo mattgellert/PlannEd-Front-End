@@ -6,10 +6,6 @@ import CourseList from '../components/CourseList';
 
 class CourseContainer extends Component {
 
-  handleSeeCourseDirectory = () => {
-    this.props.history.push("/course-directory")
-  };
-
   render() {
     const props = this.props;
 
@@ -17,8 +13,10 @@ class CourseContainer extends Component {
       <div className="course-container-wrapper sidebar-wrapper">
         {this.props.student.id
           ?
-            <div className="course-list-container">
-              <button onClick={this.handleSeeCourseDirectory}>Add Course</button>
+            <div className="directory-list-container">
+              <div className="courses-button-container">
+                <button className="courses-button" onClick={this.props.toggleDirectoryContainer}>Add Course</button>
+              </div>
               <CourseList courses={this.props.studentCourses} {...props}/>
             </div>
           :
@@ -79,8 +77,8 @@ function mapDispatchToProps(dispatch) {
     onSubmitCourseColorChange: (studentCourseId, color) => {
       dispatch(submitCourseColorChange(studentCourseId, color));
     },
-    onCourseToChangeColor: (studentCourseId) => {
-        dispatch(courseToChangeColor(studentCourseId));
+    onCourseToChangeColor: (studentCourseId, color) => {
+        dispatch(courseToChangeColor(studentCourseId, color));
     },
     onDeselectForToDo: () => {
       dispatch(deselectForToDo());

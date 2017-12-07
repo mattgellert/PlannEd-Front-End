@@ -5,6 +5,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import './AssignmentSearchForm.css';
 import 'react-datepicker/dist/react-datepicker.css';
+import cuid from 'cuid';
 
 class AssignmentSearchForm extends Component {
 
@@ -47,7 +48,7 @@ class AssignmentSearchForm extends Component {
 
   render() {
     const courseOptions = this.props.courses.map((course, idx) => {
-      return <option key={course.studentCourseId} value={course.studentCourseId}>{course.title}</option>
+      return <option key={cuid()} value={course.studentCourseId}>{course.title}</option>
     });
     const aMoment = moment();
 

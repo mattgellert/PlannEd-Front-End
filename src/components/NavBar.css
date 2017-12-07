@@ -136,6 +136,10 @@
  width: 30px;
 }
 
+.active > .icon > .dashboard {
+  opacity: 1;
+}
+
 .dashboard-svg {
  fill: #07c5b4;
 }

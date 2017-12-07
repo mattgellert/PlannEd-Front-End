@@ -647,7 +647,8 @@ export default function studentReducer(
         ...state,
         selectedCourse: {
           ...state.selectedCourse,
-          data: action.payload
+          courseColor: action.payload.courseColor,
+          data: action.payload.id
         }
       }
     case "SUBMIT_COURSE_COLOR":

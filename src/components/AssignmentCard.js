@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import SubAssignmentCard from './SubAssignmentCard';
 import { seeToDos, hideAssignmentDetails, deselectForToDo, selectForToDo, completeParent, fetchSubAssignments, completeAssignment, completeSubAssignment, showAssignmentDetails, deselectAssignment, deselectSubAssignment } from '../actions/students';
 import cuid from 'cuid';
+import ClockIcon from './svgs/ClockIcon.js';
+import CalendarIcon from './svgs/CalendarIcon.js';
+import CalendarAddIcon from './svgs/CalendarAddIcon.js';
 // import PriorityIcon from './svgs/PriorityIcon.js';
 
 
@@ -23,10 +26,6 @@ class AssignmentCard extends Component {
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   };
 
-
-    // showDetails:
-    // if showDetails != ass &&
-    // seeSubAss == ass > showDetails & !closeSubAss
 
   handleHideAssignmentDetails = () => {
     this.props.onDeselectForToDo()
@@ -88,40 +87,51 @@ class AssignmentCard extends Component {
 
     return (
       <div>
-        <h3>{assignment.subject} {assignment.catalogNbr} HW</h3>
-        <p>{assignment.courseTitle}</p>
-        <p>{assignment.title}</p>
-        <p>Due: {dueDate.toLocaleString()}</p>
-        {showDetails
-          ?
+        <p className="title-label-primary">{assignment.subject} {assignment.catalogNbr} HW</p>
+        <p className="title-label-secondary">
+          <input
+            onChange={assignment.hasSubAssignments ? this.handleParentComplete : this.handleComplete}
+            className="checkbox"
+            type="checkbox"
+            checked={!!assignment.completed}
+          />
+          {assignment.title}
+          <CalendarAddIcon className={this.props.selectedForToDo === assignment.studentAssignmentId ? 'calendar-add-icon clicked' : 'calendar-add-icon'} onClick={this.handleAddToDo} />
+        </p>
+        {showDetails &&
             <div>
-              <button onClick={this.handleHideAssignmentDetails}>Hide Details</button>
-              <p>{assignment.description}</p>
-              {toDoItems}
+              <div className="details-drawer">
+                <p className="description">{assignment.description}</p>
+                <div className="due">
+                  <CalendarIcon />
+                  <span className="due-date">{dueDate.toLocaleString().split(',')[0]}</span>
+                  <ClockIcon />
+                  <span className="due-time">{dueDate.toLocaleString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
+                {toDoItems}
+              </div>
             </div>
-          :
-            <button onClick={this.handleShowAssignmentDetails}>Show Details</button>
         }
-        <button onClick={this.handleAddToDo}>{this.props.selectedForToDo === assignment.studentAssignmentId ? "Choose A Date >" : "+ To Do"}</button>
-        {assignment.hasSubAssignments
-          ?
-            <div>
-              <button onClick={this.handleParentComplete}>{assignment.completed ? "Completed!" : "Complete Sub-Assignments"}</button>
-              {(this.props.selectedAssignment.id.length > 0 && this.props.selectedAssignment.id[0][0] === assignment.studentAssignmentId)
-                ?
-                  <div>
-                    <button onClick={this.handleDeselectAssignment}>Hide Sub-Assignments</button>
-                    {this.showSubAssignments()}
-                  </div>
-                :
-                  <div>
-                    <button onClick={this.handleSelectSubAssignments}>See Sub-Assignments</button>
-                  </div>
-              }
-            </div>
-          :
-            <button onClick={this.handleComplete}>{assignment.completed ? "Completed!" : "Complete"}</button>
-        }
+        <div className="buttons-wrapper">
+            {showDetails ? <button className="details-button" onClick={this.handleHideAssignmentDetails}>Hide Details</button> : <button className="details-button" onClick={this.handleShowAssignmentDetails}>Show Details</button>}
+        </div>
+        <div className="buttons-wrapper">
+          {assignment.hasSubAssignments &&
+              <div className="sub-button">
+                {(this.props.selectedAssignment.id.length > 0 && this.props.selectedAssignment.id[0][0] === assignment.studentAssignmentId)
+                  ?
+                    <div>
+                      <button className="details-button sub" onClick={this.handleDeselectAssignment}>Hide Sub-Assignments</button>
+                      {this.showSubAssignments()}
+                    </div>
+                  :
+                    <div>
+                      <button className="details-button" onClick={this.handleSelectSubAssignments}>See Sub</button>
+                    </div>
+                }
+              </div>
+          }
+        </div>
       </div>
     );
   };

@@ -27,9 +27,9 @@ class DirectoryContainer extends Component {
         <div className="home-wrapper">
           <MainNavBar children={<DirectorySearchForm/>}/>
           <div className="content-wrapper">
-            <NavBar {...this.props} activeTab="directory" />
+            <NavBar {...this.props} activeTab="directory" forcePrevTab="directory" />
             <div className="content-container">
-              <DirectoryCourseList history={this.props.history} courses={this.props.directoryCourses} studentCourses={this.props.studentCourses} student={this.props.student}/>
+              <DirectoryCourseList history={this.props.history} courses={this.props.directoryCourses} studentCourses={this.props.studentCourses} student={this.props.student} toggleDirectoryContainer={this.props.toggleDirectoryContainer}/>
               <div className="dashboard-calendar-wrapper main-content">
                 <DashboardCalendar inDirectory={true} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
               </div>

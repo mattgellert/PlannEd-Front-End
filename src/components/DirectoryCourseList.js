@@ -4,10 +4,6 @@ import cuid from 'cuid';
 
 export default class DirectoryCourseList extends Component {
 
-  handleSeeMyCourses = () => {
-    this.props.history.push("/my-courses")
-  };
-
   render() {
     const courses = this.props.courses.map((course, idx) => (
       <DirectoryCourseCard key={cuid()} course={course} history={this.props.history}/>
@@ -16,8 +12,12 @@ export default class DirectoryCourseList extends Component {
     return (
      <div className="directory-container-wrapper sidebar-wrapper">
        <div className="directory-list-container">
-          <button onClick={this.handleSeeMyCourses}>My Courses</button>
-         {courses}
+          <div className="courses-button-container">
+            <button className="courses-button" onClick={this.props.toggleDirectoryContainer}>
+              My Courses
+            </button>
+          </div>
+        {courses}
        </div>
      </div>
    );
