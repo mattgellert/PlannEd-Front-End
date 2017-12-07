@@ -10,12 +10,12 @@
  margin: auto;
  width: 90%;
  z-index: 0;
- height: 500px;
+ height: 700px;
 }
 
 .rbc-month-view {
   /*border: 1px solid blue;*/
-  animation: fade-in 0.8s;
+  /*animation: fade-in 0.8s;*/
   box-shadow: 2px 3px 6px 0px rgba(0,0,0,0.5);
 }
 

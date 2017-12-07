@@ -7,6 +7,8 @@ import generateKeyFrames from './helpers/generateKeyFrames';
 import DashboardIcon from './svgs/DashboardIcon';
 import SigninIcon from './svgs/SigninIcon';
 import SignupIcon from './svgs/SignupIcon';
+import CoursesIcon from './svgs/CoursesIcon';
+import SignoutIcon from './svgs/SignoutIcon';
 
 let prevTab = '';
 
@@ -75,10 +77,18 @@ class NavBar extends Component {
                  </div>
                </NavLink>
              </li>
-             <li onClick={this.setPrevTab} className={`navlink ${directoryActiveClass}`}><NavLink activeClassName="active" className="link" to="/my-courses" exact>Courses Directory</NavLink></li>
-             <li onClick={this.setPrevTab} className="navlink"><NavLink className="link sign-out" to="/" exact>Sign Out</NavLink></li>
-             <li onClick={this.setPrevTab} className="navlink" ><NavLink className="link my-courses" to="/my-courses" exact>My Courses</NavLink></li>
-             <li onClick={this.setPrevTab} className="navlink" ><NavLink className="link my-study-items" to="/my-study-items" exact>Study Items</NavLink></li>
+             <li onClick={this.setPrevTab} className={`navlink ${directoryActiveClass}`}>
+              <NavLink activeClassName="active" className="link" to="/my-courses" exact>
+                <div className="icon">
+                  <CoursesIcon />
+                </div>
+              </NavLink>
+            </li>
+             <li onClick={this.setPrevTab} className="navlink">
+              <NavLink className="link sign-out" to="/" exact>
+                <SignoutIcon />
+              </NavLink>
+            </li>
            </div>
            :
            <div>
@@ -105,9 +115,6 @@ class NavBar extends Component {
    );
   };
 };
-
-// <li onClick={this.setPrevTab} className={`navlink ${directoryActiveClass}`}><NavLink activeClassName="active" className="link" to="/course-directory" exact>Course Directory</NavLink></li>
-
 
 
 function mapStateToProps(state) {

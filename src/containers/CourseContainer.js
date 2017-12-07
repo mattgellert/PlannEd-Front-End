@@ -77,8 +77,8 @@ function mapDispatchToProps(dispatch) {
     onSubmitCourseColorChange: (studentCourseId, color) => {
       dispatch(submitCourseColorChange(studentCourseId, color));
     },
-    onCourseToChangeColor: (studentCourseId, color) => {
-        dispatch(courseToChangeColor(studentCourseId, color));
+    onCourseToChangeColor: (studentCourseId) => {
+        dispatch(courseToChangeColor(studentCourseId));
     },
     onDeselectForToDo: () => {
       dispatch(deselectForToDo());

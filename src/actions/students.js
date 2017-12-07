@@ -632,10 +632,10 @@ export function submitCourseColorChange(studentCourseId, color) {
 }
 
 
-export function courseToChangeColor(studentCourseId, courseColor) {
+export function courseToChangeColor(studentCourseId) {
   return {
     type: "COURSE_TO_CHANGE_COLOR",
-    payload: { id: studentCourseId, courseColor: courseColor }
+    payload: studentCourseId
   }
 }
 

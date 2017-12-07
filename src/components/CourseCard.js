@@ -7,6 +7,10 @@ import cuid from 'cuid';
 
 class CourseCard extends Component {
 
+  state = {
+    courseColor: this.props.course.color
+  }
+
   handleHideStudentCourseDetails = () => {
     this.props.selectedForToDo === this.props.course.studentCourseId ? this.props.onDeselectForToDo() : null;
     this.props.onSeeToDoFor(null)
@@ -45,18 +49,18 @@ class CourseCard extends Component {
   };
 
   handleChangeCourseColor = () => {
-    console.log(this.props.course)
-    debugger
-    this.props.onCourseToChangeColor(this.props.course.studentCourseId, this.props.course.color)
+    this.props.onCourseToChangeColor(this.props.course.studentCourseId)
   }
 
   handleCourseColorChange = (event) => {
-    debugger
-    this.props.onSelectCourseColor(event.hex)
+    this.setState({
+      courseColor: event.hex
+    })
+    // this.props.onSelectCourseColor(event.hex)
   }
 
   handleSubmitCourseColorChange = () => {
-    this.props.onSubmitCourseColorChange(this.props.course.studentCourseId, this.props.selectedCourse.courseColor);
+    this.props.onSubmitCourseColorChange(this.props.course.studentCourseId, this.state.courseColor);
   }
 
   getToDoItems = () => {
@@ -83,11 +87,11 @@ class CourseCard extends Component {
     const selectedStudentCourse = this.props.selectedStudentCourse;
     const isCourseToRemove = course.studentCourseId === this.props.courseToRemove;
     const showColor = this.props.selectedCourse.data === course.studentCourseId;
-    const courseColor = this.props.selectedCourse.courseColor;
+    const courseColor = this.state.courseColor;
     const seeToDoFor = this.props.seeToDoFor;
     const incompleteFilter = this.props.completedFilter === "Incomplete"; //will this be default? check other page settings
     const showDetails = selectedStudentCourse.showDetails === course.studentCourseId;
-    console.log("****SHOWCOLOR:", courseColor)
+
     return(
       <div className="course-card-wrapper">
         <p>Course Color: {course.color}</p>
@@ -130,7 +134,6 @@ class CourseCard extends Component {
         {!!showColor
           ?
             <div>
-              {console.log("course color", courseColor)}
               <p>Pick a color for your course!</p>
               <HuePicker
                 color={courseColor}
