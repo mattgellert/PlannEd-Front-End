@@ -34,6 +34,7 @@ class SignUpForm extends Component {
        <div className="content-wrapper">
          <NavBar {...this.props} activeTab="signup" />
          <h1>Welcome to PlannEd!</h1>
+         <h3>Sure to make college a breeze</h3>
          <form className="signup-form-container" onSubmit={this.handleSubmit}>
            Email: <input onChange={this.handleEmailChange} type="text" value={this.props.student.email}/>
            First Name: <input onChange={this.handleFirstNameChange} type="text" value={this.props.student.firstName}/>
