@@ -6,10 +6,12 @@ import AssignmentContainer from './AssignmentContainer';
 import AssignmentSearchForm from '../components/AssignmentSearchForm';
 import MainNavBar from '../components/MainNavBar';
 import NavBar from '../components/NavBar';
-import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
+import { editSelectedEvent, deselectEvent, selectEvent, seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
 import ToDoForm from '../components/ToDoForm';
 import './DashboardContainer.css';
 import CourseContainer from './CourseContainer';
+import EventDetailsWindow from '../components/EventDetailsWindow';
+import EventDetailsForm from '../components/EventDetailsForm';
 
 
 class DashboardContainer extends Component {
@@ -48,8 +50,31 @@ class DashboardContainer extends Component {
     this.props.onDescChange(event.target.value)
   };
 
-  render() {
+  handleSelectEvent = (event) => {
+    this.props.onSelectEvent(event)
+    this.windowListener = document.querySelector('.rbc-month-view').addEventListener("click", (event) => {
+      this.handleCloseEventWindow();
+    });
+  }
 
+  handleCloseEventWindow = () => {
+    this.props.onDeselectEvent();
+    this.windowListener = null;
+  };
+
+  handleEventDetailsUpdate = (event) => {
+    event.preventDefault();
+    //update event on backend and return new data?
+    console.log("submit event changes")
+  };
+
+  handleShowEventForm = () => {
+    this.props.onEditSelectedEvent();
+  };
+
+  //MAKE SURE YOU CANT SELECT EVENT WHEN ADDING TO DO
+
+  render() {
     const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
     let MainNavChildren;
      if (this.props.student.id) {
@@ -69,6 +94,18 @@ class DashboardContainer extends Component {
               </div>
             : null
           }
+          {!!this.props.eventSelected.data
+            ?
+              <div>
+                {this.props.eventSelected.edit
+                  ?
+                    <EventDetailsForm calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleCloseEventWindow={this.handleCloseEventWindow} handleEventDetailsUpdate={this.handleEventDetailsUpdate}/>
+                  :
+                    <EventDetailsWindow calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleShowEventForm={this.handleShowEventForm} handleCloseEventWindow={this.handleCloseEventWindow}/>
+                }
+              </div>
+            : null
+          }
           <div className="content-wrapper">
             <NavBar {...this.props} activeTab="dashboard" />
             <div className="content-container">
@@ -77,7 +114,7 @@ class DashboardContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
+              <DashboardCalendar handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
             </div>
           :
             <Redirect to="/"/>
@@ -106,7 +143,8 @@ function mapStateToProps(state) {
     completedFilter: state.studentAssignments.completedFilter,
     seeToDoFor: state.calendar.seeToDoFor,
     selectedAssignment: state.selectedAssignment,
-    studentCourses: state.studentCourses
+    studentCourses: state.studentCourses,
+    eventSelected: state.eventSelected
   }
 };
 
@@ -138,6 +176,15 @@ function mapDispatchToProps(dispatch) {
     },
     onSeeToDos: (studentAssignmentId) => {
       dispatch(seeToDos(studentAssignmentId));
+    },
+    onSelectEvent: (event) => {
+      dispatch(selectEvent(event));
+    },
+    onDeselectEvent: () => {
+      dispatch(deselectEvent());
+    },
+    onEditSelectedEvent: () => {
+      dispatch(editSelectedEvent());
     }
   }
 };

@@ -8,7 +8,7 @@ export default class ToDoForm extends Component {
       height: 200px;
       width: 200px;
       left: ${this.props.calendarClick.x}px;
-      top: ${this.props.calendarClick.y - 90}px;
+      top: ${this.props.calendarClick.y}px;
       z-index: 100;
       background: red;
     }

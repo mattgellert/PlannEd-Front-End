@@ -52,7 +52,7 @@ export default class DashboardCalendar extends Component {
 
   render() {
     BigCalendar.momentLocalizer(moment);
-    const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
+    // const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
     const toDoItems = this.props.calendar.toDoItems.filter(todo => !todo.completed)
     let calEvents = [...this.props.calendar.courses, ...this.props.calendar.dueDates, ...toDoItems].map(date => ({
       title: date.title,
@@ -67,7 +67,7 @@ export default class DashboardCalendar extends Component {
 
     !this.props.courseFilter && !this.props.inDirectory ? calEvents = calEvents.filter(ev => (ev.eventType === "course" || ev.eventType === "course to do")) : null;
     !this.props.courseFilter && !!this.props.inDirectory ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
-    // ["month", "week", "work_week", "day", "agenda"]
+    //
     const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("9/04/2017")
     return (
       <div className="dashboard-calendar">
@@ -80,8 +80,8 @@ export default class DashboardCalendar extends Component {
           endAccessor='endDate'
           step={60}
           onSelectSlot={this.props.slotSelected}
-          onSelectEvent={event => alert(event.title)}
-          views={allViews}
+          onSelectEvent={this.props.handleSelectEvent}
+          views={["month", "week", "day"]}
           defaultDate={defaultDate}
         />
       </div>

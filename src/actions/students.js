@@ -583,3 +583,22 @@ export function courseToChangeColor(studentCourseId) {
     payload: studentCourseId
   }
 }
+
+export function selectEvent(event) {
+  return {
+    type: "SELECT_EVENT",
+    payload: event
+  }
+}
+
+export function deselectEvent() {
+  return {
+    type: "DESELECT_EVENT"
+  }
+}
+
+export function editSelectedEvent() {
+  return {
+    type: "EDIT_SELECTED_EVENT"
+  }
+}

@@ -68,6 +68,10 @@ export default function studentReducer(
       subAssignments: [],
       showDetails: null
     },
+    eventSelected: {
+      data: null,
+      edit: null
+    },
     loading: false
   }, action) {
   switch (action.type) {
@@ -162,6 +166,10 @@ export default function studentReducer(
           id: [],
           subAssignments: [],
           showDetails: null
+        },
+        eventSelected: {
+          data: null,
+          edit: null
         },
         loading: false
       };
@@ -986,6 +994,30 @@ export default function studentReducer(
         calendar: {
           ...state.calendar,
           seeToDoFor: seeToDoFor
+        }
+      }
+    case "SELECT_EVENT":
+      return {
+        ...state,
+        eventSelected: {
+          data: action.payload,
+          edit: null
+        }
+      }
+    case "DESELECT_EVENT":
+      return {
+        ...state,
+        eventSelected: {
+          data: null,
+          edit: null
+        }
+      }
+    case "EDIT_SELECTED_EVENT":
+      return {
+        ...state,
+        eventSelected: {
+          ...state.eventSelected,
+          edit: true
         }
       }
       //REFACTOR TO USE FOR SELECTING WHEN CREATING COMPONENT TO DO
