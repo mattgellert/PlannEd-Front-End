@@ -2,13 +2,9 @@ import React, { Component } from 'react';
 
 class EventDetailsWindow extends Component {
 
-  componentDidMount() {
-    //event listener for clicking on window?
-  };
-
   render() {
     const eventInfo = this.props.eventInfo;
-    const editable = eventInfo.eventType === ("course to do" || "to do")
+    const editable = (eventInfo.eventType === "course to do") || (eventInfo.eventType === "to do")
     const windowCss = `
     .event-details-window-wrapper {
       position: absolute;
@@ -20,6 +16,7 @@ class EventDetailsWindow extends Component {
       background: red;
     }
     `
+    console.log("event details window info:", eventInfo)
 
     return (
       <div>

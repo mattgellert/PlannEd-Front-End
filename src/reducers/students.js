@@ -70,7 +70,8 @@ export default function studentReducer(
     },
     eventSelected: {
       data: null,
-      edit: null
+      edit: null,
+      toDelete: null
     },
     loading: false
   }, action) {
@@ -169,7 +170,8 @@ export default function studentReducer(
         },
         eventSelected: {
           data: null,
-          edit: null
+          edit: null,
+          toDelete: null
         },
         loading: false
       };
@@ -877,6 +879,7 @@ export default function studentReducer(
         }
       }
     case "DESC_CHANGE":
+    console.log("desc change", action.payload)
       return {
         ...state,
         selectedSlot: {
@@ -900,6 +903,31 @@ export default function studentReducer(
           description: null
         },
         selectedForToDo: 0
+      }
+    case "UPDATED_EVENT_DETAILS":
+      const updatedItem = action.payload;
+      const updatedToDoItems = state.calendar.toDoItems.map(todo => {
+        if (todo.id === updatedItem.id) {
+          return updatedItem
+        } else {
+          return todo
+        }
+      })
+      const updatedCourseItems = state.calendar.courses.map(todo => {
+        if (todo.id === updatedItem.id) {
+          return updatedItem
+        } else {
+          return todo
+        }
+      })
+
+      return {
+        ...state,
+        calendar: {
+          ...state.calendar,
+          toDoItems: updatedToDoItems,
+          courses: updatedCourseItems
+        }
       }
     case "COMPLETED_COURSE_TO_DO":
       const calendarCoursesWithCompleted = state.calendar.courses.map(ev => {
@@ -1001,7 +1029,8 @@ export default function studentReducer(
         ...state,
         eventSelected: {
           data: action.payload,
-          edit: null
+          edit: null,
+          toDelete: null
         }
       }
     case "DESELECT_EVENT":
@@ -1009,15 +1038,59 @@ export default function studentReducer(
         ...state,
         eventSelected: {
           data: null,
-          edit: null
+          edit: null,
+          toDelete: null
+        },
+        selectedSlot: {
+          startTime: null,
+          endTime: null,
+          info: null,
+          title: null,
+          description: null
         }
       }
     case "EDIT_SELECTED_EVENT":
+      const selectedEvent = state.eventSelected.data;
+      console.log("edit selected event", selectedEvent)
       return {
         ...state,
         eventSelected: {
           ...state.eventSelected,
           edit: true
+        },
+        selectedSlot: {
+          startTime: selectedEvent.startDate,
+          endTime: selectedEvent.endDate,
+          info: null,
+          title: selectedEvent.title,
+          description: selectedEvent.description
+        }
+      }
+    case "EVENT_DELETE_WARNING":
+      return {
+        ...state,
+        eventSelected: {
+          ...state.eventSelected,
+          toDelete: true
+        }
+      }
+    case "EVENT_CANCEL_DELETE":
+      return {
+        ...state,
+        eventSelected: {
+          ...state.eventSelected,
+          toDelete: null
+        }
+      }
+    case "EVENT_DELETED":
+      const toDoItemsWithoutDeleted = state.calendar.toDoItems.filter(todo => todo.id !== action.payload)
+      const courseItemsWithoutDeleted = state.calendar.courses.filter(todo => todo.id !== action.payload)
+      return {
+        ...state,
+        calendar: {
+          ...state.calendar,
+          toDoItems: toDoItemsWithoutDeleted,
+          courses: courseItemsWithoutDeleted
         }
       }
       //REFACTOR TO USE FOR SELECTING WHEN CREATING COMPONENT TO DO

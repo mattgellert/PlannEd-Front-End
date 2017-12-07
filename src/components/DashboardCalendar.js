@@ -55,10 +55,12 @@ export default class DashboardCalendar extends Component {
     // const allViews = Object.keys(BigCalendar.Views).map(k => BigCalendar.Views[k])
     const toDoItems = this.props.calendar.toDoItems.filter(todo => !todo.completed)
     let calEvents = [...this.props.calendar.courses, ...this.props.calendar.dueDates, ...toDoItems].map(date => ({
+      id: date.id,
       title: date.title,
+      description: date.description,
       eventType: date.eventType,
-      startDate: new Date(...date.startDate),
-      endDate: new Date(...date.endDate),
+      startDate: (new Date(...date.startDate)),
+      endDate: (new Date(...date.endDate)),
       color: date.color,
       studentCourseId: date.studentCourseId,
       studentAssignmentId: date.studentAssignmentId,

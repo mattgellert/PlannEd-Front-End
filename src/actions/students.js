@@ -439,6 +439,54 @@ export function submitCourseToDo(date, time, studentCourseId, title, description
   }
 }
 
+export function updateEventDetails(date, time, id, title, description, eventType) {
+  return (dispatch) => {
+    dispatch({ type: "LOADING" })
+    return fetch('http://localhost:3000/api/v1/students/update_to_do', {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ date, time, id, title, description, eventType })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        dispatch({ type: "UPDATED_EVENT_DETAILS", payload: json })
+      })
+  }
+}
+
+export function eventDeleteWarning() {
+  return {
+    type: "EVENT_DELETE_WARNING"
+  }
+}
+
+export function eventCancelDelete() {
+  return {
+    type: "EVENT_CANCEL_DELETE"
+  }
+}
+
+export function eventDelete(id) {
+  return (dispatch) => {
+    dispatch({ type: "LOADING" })
+    return fetch('http://localhost:3000/api/v1/students/delete_to_do', {
+      method: "delete",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ id })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        dispatch({ type: "EVENT_DELETED", payload: json.id })
+      })
+  }
+}
+
 export function completeCourseToDo(eventId) {
   return (dispatch) => {
     dispatch({ type: "LOADING" });

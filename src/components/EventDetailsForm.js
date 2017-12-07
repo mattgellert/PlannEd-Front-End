@@ -2,13 +2,8 @@ import React, { Component } from 'react';
 
 class EventDetailsForm extends Component {
 
-  componentDidMount() {
-    //event listener for clicking on window?
-  };
-
-
   render() {
-    const eventInfo = this.props.eventInfo;
+    const eventInfo = this.props.selectedSlot;
     const windowCss = `
     .event-details-form-wrapper {
       position: absolute;
@@ -20,6 +15,8 @@ class EventDetailsForm extends Component {
       background: red;
     }
     `
+    console.log("event details form info:", eventInfo)
+    debugger
     //set selectedSlot values to equal that of event and default to those values which get changed
     return (
       <div>
@@ -30,14 +27,24 @@ class EventDetailsForm extends Component {
             <input type="text" value={eventInfo.title} onChange={this.props.handleTitleChange}/>
             <br/>
             Start Time:
-            <input type="time" value={eventInfo.startTime} onChange={this.props.handleStartChange}/>
+            <input type="time" value={eventInfo.startTime.toTimeString().slice(0,5)} onChange={this.props.handleStartChange}/>
             <br/>
             End Time:
-            <input type="time" value={eventInfo.endTime} onChange={this.props.handleEndChange}/>
+            <input type="time" value={eventInfo.endTime.toTimeString().slice(0,5)} onChange={this.props.handleEndChange}/>
             Description:
             <input type="textbox" value={eventInfo.description} onChange={this.props.handleDescChange}/>
             <br/>
-            <input type="submit" value="Create To Do!"/>
+            <input type="submit" value="Update To Do!"/>
+            {this.props.toDelete
+              ?
+                <div>
+                  <p>Are you sure?</p>
+                  <button onClick={this.props.handleEventCancelDelete}>Cancel</button>
+                  <button onClick={this.props.handleEventDelete}>Delete</button>
+                </div>
+              :
+                <button onClick={this.props.handleEventDeleteWarning}>Delete</button>
+            }
             <p onClick={this.props.handleCloseEventWindow}>X</p>
           </form>
         </div>

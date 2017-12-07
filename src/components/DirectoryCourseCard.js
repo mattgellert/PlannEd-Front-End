@@ -99,6 +99,7 @@ class DirectoryCourseCard extends Component {
         {this.props.selectedCourse.data ? this.props.selectedCourse.data.crseId === this.props.course.crseId
           ?
             <div>
+              <p>{this.props.course.description}</p>
               {courseDetails}
               {this.requiredComponentsSelected()
                 ?

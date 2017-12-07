@@ -12,7 +12,6 @@ class DirectoryCourseDetails extends Component {
     })
     return(
       <div>
-        <p>{this.props.description}</p>
         <p>Please select required components {this.props.selectedCourse.data ? ": " + this.props.selectedCourse.data.enrollGroups[0].componentsRequired.join(", ") : null }</p>
         <h3>{this.props.ssrComponent + " Section: " + this.props.section}</h3>
           <p>{this.props.data.pattern + ":" + this.props.data.timeStart + "-" + this.props.data.timeEnd}</p>

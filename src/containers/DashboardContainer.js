@@ -6,7 +6,7 @@ import AssignmentContainer from './AssignmentContainer';
 import AssignmentSearchForm from '../components/AssignmentSearchForm';
 import MainNavBar from '../components/MainNavBar';
 import NavBar from '../components/NavBar';
-import { editSelectedEvent, deselectEvent, selectEvent, seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
+import { eventDelete, eventCancelDelete, eventDeleteWarning, updateEventDetails, editSelectedEvent, deselectEvent, selectEvent, seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
 import ToDoForm from '../components/ToDoForm';
 import './DashboardContainer.css';
 import CourseContainer from './CourseContainer';
@@ -39,6 +39,7 @@ class DashboardContainer extends Component {
   }
 
   handleTitleChange = (event) => {
+    console.log("title change")
     this.props.onTitleChange(event.target.value);
   };
 
@@ -47,11 +48,13 @@ class DashboardContainer extends Component {
   };
 
   handleDescChange = (event) => {
+    console.log("desc change", event.target.value)
     this.props.onDescChange(event.target.value)
   };
 
   handleSelectEvent = (event) => {
     this.props.onSelectEvent(event)
+    console.log("selected event", event)
     this.windowListener = document.querySelector('.rbc-month-view').addEventListener("click", (event) => {
       this.handleCloseEventWindow();
     });
@@ -62,10 +65,25 @@ class DashboardContainer extends Component {
     this.windowListener = null;
   };
 
+  handleEventDeleteWarning = () => {
+    this.props.onEventDeleteWarning();
+  };
+
+  handleEventDelete = () => {
+    this.props.onEventDelete(this.props.eventSelected.data.id);
+  };
+
+  handleEventCancelDelete = () => {
+    this.props.onEventCancelDelete();
+  };
+
   handleEventDetailsUpdate = (event) => {
     event.preventDefault();
-    //update event on backend and return new data?
-    console.log("submit event changes")
+    const eventSelected = this.props.eventSelected.data;
+    const updatedEventTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
+    this.props.onDeselectEvent();
+    this.windowListener = null;
+    this.props.onUpdateEventDetails(eventSelected.startDate.toLocaleDateString(), updatedEventTime, eventSelected.id, this.props.selectedSlot.title, this.props.selectedSlot.description, eventSelected.eventType);
   };
 
   handleShowEventForm = () => {
@@ -90,7 +108,7 @@ class DashboardContainer extends Component {
           {this.props.slotSelected && (this.props.selectedForToDo !== 0)
             ?
               <div className="to-do-form-assignment-container" >
-                <ToDoForm calendarClick={this.props.calendarClick} handleSubmit={this.handleSubmit} selectedSlot={this.props.selectedSlot} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleCloseForm={this.handleCloseForm}/>
+                <ToDoForm calendarClick={this.props.calendarClick} handleSubmit={this.handleSubmit} selectedSlot={this.props.selectedSlot} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleCloseForm={this.handleCloseForm} handleDescChange={this.handleDescChange}/>
               </div>
             : null
           }
@@ -99,7 +117,7 @@ class DashboardContainer extends Component {
               <div>
                 {this.props.eventSelected.edit
                   ?
-                    <EventDetailsForm calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleCloseEventWindow={this.handleCloseEventWindow} handleEventDetailsUpdate={this.handleEventDetailsUpdate}/>
+                    <EventDetailsForm toDelete={this.props.eventSelected.toDelete} handleEventDeleteWarning={this.handleEventDeleteWarning} handleEventDelete={this.handleEventDelete} handleEventCancelDelete={this.handleEventCancelDelete} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleDescChange={this.handleDescChange} selectedSlot={this.props.selectedSlot} calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleCloseEventWindow={this.handleCloseEventWindow} handleEventDetailsUpdate={this.handleEventDetailsUpdate}/>
                   :
                     <EventDetailsWindow calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleShowEventForm={this.handleShowEventForm} handleCloseEventWindow={this.handleCloseEventWindow}/>
                 }
@@ -153,8 +171,8 @@ function mapDispatchToProps(dispatch) {
     onSelectSlot: (slotInfo) => {
       dispatch(selectSlot(slotInfo));
     },
-    onSubmitToDo: (date, time, studentAssignmentId, title) => {
-      dispatch(submitToDo(date, time, studentAssignmentId, title));
+    onSubmitToDo: (date, time, studentAssignmentId, title, description) => {
+      dispatch(submitToDo(date, time, studentAssignmentId, title, description));
     },
     onStartChange: (startTime) => {
       dispatch(startChange(startTime));
@@ -185,6 +203,18 @@ function mapDispatchToProps(dispatch) {
     },
     onEditSelectedEvent: () => {
       dispatch(editSelectedEvent());
+    },
+    onUpdateEventDetails: (date, time, id, title, description, eventType) => {
+      dispatch(updateEventDetails(date, time, id, title, description, eventType));
+    },
+    onEventDelete: (id) => {
+      dispatch(eventDelete(id));
+    },
+    onEventCancelDelete: () => {
+      dispatch(eventCancelDelete());
+    },
+    onEventDeleteWarning: () => {
+      dispatch(eventDeleteWarning());
     }
   }
 };
