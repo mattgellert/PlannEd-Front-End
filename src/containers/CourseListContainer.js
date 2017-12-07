@@ -6,26 +6,29 @@ import AssignmentContainer from './AssignmentContainer';
 import AssignmentSearchForm from '../components/AssignmentSearchForm';
 import MainNavBar from '../components/MainNavBar';
 import NavBar from '../components/NavBar';
-import { seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitCourseToDo, startChange, endChange } from '../actions/students'; ///KEEP
+import { dateChange, eventDelete, eventCancelDelete, eventDeleteWarning, updateEventDetails, editSelectedEvent, deselectEvent, selectEvent, seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitCourseToDo, startChange, endChange } from '../actions/students'; ///KEEP
 import ToDoForm from '../components/ToDoForm';
 import './DashboardContainer.css';
 import CourseContainer from './CourseContainer';
+import EventDetailsWindow from '../components/EventDetailsWindow';
+import EventDetailsForm from '../components/EventDetailsForm';
 
 
 class CourseListContainer extends Component {
 
-  slotSelected = (slotInfo) => {
-    console.log("slotSelected", slotInfo)
+  calSlotSelected = (slotInfo) => {
+    console.log("cal slot selected:",slotInfo)
     this.props.onSelectSlot(slotInfo)
   }
 
   handleSubmit = (event) => {
+    console.log('event create')
     event.preventDefault();
-    // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
     const selectedSlot = this.props.selectedSlot;
     const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
     this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
-    this.props.onSubmitCourseToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
+    const dateToSubmit = selectedSlot.info.start.toLocaleDateString();
+    this.props.onSubmitCourseToDo(dateToSubmit, toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
   };
 
   handleStartChange = (event) => {
@@ -48,9 +51,61 @@ class CourseListContainer extends Component {
     this.props.onDescChange(event.target.value)
   };
 
+  handleDateChange = (event) => {
+    this.props.onDateChange(event.target.value);
+  }
+
+
+  //////ADDED////
+
+  handleSelectEvent = (event) => {
+    console.log("event selected", event)
+    this.props.onSelectEvent(event)
+    this.windowListener = document.body.addEventListener("click", (event) => {
+      event.target.id !== "event-details-window" ? this.handleCloseEventWindow() : null;
+    });
+  }
+
+  handleCloseEventWindow = () => {
+    this.props.onDeselectEvent();
+    this.windowListener = null;
+  };
+
+  handleEventDeleteWarning = () => {
+    this.props.onEventDeleteWarning();
+  };
+
+  handleEventDelete = () => {
+    this.props.onEventDelete(this.props.eventSelected.data.id);
+  };
+
+  handleEventCancelDelete = () => {
+    this.props.onEventCancelDelete();
+  };
+
+  handleEventDetailsUpdate = (event) => {
+    console.log('event updated description:', this.props.selectedSlot)
+    event.preventDefault();
+    const eventSelected = this.props.eventSelected.data;
+    const updatedEventStart = typeof this.props.selectedSlot.startTime === "string" ? this.props.selectedSlot.startTime : this.props.selectedSlot.startTime.toTimeString().slice(0,5);
+    const updatedEventEnd = typeof this.props.selectedSlot.endTime === "string" ? this.props.selectedSlot.endTime : this.props.selectedSlot.endTime.toTimeString().slice(0,5);
+    const updatedEventTime = `${updatedEventStart}:${updatedEventEnd}`;
+    this.props.onDeselectEvent();
+    this.windowListener = null;
+    const updatedEventDate = this.props.selectedSlot.date;
+    debugger
+    this.props.onUpdateEventDetails(updatedEventDate, updatedEventTime, eventSelected.id, this.props.selectedSlot.title, this.props.selectedSlot.description, eventSelected.eventType);
+  };
+
+  handleShowEventForm = () => {
+    this.props.onEditSelectedEvent();
+  };
+
+  //////ADDED////
+
   render() {
 
-    const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
+    // const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
     let MainNavChildren;
      // if (this.props.student.id) {
      //   MainNavChildren = (
@@ -69,6 +124,18 @@ class CourseListContainer extends Component {
               </div>
             : null
           }
+          {!!this.props.eventSelected.data
+            ?
+              <div>
+                {this.props.eventSelected.edit
+                  ?
+                    <EventDetailsForm onDateChange={this.handleDateChange} toDelete={this.props.eventSelected.toDelete} handleEventDeleteWarning={this.handleEventDeleteWarning} handleEventDelete={this.handleEventDelete} handleEventCancelDelete={this.handleEventCancelDelete} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleDescChange={this.handleDescChange} selectedSlot={this.props.selectedSlot} calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleCloseEventWindow={this.handleCloseEventWindow} handleEventDetailsUpdate={this.handleEventDetailsUpdate}/>
+                  :
+                    <EventDetailsWindow calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleShowEventForm={this.handleShowEventForm} handleCloseEventWindow={this.handleCloseEventWindow}/>
+                }
+              </div>
+            : null
+          }
           <div className="content-wrapper">
             <NavBar {...this.props} activeTab="dashboard" />
             <div className="content-container">
@@ -76,7 +143,7 @@ class CourseListContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar selectedStudentCourse={this.props.selectedStudentCourse} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
+              <DashboardCalendar slotSelected={this.props.slotSelected} calSlotSelected={this.calSlotSelected} handleSelectEvent={this.handleSelectEvent} inMyCourses={true} selectedStudentCourse={this.props.selectedStudentCourse} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
             </div>
           :
             <Redirect to="/"/>
@@ -106,7 +173,8 @@ function mapStateToProps(state) {
     seeToDoFor: state.calendar.seeToDoFor,
     selectedAssignment: state.selectedAssignment,
     studentCourses: state.studentCourses,
-    selectedStudentCourse: state.selectedStudentCourse
+    selectedStudentCourse: state.selectedStudentCourse,
+    eventSelected: state.eventSelected
   }
 };
 
@@ -138,6 +206,30 @@ function mapDispatchToProps(dispatch) {
     },
     onSeeToDos: (studentAssignmentId) => {
       dispatch(seeToDos(studentAssignmentId));
+    },
+    onSelectEvent: (event) => {
+      dispatch(selectEvent(event));
+    },
+    onDeselectEvent: () => {
+      dispatch(deselectEvent());
+    },
+    onEditSelectedEvent: () => {
+      dispatch(editSelectedEvent());
+    },
+    onUpdateEventDetails: (date, time, id, title, description, eventType) => {
+      dispatch(updateEventDetails(date, time, id, title, description, eventType));
+    },
+    onEventDelete: (id) => {
+      dispatch(eventDelete(id));
+    },
+    onEventCancelDelete: () => {
+      dispatch(eventCancelDelete());
+    },
+    onEventDeleteWarning: () => {
+      dispatch(eventDeleteWarning());
+    },
+    onDateChange: (date) => {
+      dispatch(dateChange(date));
     }
   }
 };

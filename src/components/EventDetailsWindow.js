@@ -16,18 +16,17 @@ class EventDetailsWindow extends Component {
       background: red;
     }
     `
-    console.log("event details window info:", eventInfo)
 
     return (
-      <div>
+      <div id="event-details-window">
         <style>{windowCss}</style>
-        <div className="event-details-window-wrapper">
-          <h4>{eventInfo.title}</h4>
-          <p>Start Time: {`${eventInfo.startDate}`.slice(0,21)}</p>
-          <p>End Time: {`${eventInfo.endDate}`.slice(0,21)}</p>
-          <p>{eventInfo.description}</p>
-          <p onClick={this.props.handleCloseEventWindow}>X</p>
-          {editable ? <button onClick={this.props.handleShowEventForm}>Edit</button> : null}
+        <div className="event-details-window-wrapper" id="event-details-window">
+          <h4 id="event-details-window">{eventInfo.title}</h4>
+          <p id="event-details-window">Start Time: {`${eventInfo.startDate}`.slice(0,21)}</p>
+          <p id="event-details-window">End Time: {`${eventInfo.endDate}`.slice(0,21)}</p>
+          <p id="event-details-window">{eventInfo.description}</p>
+          <p  id="event-details-window"onClick={this.props.handleCloseEventWindow}>X</p>
+          {editable ? <button  id="event-details-window"onClick={this.props.handleShowEventForm}>Edit</button> : null}
         </div>
       </div>
     )

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SubAssignmentCard from './SubAssignmentCard';
 import { seeToDos, hideAssignmentDetails, deselectForToDo, selectForToDo, completeParent, fetchSubAssignments, completeAssignment, completeSubAssignment, showAssignmentDetails, deselectAssignment, deselectSubAssignment } from '../actions/students';
+import cuid from 'cuid';
 // import PriorityIcon from './svgs/PriorityIcon.js';
 
 
@@ -46,17 +47,12 @@ class AssignmentCard extends Component {
 
   showSubAssignments = () => {
     const arr = this.props.selectedAssignment.subAssignments.map((subAss, idx) => {
-      return <SubAssignmentCard key={subAss.studentAssignmentId} toDoItems={this.props.toDoItems} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos}onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
+      return <SubAssignmentCard key={cuid()} toDoItems={this.props.toDoItems} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos}onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
     });
     return arr;
   };
 
   handleAddToDo = () => {
-
-//     +ToDo:
-// if showDetails != assId > showDetails(assId) & selectForToDo(assId)
-
-
     this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : this.props.onSeeToDos(null);
     this.props.selectedAssignment.showDetails === this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
     this.props.onDeselectForToDo()
@@ -68,7 +64,7 @@ class AssignmentCard extends Component {
     const today = new Date();
     return this.props.toDoItems.filter(todo => todo.studentAssignmentId === assigmentToShowToDo.studentAssignmentId).map(todo => {
       return (
-        <div className="assignment-to-do">
+        <div key={cuid()} className="assignment-to-do">
           <h4>{todo.title}</h4>
           <p>{`${(new Date(...todo.startDate)).toString().slice(0,21)}`} - {`${(new Date(...todo.endDate)).toString().slice(0,21)}`} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
           <p>{todo.description}</p>

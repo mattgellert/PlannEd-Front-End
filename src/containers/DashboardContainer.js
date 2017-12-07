@@ -6,28 +6,27 @@ import AssignmentContainer from './AssignmentContainer';
 import AssignmentSearchForm from '../components/AssignmentSearchForm';
 import MainNavBar from '../components/MainNavBar';
 import NavBar from '../components/NavBar';
-import { eventDelete, eventCancelDelete, eventDeleteWarning, updateEventDetails, editSelectedEvent, deselectEvent, selectEvent, seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
+import { dateChange, eventDelete, eventCancelDelete, eventDeleteWarning, updateEventDetails, editSelectedEvent, deselectEvent, selectEvent, seeToDos, descChange, deselectForToDo, calendarClick, titleChange, selectSlot, submitToDo, startChange, endChange } from '../actions/students'; ///KEEP
 import ToDoForm from '../components/ToDoForm';
 import './DashboardContainer.css';
-import CourseContainer from './CourseContainer';
 import EventDetailsWindow from '../components/EventDetailsWindow';
 import EventDetailsForm from '../components/EventDetailsForm';
 
 
 class DashboardContainer extends Component {
 
-  slotSelected = (slotInfo) => {
-    console.log("slotSelected", slotInfo)
+  calSlotSelected = (slotInfo) => {
     this.props.onSelectSlot(slotInfo)
   }
 
   handleSubmit = (event) => {
+    console.log('event create')
     event.preventDefault();
-    // if submitToDo & showDetails == assignment w/ToDo --> seeToDos
     const selectedSlot = this.props.selectedSlot;
     const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
     this.props.selectedAssignment.showDetails === this.props.selectedForToDo ? null : this.props.onSeeToDos(this.props.seeToDoFor);
-    this.props.onSubmitToDo(selectedSlot.info.start.toLocaleDateString(), toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
+    const dateToSubmit = selectedSlot.info.start.toLocaleDateString();
+    this.props.onSubmitToDo(dateToSubmit, toDoTime, this.props.selectedForToDo, selectedSlot.title, selectedSlot.description);
   };
 
   handleStartChange = (event) => {
@@ -39,7 +38,6 @@ class DashboardContainer extends Component {
   }
 
   handleTitleChange = (event) => {
-    console.log("title change")
     this.props.onTitleChange(event.target.value);
   };
 
@@ -48,15 +46,19 @@ class DashboardContainer extends Component {
   };
 
   handleDescChange = (event) => {
-    console.log("desc change", event.target.value)
     this.props.onDescChange(event.target.value)
   };
 
+
+  handleDateChange = (event) => {
+    this.props.onDateChange(event.target.value);
+  }
+
+
   handleSelectEvent = (event) => {
     this.props.onSelectEvent(event)
-    console.log("selected event", event)
-    this.windowListener = document.querySelector('.rbc-month-view').addEventListener("click", (event) => {
-      this.handleCloseEventWindow();
+    this.windowListener = document.body.addEventListener("click", (event) => {
+      event.target.id !== "event-details-window" ? this.handleCloseEventWindow() : null;
     });
   }
 
@@ -78,12 +80,18 @@ class DashboardContainer extends Component {
   };
 
   handleEventDetailsUpdate = (event) => {
+      console.log('event update')
     event.preventDefault();
     const eventSelected = this.props.eventSelected.data;
-    const updatedEventTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
+    const updatedEventStart = typeof this.props.selectedSlot.startTime === "string" ? this.props.selectedSlot.startTime : this.props.selectedSlot.startTime.toTimeString().slice(0,5);
+    const updatedEventEnd = typeof this.props.selectedSlot.endTime === "string" ? this.props.selectedSlot.endTime : this.props.selectedSlot.endTime.toTimeString().slice(0,5);
+
+    const updatedEventTime = `${updatedEventStart}:${updatedEventEnd}`;
     this.props.onDeselectEvent();
     this.windowListener = null;
-    this.props.onUpdateEventDetails(eventSelected.startDate.toLocaleDateString(), updatedEventTime, eventSelected.id, this.props.selectedSlot.title, this.props.selectedSlot.description, eventSelected.eventType);
+    const updatedEventDate = this.props.selectedSlot.date;
+    debugger// const updatedEventDate = eventSelected.startDate
+    this.props.onUpdateEventDetails(updatedEventDate, updatedEventTime, eventSelected.id, this.props.selectedSlot.title, this.props.selectedSlot.description, eventSelected.eventType);
   };
 
   handleShowEventForm = () => {
@@ -93,7 +101,7 @@ class DashboardContainer extends Component {
   //MAKE SURE YOU CANT SELECT EVENT WHEN ADDING TO DO
 
   render() {
-    const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
+    // const calProps = {slotSelected: this.slotSelected, setStartTime: this.setStartTime, setEndTime: this.setEndTime }
     let MainNavChildren;
      if (this.props.student.id) {
        MainNavChildren = (
@@ -117,7 +125,7 @@ class DashboardContainer extends Component {
               <div>
                 {this.props.eventSelected.edit
                   ?
-                    <EventDetailsForm toDelete={this.props.eventSelected.toDelete} handleEventDeleteWarning={this.handleEventDeleteWarning} handleEventDelete={this.handleEventDelete} handleEventCancelDelete={this.handleEventCancelDelete} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleDescChange={this.handleDescChange} selectedSlot={this.props.selectedSlot} calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleCloseEventWindow={this.handleCloseEventWindow} handleEventDetailsUpdate={this.handleEventDetailsUpdate}/>
+                    <EventDetailsForm onDateChange={this.handleDateChange} toDelete={this.props.eventSelected.toDelete} handleEventDeleteWarning={this.handleEventDeleteWarning} handleEventDelete={this.handleEventDelete} handleEventCancelDelete={this.handleEventCancelDelete} handleTitleChange={this.handleTitleChange} handleStartChange={this.handleStartChange} handleEndChange={this.handleEndChange} handleDescChange={this.handleDescChange} selectedSlot={this.props.selectedSlot} calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleCloseEventWindow={this.handleCloseEventWindow} handleEventDetailsUpdate={this.handleEventDetailsUpdate}/>
                   :
                     <EventDetailsWindow calendarClick={this.props.calendarClick} eventInfo={this.props.eventSelected.data} handleShowEventForm={this.handleShowEventForm} handleCloseEventWindow={this.handleCloseEventWindow}/>
                 }
@@ -132,7 +140,7 @@ class DashboardContainer extends Component {
         {this.props.student.id
           ?
             <div className="dashboard-calendar-wrapper main-content">
-              <DashboardCalendar handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
+              <DashboardCalendar calSlotSelected={this.calSlotSelected} handleSelectEvent={this.handleSelectEvent} selectedAssignment={this.props.selectedAssignment}completedFilter={this.props.completedFilter} courseFilter={this.props.courseFilter} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar}/>
             </div>
           :
             <Redirect to="/"/>
@@ -215,6 +223,9 @@ function mapDispatchToProps(dispatch) {
     },
     onEventDeleteWarning: () => {
       dispatch(eventDeleteWarning());
+    },
+    onDateChange: (date) => {
+      dispatch(dateChange(date));
     }
   }
 };

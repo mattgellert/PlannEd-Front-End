@@ -57,7 +57,8 @@ export default function studentReducer(
       endTime: null,
       info: null,
       title: null,
-      description: null
+      description: null,
+      date: null
     },
     calendarClick: {
       x: null,
@@ -351,7 +352,6 @@ export default function studentReducer(
           return todo
         }
       });
-      debugger
 
       return {
         ...state,
@@ -887,22 +887,55 @@ export default function studentReducer(
           description: action.payload
         }
       }
-    case "SUBMITTED_TO_DO":
+    case "DATE_CHANGE":
       return {
         ...state,
-        calendar: {
-          ...state.calendar,
-          toDoItems: [...state.calendar.toDoItems, action.payload]
-        },
-        slotSelected: false,
         selectedSlot: {
-          startTime: null,
-          endTime: null,
-          info: null,
-          title: null,
-          description: null
-        },
-        selectedForToDo: 0
+          ...state.selectedSlot,
+          date: action.payload
+        }
+      }
+    case "SUBMITTED_TO_DO":
+      const submittedItem = action.payload;
+      const submittedToDo = submittedItem.eventType === "to do" ? submittedItem : null;
+      const submittedCourseToDo = submittedItem.eventType === "course to do" ? submittedItem : null;
+
+      if (submittedItem.eventType === "to do") {
+        return {
+          ...state,
+          calendar: {
+            ...state.calendar,
+            toDoItems: [...state.calendar.toDoItems, submittedToDo]
+          },
+          slotSelected: false,
+          selectedSlot: {
+            startTime: null,
+            endTime: null,
+            info: null,
+            title: null,
+            description: null,
+            date: null
+          },
+          selectedForToDo: 0
+        }
+      } else {
+        return {
+          ...state,
+          calendar: {
+            ...state.calendar,
+            courses: [...state.calendar.courses, submittedCourseToDo]
+          },
+          slotSelected: false,
+          selectedSlot: {
+            startTime: null,
+            endTime: null,
+            info: null,
+            title: null,
+            description: null,
+            date: null
+          },
+          selectedForToDo: 0
+        }
       }
     case "UPDATED_EVENT_DETAILS":
       const updatedItem = action.payload;
@@ -940,7 +973,7 @@ export default function studentReducer(
           return ev
         }
       })
-      // debugger
+
       return {
         ...state,
         calendar: {
@@ -1046,7 +1079,8 @@ export default function studentReducer(
           endTime: null,
           info: null,
           title: null,
-          description: null
+          description: null,
+          date: null
         }
       }
     case "EDIT_SELECTED_EVENT":
@@ -1059,11 +1093,12 @@ export default function studentReducer(
           edit: true
         },
         selectedSlot: {
+          ...state.selectedSlot,
           startTime: selectedEvent.startDate,
           endTime: selectedEvent.endDate,
-          info: null,
           title: selectedEvent.title,
-          description: selectedEvent.description
+          description: selectedEvent.description,
+          date: selectedEvent.startDate
         }
       }
     case "EVENT_DELETE_WARNING":

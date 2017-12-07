@@ -67,9 +67,22 @@ export default class DashboardCalendar extends Component {
       completed: date.completed
     }));
 
-    !this.props.courseFilter && !this.props.inDirectory ? calEvents = calEvents.filter(ev => (ev.eventType === "course" || ev.eventType === "course to do")) : null;
+    // !this.props.courseFilter && !this.props.inDirectory ? calEvents = calEvents.filter(ev => (ev.eventType === "course" || ev.eventType === "course to do")) : null;
+    if (!this.props.courseFilter && !this.props.inDirectory) {
+      calEvents = calEvents.map(ev => {
+        if ((ev.eventType !== "course") && (ev.eventType !== "course to do")) {
+          return {
+            ...ev,
+            color: "#bcbfc4"
+          }
+        } else {
+          return ev
+        }
+      })
+    }
     !this.props.courseFilter && !!this.props.inDirectory ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
-    //
+    !!this.props.inMyCourses ? calEvents = calEvents.filter(ev => ev.eventType === "course" ? true : !ev.completed) : null;
+
     const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("9/04/2017")
     return (
       <div className="dashboard-calendar">
@@ -81,7 +94,7 @@ export default class DashboardCalendar extends Component {
           startAccessor='startDate'
           endAccessor='endDate'
           step={60}
-          onSelectSlot={this.props.slotSelected}
+          onSelectSlot={this.props.calSlotSelected}
           onSelectEvent={this.props.handleSelectEvent}
           views={["month", "week", "day"]}
           defaultDate={defaultDate}

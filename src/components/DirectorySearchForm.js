@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchDirectorySubjects, fetchDirectoryCourses, enterDirectorySubject, enterDirectorySemester } from '../actions/students';
 import SearchIcon from './svgs/SearchIcon';
+import cuid from 'cuid';
 
 class DirectorySearchForm extends Component {
 
@@ -26,7 +27,7 @@ class DirectorySearchForm extends Component {
 
   render() {
     const subjectOptions = this.props.directorySubjects.map((subj, idx) => {
-      return <option key={idx} value={subj.value}>{subj.descrformal}</option>
+      return <option key={cuid()} value={subj.value}>{subj.descrformal}</option>
     })
     return (
      <div className="directory-search-form-wrapper">

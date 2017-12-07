@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ComponentCard from './ComponentCard';
 import { HuePicker } from 'react-color'
 import CourseToDo from './CourseToDo';
+import cuid from 'cuid';
 
 class CourseCard extends Component {
 
@@ -18,7 +19,7 @@ class CourseCard extends Component {
 
   showComponents = () => {
     return this.props.course.components.map(comp => {
-      return <ComponentCard key={comp.studentComponentId} comp={comp} selectedStudentCourse={this.props.selectedStudentCourse} onHideStudentCompDetails={this.props.onHideStudentCompDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails}/>
+      return <ComponentCard key={cuid()} comp={comp} selectedStudentCourse={this.props.selectedStudentCourse} onHideStudentCompDetails={this.props.onHideStudentCompDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails}/>
     })
   };
 
@@ -57,7 +58,7 @@ class CourseCard extends Component {
   getToDoItems = () => {
     const courseToShowToDo = this.props.course;
     const showIncomplete = this.props.completedFilter === "Incomplete";
-    const toDoItems = this.props.courseEvents.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do") && (todo.completed !== showIncomplete))).map(todo => <CourseToDo key={todo.id} todo={todo} onCompleteCourseToDo={this.props.onCompleteCourseToDo}/>)
+    const toDoItems = this.props.courseEvents.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do") && (todo.completed !== showIncomplete))).map(todo => <CourseToDo key={cuid()} todo={todo} onCompleteCourseToDo={this.props.onCompleteCourseToDo}/>)
     return toDoItems.length > 0 ? toDoItems : <p>Zero {this.props.completedFilter} To Do items!</p>;
   };
 

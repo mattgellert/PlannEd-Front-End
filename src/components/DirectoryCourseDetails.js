@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import cuid from 'cuid';
 
 class DirectoryCourseDetails extends Component {
 
@@ -8,7 +9,7 @@ class DirectoryCourseDetails extends Component {
 
   render() {
     const instructors = this.props.data.instructors.map((inst, idx) => {
-      return <p key={idx}>{inst.firstName + " " + inst.lastName + ", " + inst.netid + "@cornell.edu"}</p>
+      return <p key={cuid()}>{inst.firstName + " " + inst.lastName + ", " + inst.netid + "@cornell.edu"}</p>
     })
     return(
       <div>

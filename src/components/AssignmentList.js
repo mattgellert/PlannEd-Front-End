@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import AssignmentCard from './AssignmentCard';
+import cuid from 'cuid';
 
 export default class AssignmentList extends Component {
   render() {
 
     const assignments = this.props.assignments.map((assignment,idx) => {
-      return <AssignmentCard key={assignment.studentAssignmentId} assignment={assignment}/>
+      return <AssignmentCard key={cuid()} assignment={assignment}/>
     });
     return (
       <div className="assignment-list-container-inner">

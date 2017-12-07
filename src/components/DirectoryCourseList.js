@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import DirectoryCourseCard from './DirectoryCourseCard';
+import cuid from 'cuid';
 
 export default class DirectoryCourseList extends Component {
 
@@ -9,7 +10,7 @@ export default class DirectoryCourseList extends Component {
 
   render() {
     const courses = this.props.courses.map((course, idx) => (
-      <DirectoryCourseCard key={course.crseId} course={course} history={this.props.history}/>
+      <DirectoryCourseCard key={cuid()} course={course} history={this.props.history}/>
     ))
 
     return (

@@ -403,6 +403,13 @@ export function titleChange(title) {
   }
 }
 
+export function dateChange(date) {
+  return {
+    type: "DATE_CHANGE",
+    payload: date
+  }
+}
+
 export function submitToDo(date, time, studentAssignmentId, title, description) {
   return (dispatch) => {
     dispatch({ type: "LOADING" })
