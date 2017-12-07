@@ -13,7 +13,6 @@ class ComponentCard extends Component {
 
   render() {
     const comp = this.props.comp;
-    console.log("ComponentCard render", comp)
 
     return (
       <div className="compenet-card-wrapper">

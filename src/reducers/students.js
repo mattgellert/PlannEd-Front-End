@@ -756,6 +756,7 @@ export default function studentReducer(
       }
     case "FILTER_BY_COMPLETED":
       let prevCompletedFilterI = state.studentAssignments.completedFilter;
+      console.log("filter by completed")
       return {
         ...state,
         studentAssignments: {
@@ -766,6 +767,7 @@ export default function studentReducer(
       }
     case "FILTER_BY_INCOMPLETE":
       let prevCompletedFilterII = state.studentAssignments.completedFilter;
+      console.log("filter by incomplete")
       return {
         ...state,
         studentAssignments: {
@@ -890,6 +892,25 @@ export default function studentReducer(
           description: null
         },
         selectedForToDo: 0
+      }
+    case "COMPLETED_COURSE_TO_DO":
+      const calendarCoursesWithCompleted = state.calendar.courses.map(ev => {
+        if (ev.id === action.payload.id) {
+          return {
+            ...ev,
+            completed: action.payload.completed
+          }
+        } else {
+          return ev
+        }
+      })
+      // debugger
+      return {
+        ...state,
+        calendar: {
+          ...state.calendar,
+          courses: calendarCoursesWithCompleted
+        }
       }
     case "CALENDAR_CLICK":
       return {

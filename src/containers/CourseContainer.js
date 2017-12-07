@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { seeToDos, selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
+import { filterCourseToDoByIncomplete,filterCourseToDoByCompleted, completeCourseToDo, seeToDos, selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
 import CourseList from '../components/CourseList';
 
 class CourseContainer extends Component {
@@ -39,7 +39,8 @@ function mapStateToProps(state) {
     selectedCourse: state.selectedCourse,
     selectedForToDo: state.selectedForToDo,
     courseEvents: state.calendar.courses,
-    seeToDoFor: state.calendar.seeToDoFor
+    seeToDoFor: state.calendar.seeToDoFor,
+    completedFilter: state.studentAssignments.completedFilter
   }
 };
 
@@ -89,6 +90,15 @@ function mapDispatchToProps(dispatch) {
     },
     onSeeToDoFor: (studentCourseId) => {
       dispatch(seeToDos(studentCourseId));
+    },
+    onCompleteCourseToDo: (eventId) => {
+      dispatch(completeCourseToDo(eventId));
+    },
+    onFilterCourseToDoByCompleted: () => {
+      dispatch(filterCourseToDoByCompleted());
+    },
+    onFilterCourseToDoByIncomplete: () => {
+      dispatch(filterCourseToDoByIncomplete());
     }
   }
 }

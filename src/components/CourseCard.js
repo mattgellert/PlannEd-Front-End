@@ -34,12 +34,7 @@ class CourseCard extends Component {
     this.props.onRemoveCourse(this.props.course.studentCourseId);
   };
 
-  // get these functions for props
   handleAddToDo = () => {
-    // + To Do: if showDetails != courseId > hideDetails
-    // + To Do: if seeToDoFor == courseId > hideToDos
-    console.log("show to do hide?",this.props.selectedForToDo === this.props.course.studentCourseId)
-
     this.props.selectedStudentCourse.showDetails !== this.props.course.studentCourseId ? this.props.onHideStudentCourseDetails() : null;
     this.props.onDeselectForToDo()
     this.props.selectedForToDo !== this.props.course.studentCourseId ? this.props.onSelectForToDo(this.props.course.studentCourseId) : null;
@@ -61,12 +56,23 @@ class CourseCard extends Component {
 
   getToDoItems = () => {
     const courseToShowToDo = this.props.course;
-    const toDoItems = this.props.courseEvents.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do"))).map(todo => <CourseToDo key={todo.id} todo={todo} onCompleteCourseToDo={this.props.onCompleteCourseToDo}/>)
-    return toDoItems.length > 0 ? toDoItems : <p>You've yet to create any To Do items!</p>;
+    const showIncomplete = this.props.completedFilter === "Incomplete";
+    const toDoItems = this.props.courseEvents.filter(todo => ((todo.studentCourseId === courseToShowToDo.studentCourseId) && (todo.eventType === "course to do") && (todo.completed !== showIncomplete))).map(todo => <CourseToDo key={todo.id} todo={todo} onCompleteCourseToDo={this.props.onCompleteCourseToDo}/>)
+    return toDoItems.length > 0 ? toDoItems : <p>Zero {this.props.completedFilter} To Do items!</p>;
   };
 
   handleSeeToDos = () => {
     this.props.onSeeToDoFor(this.props.course.studentCourseId);
+  };
+
+  handleCompletedFilter = () => {
+    console.log("filter by completed")
+    this.props.onFilterCourseToDoByCompleted();
+  };
+
+  handleIncompleteFilter = () => {
+    console.log("filter by incomplete")
+    this.props.onFilterCourseToDoByIncomplete();
   };
 
   render() {
@@ -75,7 +81,8 @@ class CourseCard extends Component {
     const isCourseToRemove = course.studentCourseId === this.props.courseToRemove;
     const courseColor = this.props.selectedCourse.data === course.studentCourseId;
     const seeToDoFor = this.props.seeToDoFor;
-    console.log("selected for to do:",this.props.selectedForToDo,"course id:",course.studentCourseId)
+    const incompleteFilter = this.props.completedFilter === "Incomplete"; //will this be default? check other page settings
+    console.log("course card render")
     return(
       <div className="course-card-wrapper">
         <p>Course Color: {course.color}</p>
@@ -118,6 +125,10 @@ class CourseCard extends Component {
               {seeToDoFor === course.studentCourseId
                 ?
                   <div>
+                    <input onClick={this.handleIncompleteFilter} type="radio" id="complete-filter-1" name="complete-course-filter" checked={incompleteFilter ? "checked" : ""} value="Incomplete"/>
+                    <label for="complete-filter-1">Incomplete</label>
+                    <input onClick={this.handleCompletedFilter} type="radio" id="complete-filter-2" name="complete-course-filter" value="Completed"/>
+                    <label for="complete-filter-2">Completed</label>
                     {this.getToDoItems()}
                   </div>
                 : null
@@ -132,5 +143,3 @@ class CourseCard extends Component {
 };
 
 export default CourseCard;
-
-//add course-level to-do items?

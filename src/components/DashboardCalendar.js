@@ -36,7 +36,8 @@ export default class DashboardCalendar extends Component {
       }
     } else {
       const showCourseDetailsFor = this.props.selectedStudentCourse ? this.props.selectedStudentCourse.showDetails : null;
-      if (seeToDoFor === event.studentCourseId && event.eventType === "course to do") {
+      const showIncomplete = this.props.completedFilter === "Incomplete"
+      if (seeToDoFor === event.studentCourseId && event.eventType === "course to do" && event.completed !== showIncomplete) {
         return { style: { backgroundColor: color, border: "2px solid #000000" } }
       }
       if (showCourseDetailsFor === event.studentCourseId && event.eventType === "course") {

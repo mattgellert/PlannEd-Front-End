@@ -316,6 +316,18 @@ export function filterByCompleted() {
   }
 };
 
+export function filterCourseToDoByCompleted() {
+  return {
+    type: "FILTER_BY_COMPLETED"
+  }
+}
+
+export function filterCourseToDoByIncomplete() {
+  return {
+    type: "FILTER_BY_INCOMPLETE"
+  }
+}
+
 export function filterByIncomplete() {
   return (dispatch) => {
     dispatch({ type: "FILTER_BY_INCOMPLETE" })
@@ -423,6 +435,24 @@ export function submitCourseToDo(date, time, studentCourseId, title, description
       .then(resp => resp.json())
       .then(json => {
         dispatch({ type: "SUBMITTED_TO_DO", payload: json })
+      })
+  }
+}
+
+export function completeCourseToDo(eventId) {
+  return (dispatch) => {
+    dispatch({ type: "LOADING" });
+    return fetch('http://localhost:3000/api/v1/students/complete_course_to_do', {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({ eventId })
+    })
+      .then(resp => resp.json())
+      .then(json => {
+        dispatch({ type: "COMPLETED_COURSE_TO_DO", payload: json })
       })
   }
 }
