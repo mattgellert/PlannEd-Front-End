@@ -87,46 +87,49 @@ class DirectoryCourseCard extends Component {
     const courseColor = !!this.props.courseColor ? this.props.courseColor : "#fff"
 
     return (
-      <div>
-        <h3>{this.props.course.subject} {this.props.course.catalogNbr}: {this.props.course.titleLong}</h3>
-        {this.props.studentCourseIds.includes(this.props.course.crseId) ? "Enrolled" : <button onClick={this.handleDetails}>{(this.props.selectedCourse.data && (this.props.selectedCourse.data.crseId === this.props.course.crseId)) ? "Hide Details" : "See Details"}</button>}
-        {this.props.selectedCourse.data && (this.props.selectedCourse.data.crseId === this.props.course.crseId)
-          ?
-            null
-          :
-            <p>{this.props.course.description.slice(0,100) + "..."}</p>
-        }
-        {this.props.selectedCourse.data ? this.props.selectedCourse.data.crseId === this.props.course.crseId
-          ?
-            <div>
-              <p>{this.props.course.description}</p>
-              {courseDetails}
-              {this.requiredComponentsSelected()
-                ?
-                  <div>
-                    {this.colorSelected()
-                      ?
-                        <button onClick={this.handleAddCourse}>Add Course</button>
-                      :
-                        <div>
-                          <p>Pick a color for your course!</p>
-                          <HuePicker
-                            color={courseColor}
-                            onChangeComplete={this.handleCourseColorChange}
-                          />
-                          <button onClick={this.handleSubmitCourseColor}>Select Color</button>
-                        </div>
-                    }
-                  </div>
-                :
-                  <p>Please select required components {this.props.selectedCourse.data ? ": " + this.props.selectedCourse.data.enrollGroups[0].componentsRequired.join(", ") : null }</p>
-              }
-            </div>
-          : null : null
-        }
-      </div>
-    );
-  };
+     <div>
+       <p className="title-label-primary">{this.props.course.subject} {this.props.course.catalogNbr}</p>
+       <p className="title-label-secondary">
+         <span className="title"> {this.props.course.titleLong} </span>
+       </p>
+       {this.props.selectedCourse.data && (this.props.selectedCourse.data.crseId === this.props.course.crseId)
+         ?
+           null
+         :
+           <p className="description-short">{!!this.props.course.description ? this.props.course.description.slice(0,100) + "..." : null}</p>
+       }
+       {this.props.selectedCourse.data ? this.props.selectedCourse.data.crseId === this.props.course.crseId
+         ?
+           <div className="details-drawer">
+             <p className="description">{this.props.course.description}</p>
+             {courseDetails}
+             {this.requiredComponentsSelected()
+               ?
+                 <div>
+                   {this.colorSelected()
+                     ?
+                       <button className="courses-button" onClick={this.handleAddCourse}>Add Course</button>
+                     :
+                       <div>
+                         <p>Pick a color for your course!</p>
+                         <HuePicker
+                           color={courseColor}
+                           onChangeComplete={this.handleCourseColorChange}
+                         />
+                         <button className="courses-button" onClick={this.handleSubmitCourseColor}>Select Color</button>
+                       </div>
+                   }
+                 </div>
+               :
+                 <p className="course-select-wrapper">Please select required components {this.props.selectedCourse.data ? ": " + this.props.selectedCourse.data.enrollGroups[0].componentsRequired.join(", ") : null }</p>
+             }
+           </div>
+         : null : null
+       }
+       {this.props.studentCourseIds.includes(this.props.course.crseId) ? "Enrolled" : <button className="details-button" onClick={this.handleDetails}>{(this.props.selectedCourse.data && (this.props.selectedCourse.data.crseId === this.props.course.crseId)) ? "Hide Details" : "See Details"}</button>}
+     </div>
+   );
+ };
 };
 
 
