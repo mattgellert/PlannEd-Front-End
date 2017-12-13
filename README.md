@@ -1,4 +1,6 @@
 # PlannEd Front End
+<img src="https://media.giphy.com/media/xT1R9zSc45rgSbB2rC/giphy.gif" height="500px"/>
+
 Still in progress. Built with React, Redux, BigCalendar, DatePicker and the Cornell Course API. Back end built with Ruby on Rails.
 
 GitHub (front): https://github.com/mattgellert/PlannEd-front-end
@@ -14,27 +16,23 @@ Next Steps:
 * Create a dashboard for Students to see updates and a snapshot of latest assignments.
 
 ## Courses
-course view
-### Search
 
-### Conflicts
+### Search & Add
+<img src="https://media.giphy.com/media/3o6nV999n3Sw87qCIw/giphy.gif" height="500px"/>
+Courses that conflict with the user's schedule will result in a warning.
 
-### Add
+### Edit Color/Remove Course
+<img src="https://media.giphy.com/media/xUNda6EcYwOsu3Csyk/giphy.gif" height="500px"/>
 
-### Edit Color
-
-### Remove Courses
 
 
 ## Assignments
-assignment view
-### Filter
+
+### Filter & Complete
+<img src="https://media.giphy.com/media/xUNd9CvdyoioukjDuU/giphy.gif" height="500px"/>
 
 ### Sub-Assignments
-
-### Complete
+<img src="https://media.giphy.com/media/xT1R9J6LnJr9slBMwo/giphy.gif" height="500px"/>
 
 ### To-Do's
-create
-edit
-complete
+<img src="https://media.giphy.com/media/xT1R9zNvqtQB0Mc3gQ/giphy.gif" height="500px"/>
