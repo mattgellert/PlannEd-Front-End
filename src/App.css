@@ -1,24 +1,51 @@
+
+
 /* animations */
-@-webkit-keyframes slide-in {
-  0%   { opacity: 0; margin-top: -50%; }
-  100% { opacity: 1; margin-top: 0; }
+@-webkit-keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 @keyframes fade-in {
-  0%   { opacity: 0; margin-top: -50%; }
-  100% { opacity: 1; margin-top: 0; }
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes slide-in {
+  0% { margin-top: -50%; }
+  100% { margin-top: 0; }
+}
+
+@keyframes slide-in {
+  0% { margin-top: -50%; }
+  100% { margin-top: 0; }
+}
+
+@-webkit-keyframes slide-out {
+  0% { margin-top: 150%; }
+  100% { margin-top: 0; }
+}
+
+@keyframes slide-out {
+  0% { margin-top: 150%; }
+  100% { margin-top: 0; }
+}
+
+html {
+  height: 100%;
+  overflow: hidden;
 }
 
 .body {
   height: 100%;
-  overflow: hidden;
+  overflow: auto;
   width: 100%;
 
   background-color: #ebeced;
   color: #3f4652;
   line-height: 1.4;
   font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   text-align: left;
   -webkit-overflow-scrolling: none;
   -webkit-user-select: none;
@@ -40,27 +67,47 @@ h2 {
   top: 0;
 }
 
-.assignment-container-wrapper,
-.course-container-wrapper,
-.dashboard-container,
-.signin-container,
-.signup-container {
+.content-wrapper {
   display: flex;
-  flex-grow: 1;
+  height: calc(100% - 70px);
+  width: 100%;
+}
+
+.content-container {
+  display: flex;
+  width: 100%;
+}
+
+.main-content {
+  display: flex;
+  flex: 0 0 75%;
+}
+
+.sidebar-wrapper {
+  flex: 0 0 25%;
+  height: 100%;
+  max-width: 350px;
+  min-width: 250px;
+  position: relative;
+}
+
+/* Main Nav Bar */
+.main-nav-bar {
+  background: #026082;
+  display: flex;
+  height: 70px;
+  position: relative;
+  width: 100%;
+  z-index: 1;
 }
 
 /* DirectoryCourses */
 .course-container {
-  background: #5a0202;
+  background: #1e2025;
+  color: #b0d8e8;
   flex-grow: 1;
   height: 70px;
   margin: 0 0 50px;
-}
-
-.course-form-select {
-  height: 30px;
-  margin-right: 10px;
-  width: 100px;
 }
 
 .course-form-label {
@@ -71,6 +118,32 @@ h2 {
   border: 1px solid #ddd;
   height: 25px;
   width: 150px;
+  color: white;
+}
+
+.event-form-input {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  height: 19px;
+  margin: 0;
+  padding: 0;
+}
+
+.button-search {
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  height: 35px;
+  outline: none;
+  width: 90px;
+}
+
+.search-svg {
+  height: 35px;
 }
 
 .directory-search-form-wrapper {
@@ -78,45 +151,450 @@ h2 {
   width: 100%;
 }
 
-/* Assignments */
-/*.nav-assignments {
-  background: #8BC34A;
-  height: 100%;
-  left: 90px;
-  position: absolute;
-  top: 0;
-  width: 500px;
-}*/
-
-.assignment-container {
+/* Home */
+.home-wrapper, .signin-container, .signup-container {
   width: 100%;
 }
 
+.assignment-container-wrapper, .directory-container-wrapper, .course-container-wrapper {
+  background: #26282e;
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+
+.assignment-list-container, .directory-list-container, .course-list-container {
+  background: #26282e;
+  display: block;
+  height: 100%;
+  overflow-y: scroll;
+  z-index: -1;
+}
+
+.assignment-list-container{
+  animation: slide-in .3s;
+}
+
+.directory-list-container {
+  animation: slide-out .3s;
+  padding: 20px;
+}
+
+.course-list-container {
+  animation: slide-out .3s;
+}
+
+/* Assignments */
 .assignment-form-container {
-  background: #5a0202;
+  animation: fade-in 0.8s;
+  background: #026082;
   height: 70px;
   width: 100%;
 }
 
-.assignment-form {
+.assignment-form, .directory-form {
   align-items: center;
   color: rgba(238, 238, 238, 0.51);
+  font-size: 16px;
   display: flex;
   height: 100%;
   justify-content: center;
 }
 
-.assignment-list-container {
-  background: #333;
-  display: block;
-  height: 100%;
-  max-width: 350px;
-  overflow-y: scroll;
-  position: absolute;
-  top: 70px;
+.assignment-list-container-inner {
+  animation: fade-in 0.8s;
+  padding: 20px;
 }
 
-.assignment-list-container-inner {
-  animation: slide-in .3s;
-  padding: 20px;
+/* Lists */
+.title-label-primary {
+  border-bottom: 2px solid #025f81;
+  color: #fff;
+  font-size: 14px;
+  margin: 0;
+  padding: 5px 0;
+  text-align: left;
+}
+
+.title-label-primary.courses {
+  display: flex;
+  align-items: center;
+}
+
+.color-dot {
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  margin: 0 0 0 5px;
+}
+
+.view-todo-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #e5e5e5;
+  outline: none;
+  padding: 0;
+}
+
+.course-todo-wrapper, .course-select-wrapper {
+  color: #727890;
+}
+
+.course-select-wrapper {
+  font-size: 12px;
+}
+
+.todo-radio-buttons {
+  display: flex;
+  border-top: 1px solid #025f81;
+  padding: 15px 0 0;
+  font-size: 14px;
+  color: #727890;
+}
+
+.title-label-secondary {
+  background: #1e2026;
+  border-radius: 3px;
+  color: #08ace8;
+  font-size: 12px;
+  margin: 10px 0 0;
+  padding: 5px 10px;
+  display: flex;
+  height: 20px;
+  align-items: center;
+  transition: all 0.3s;
+}
+
+.title-label-secondary.sub {
+  color: #f8ac57;
+}
+
+.title-label-secondary .title {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 90%;
+}
+
+.calendar-icon, .clock-icon {
+  height: 15px;
+  margin-right: 5px;
+}
+
+.clock-icon {
+  margin: 0 5px 0 15px;
+}
+
+.calendar-svg, .clock-svg {
+  fill: #757b90;
+  height: 15px;
+  margin-bottom: 10px;
+}
+
+.calendar-svg.home {
+  fill: #000000;
+  height: 100px;
+  margin-bottom: 0px;
+}
+
+.due {
+  align-items: center;
+  color: #757b90;
+  display: flex;
+  font-size: 12px;
+}
+
+.checkbox {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  transition: all 0.3s;
+  display: inline-block;
+  cursor: pointer;
+  outline: none;
+  margin: 0;
+  width: 20px;
+}
+
+.checkbox:before {
+  content: '\f096';
+  color: #ee5464;
+}
+
+.checkbox:checked:before {
+    content: '\f14a';
+    color: #07c5b4;
+}
+
+.checkbox:before, .checkbox:checked:before {
+    font-family: 'FontAwesome';
+    font-size: 14px;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+.add-todo-button {
+  margin-left: auto;
+  font-size: 12px;
+  line-height: 1;
+  background: none;
+  display: flex;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  color: #fff;
+  height: 14px;
+  width: 20px;
+}
+
+.buttons-wrapper {
+  display: flex;
+}
+
+.content-container {
+
+  display: -ms-flexbox;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+
+.home-title {
+  font-family: 'Gloria Hallelujah', cursive;
+}
+
+.signin-form-container, .signup-form-container {
+  font-family: sans-serif;
+  margin-top: 50px;
+}
+
+.signup-form-container {
+  font-size: 30px;
+  margin-bottom: 270px;
+}
+
+.signin-form-container {
+  margin-bottom: 270px;
+}
+
+.content-container.home {
+  animation: fade-in 0.8s ease-in-out;
+}
+
+.email, .name {
+  background: #0592c5b0;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 3px;
+  font-size: 14px;
+  margin: 10px;
+  opacity: 0.7;
+  outline: none;
+}
+
+.signin-button, .signup-button {
+  background: #0592c5b0;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  outline: none;
+  font-size: 14px;
+  opacity: 0.7;
+  transition: all 175ms;
+}
+
+.signin-button:hover, .signup-button:hover {
+  opacity: 1;
+}
+
+.calendar-add-icon {
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.calendar-add-svg {
+  height: 14px;
+  fill: #747a90;
+  transition: all 175ms;
+}
+
+.cxalendar-add-svg:hover, .calendar-add-icon.clicked > .calendar-add-svg {
+  fill: #fff;
+}
+
+.details-button {
+  cursor: pointer;
+  margin: 0;
+  margin-top: 10px;
+  margin-left: auto;
+  outline: none;
+  border: none;
+  font-size: 10px;
+  padding: 0;
+  background: none;
+  color: #fff;
+  text-align: right;
+  text-transform: uppercase;
+  width: 100%;
+}
+
+.details-button.sub {
+  border-bottom: 1px solid #025f81;
+  border-radius: 0;
+  padding-bottom: 5px;
+}
+
+.details-drawer {
+  animation: fade-in 0.3s;
+  background: #1e2127;
+  padding: 10px;
+  transition: all 0.3s;
+}
+
+.description {
+  background: #1e2127;
+  color: #747a90;
+  font-size: 14px;
+  margin-top: 0;
+}
+
+.assignment-to-do {
+  border-top: 1px solid #737990;
+  color: #09ace9;
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+.sub-button {
+  width: 100%;
+}
+/* Courses */
+.courses-button-container {
+  display: flex;
+  width: 100%;
+}
+
+.courses-button {
+  color: #e5e5e5;
+  cursor: pointer;
+  margin-left: auto;
+  height: 20px;
+  background: #747a90;
+  opacity: 0.5;
+  outline: none;
+  border: none;
+  border-radius: 3px;
+  transition: all .3s;
+}
+
+.courses-button:hover {
+  opacity: 1;
+}
+
+.component-card-wrapper {
+  color: #737990;
+  font-size: 12px;
+  border-top: 1px solid #025f81;
+}
+
+.course-card-wrapper {
+  color: #737990;
+}
+
+.hue-picker {
+  width: auto !important;
+}
+
+.description-short {
+  color: #747a90;
+  font-size: 12px;
+}
+
+.to-do-form-assignment-wrapper, .event-details-window-wrapper {
+    border-radius: 5px;
+    padding: 4px;
+    color: #eff5f7;
+    background: #025f81;
+    box-shadow: 3px 3px 3px #888888;
+}
+
+.event-form-input {
+  background-color: #4988a2;
+  border-radius: 4px;
+  padding-left: 5px;
+}
+
+.event-details-title {
+  padding: 1px;
+  font-weight: bold;
+}
+
+.event-details-time {
+  background: #4988a2;
+  border-radius: 4px;
+  padding-left: 4px;
+}
+
+
+.event-details-window-label {
+  padding-bottom: 2px;
+}
+
+.courses-button.event {
+  margin-top: 4px;
+}
+
+.content-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.content-container.home {
+  background-image: url(https://i.imgur.com/2i4KbxF.jpg);
+  display: -ms-flexbox;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.content-wrapper.home {
+  background-image: url(https://i.imgur.com/2i4KbxF.jpg);
+  display: -ms-flexbox;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+}
+
+.home-title {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 60px;
+  margin-bottom: 10px;
+}
+
+h2.home-title.subA {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 50px;
+}
+
+h2.home-title.subB {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 50px;
+  margin-bottom: 350px;
+}
+
+.home-icon {
+  height: 100px;
+  width: 100px;
 }

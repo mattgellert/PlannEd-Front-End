@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import SubAssignmentCard from './SubAssignmentCard';
 import { seeToDos, hideAssignmentDetails, deselectForToDo, selectForToDo, completeParent, fetchSubAssignments, completeAssignment, completeSubAssignment, showAssignmentDetails, deselectAssignment, deselectSubAssignment } from '../actions/students';
+import cuid from 'cuid';
+import ClockIcon from './svgs/ClockIcon.js';
+import CalendarIcon from './svgs/CalendarIcon.js';
+import CalendarAddIcon from './svgs/CalendarAddIcon.js';
 // import PriorityIcon from './svgs/PriorityIcon.js';
 
 
@@ -16,12 +20,16 @@ class AssignmentCard extends Component {
   };
 
   handleShowAssignmentDetails = () => {
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onDeselectForToDo() : null;
     this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
+    // this.props.selectedAssignment.showDetails !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
     this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
   };
 
+
   handleHideAssignmentDetails = () => {
-    this.props.onSeeToDos(this.props.assignment.studentAssignmentId);
+    this.props.onDeselectForToDo()
+    this.props.onSeeToDos(null);
     this.props.onHideAssignmentDetails();
   };
 
@@ -30,18 +38,22 @@ class AssignmentCard extends Component {
   };
 
   handleDeselectAssignment = () => {
+    this.props.onHideAssignmentDetails();
+    this.props.onSeeToDos(null);
     this.props.onDeselectAssignment();
   };
 
+
   showSubAssignments = () => {
     const arr = this.props.selectedAssignment.subAssignments.map((subAss, idx) => {
-      return <SubAssignmentCard key={subAss.studentAssignmentId} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos}onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
+      return <SubAssignmentCard key={cuid()} toDoItems={this.props.toDoItems} seeToDoFor={this.props.seeToDoFor} onSeeToDos={this.props.onSeeToDos} onShowAssignmentDetails={this.props.onShowAssignmentDetails} onHideAssignmentDetails={this.props.onHideAssignmentDetails} onDeselectForToDo={this.props.onDeselectForToDo} selectedForToDo={this.props.selectedForToDo} assignment={subAss.assignment} onCompleteParent={this.props.onCompleteParent} onCompleteSubAssignment={this.props.onCompleteSubAssignment} onFetchSubAssignments={this.props.onFetchSubAssignments} onDeselectSubAssignment={this.props.onDeselectSubAssignment} onSelectForToDo={this.props.onSelectForToDo} selectedAssignment={this.props.selectedAssignment} studentAssignments={this.props.studentAssignments}/>
     });
     return arr;
   };
 
   handleAddToDo = () => {
-    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : null;
+    this.props.seeToDoFor !== this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : this.props.onSeeToDos(null);
+    this.props.selectedAssignment.showDetails === this.props.assignment.studentAssignmentId ? this.props.onSeeToDos(this.props.assignment.studentAssignmentId) : this.props.onShowAssignmentDetails(this.props.assignment.studentAssignmentId);
     this.props.onDeselectForToDo()
     this.props.selectedForToDo !== this.props.assignment.studentAssignmentId ? this.props.onSelectForToDo(this.props.assignment.studentAssignmentId) : null;
   };
@@ -49,11 +61,11 @@ class AssignmentCard extends Component {
   getToDoItems = () => {
     const assigmentToShowToDo = this.props.assignment;
     const today = new Date();
-    this.props.toDoItems.filter(todo => todo.studentAssignmentId === assigmentToShowToDo.studentAssignmentId).map(todo => {
+    return this.props.toDoItems.filter(todo => todo.studentAssignmentId === assigmentToShowToDo.studentAssignmentId).map(todo => {
       return (
-        <div className="assignment-to-do">
+        <div key={cuid()} className="assignment-to-do">
           <h4>{todo.title}</h4>
-          <p>{todo.startDate} - {todo.endDate} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
+          <p>{`${(new Date(...todo.startDate)).toString().slice(0,21)}`} - {`${(new Date(...todo.endDate)).toString().slice(0,21)}`} {today > todo.endDate ? "(Past)" : "(Upcoming)"}</p>
           <p>{todo.description}</p>
         </div>
       )
@@ -67,6 +79,7 @@ class AssignmentCard extends Component {
     const seeToDo = this.props.seeToDoFor === assignment.studentAssignmentId;
     let showDetails = false;
     let toDoItems = [];
+
     if (selectedAssignment.showDetails === assignment.studentAssignmentId ) {
       showDetails = true
       toDoItems = this.getToDoItems();
@@ -74,40 +87,51 @@ class AssignmentCard extends Component {
 
     return (
       <div>
-        <h3>{assignment.subject} {assignment.catalogNbr} HW</h3>
-        <p>{assignment.courseTitle}</p>
-        <p>{assignment.title}</p>
-        <p>Due: {dueDate.toLocaleString()}</p>
-        {showDetails
-          ?
+        <p className="title-label-primary">{assignment.subject} {assignment.catalogNbr} HW</p>
+        <p className="title-label-secondary">
+          <input
+            onChange={assignment.hasSubAssignments ? this.handleParentComplete : this.handleComplete}
+            className="checkbox"
+            type="checkbox"
+            checked={!!assignment.completed}
+          />
+          {assignment.title}
+          <CalendarAddIcon className={this.props.selectedForToDo === assignment.studentAssignmentId ? 'calendar-add-icon clicked' : 'calendar-add-icon'} onClick={this.handleAddToDo} />
+        </p>
+        {showDetails &&
             <div>
-              <button onClick={this.handleHideAssignmentDetails}>Hide Details</button>
-              <p>{assignment.description}</p>
-              {toDoItems}
+              <div className="details-drawer">
+                <p className="description">{assignment.description}</p>
+                <div className="due">
+                  <CalendarIcon />
+                  <span className="due-date">{dueDate.toLocaleString().split(',')[0]}</span>
+                  <ClockIcon />
+                  <span className="due-time">{dueDate.toLocaleString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                </div>
+                {toDoItems}
+              </div>
             </div>
-          :
-            <button onClick={this.handleShowAssignmentDetails}>Show Details</button>
         }
-        <button onClick={this.handleAddToDo}>{this.props.selectedForToDo === assignment.studentAssignmentId ? "Choose A Date >" : "+ To Do"}</button>
-        {assignment.hasSubAssignments
-          ?
-            <div>
-              <button onClick={this.handleParentComplete}>{assignment.completed ? "Completed!" : "Complete Sub-Assignments"}</button>
-              {(this.props.selectedAssignment.id.length > 0 && this.props.selectedAssignment.id[0][0] === assignment.studentAssignmentId)
-                ?
-                  <div>
-                    <button onClick={this.handleDeselectAssignment}>Hide Sub-Assignments</button>
-                    {this.showSubAssignments()}
-                  </div>
-                :
-                  <div>
-                    <button onClick={this.handleSelectSubAssignments}>See Sub-Assignments</button>
-                  </div>
-              }
-            </div>
-          :
-            <button onClick={this.handleComplete}>{assignment.completed ? "Completed!" : "Complete"}</button>
-        }
+        <div className="buttons-wrapper">
+            {showDetails ? <button className="details-button" onClick={this.handleHideAssignmentDetails}>Hide Details</button> : <button className="details-button" onClick={this.handleShowAssignmentDetails}>Show Details</button>}
+        </div>
+        <div className="buttons-wrapper">
+          {assignment.hasSubAssignments &&
+              <div className="sub-button">
+                {(this.props.selectedAssignment.id.length > 0 && this.props.selectedAssignment.id[0][0] === assignment.studentAssignmentId)
+                  ?
+                    <div>
+                      <button className="details-button sub" onClick={this.handleDeselectAssignment}>Hide Sub-Assignments</button>
+                      {this.showSubAssignments()}
+                    </div>
+                  :
+                    <div>
+                      <button className="details-button" onClick={this.handleSelectSubAssignments}>See Sub</button>
+                    </div>
+                }
+              </div>
+          }
+        </div>
       </div>
     );
   };

@@ -1,19 +1,24 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
+import { filterCourseToDoByIncomplete,filterCourseToDoByCompleted, completeCourseToDo, seeToDos, selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
+
 import CourseList from '../components/CourseList';
 
 class CourseContainer extends Component {
 
   render() {
-    console.log("course contianer props", this.props)
+    const props = this.props;
+
     return(
-      <div className="course-container-wrapper">
+      <div className="course-container-wrapper sidebar-wrapper">
         {this.props.student.id
           ?
-            <div className="course-container">
-              <CourseList courses={this.props.studentCourses} onSubmitCourseColorChange={this.props.onSubmitCourseColorChange} onCourseToChangeColor={this.props.onCourseToChangeColor} selectedCourse={this.props.selectedCourse} onSelectCourseColor={this.props.onSelectCourseColor} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} selectedStudentCourse={this.props.selectedStudentCourse} onSelectStudentCourse={this.props.onSelectStudentCourse} onDeselectStudentCourse={this.props.onDeselectStudentCourse} onShowStudentCourseDetails={this.props.onShowStudentCourseDetails} onHideStudentCourseDetails={this.props.onHideStudentCourseDetails} onShowStudentCompDetails={this.props.onShowStudentCompDetails} onHideStudentCompDetails={this.props.onHideStudentCompDetails}/>
+            <div className="directory-list-container">
+              <div className="courses-button-container">
+                <button className="courses-button" onClick={this.props.toggleDirectoryContainer}>Add Course</button>
+              </div>
+              <CourseList courses={this.props.studentCourses} {...props}/>
             </div>
           :
           <Redirect to="/"/>
@@ -24,13 +29,16 @@ class CourseContainer extends Component {
 };
 
 function mapStateToProps(state) {
-  console.log("course container state", state)
   return {
     studentCourses: state.studentCourses,
     selectedStudentCourse: state.selectedStudentCourse,
     student: state.student,
     courseToRemove: state.courseToRemove,
-    selectedCourse: state.selectedCourse
+    selectedCourse: state.selectedCourse,
+    selectedForToDo: state.selectedForToDo,
+    courseEvents: state.calendar.courses,
+    seeToDoFor: state.calendar.seeToDoFor,
+    completedFilter: state.studentAssignments.completedFilter
   }
 };
 
@@ -60,8 +68,8 @@ function mapDispatchToProps(dispatch) {
     onDeselectRemoveCourse: () => {
       dispatch(deselectRemoveCourse());
     },
-    onRemoveCourse: (studentCourseId) => {
-      dispatch(removeCourse(studentCourseId));
+    onRemoveCourse: (studentCourseId, studentId) => {
+      dispatch(removeCourse(studentCourseId, studentId));
     },
     onSelectCourseColor: (color) => {
       dispatch(selectCourseColor(color));
@@ -71,6 +79,24 @@ function mapDispatchToProps(dispatch) {
     },
     onCourseToChangeColor: (studentCourseId) => {
         dispatch(courseToChangeColor(studentCourseId));
+    },
+    onDeselectForToDo: () => {
+      dispatch(deselectForToDo());
+    },
+    onSelectForToDo: (studentCourseId) => {
+      dispatch(selectForToDo(studentCourseId));
+    },
+    onSeeToDoFor: (studentCourseId) => {
+      dispatch(seeToDos(studentCourseId));
+    },
+    onCompleteCourseToDo: (eventId) => {
+      dispatch(completeCourseToDo(eventId));
+    },
+    onFilterCourseToDoByCompleted: () => {
+      dispatch(filterCourseToDoByCompleted());
+    },
+    onFilterCourseToDoByIncomplete: () => {
+      dispatch(filterCourseToDoByIncomplete());
     }
   }
 }

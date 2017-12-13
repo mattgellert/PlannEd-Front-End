@@ -13,10 +13,9 @@ class ComponentCard extends Component {
 
   render() {
     const comp = this.props.comp;
-    console.log("ComponentCard render", comp)
 
     return (
-      <div className="compenet-card-wrapper">
+      <div className="component-card-wrapper">
         <h3>{comp.component}: {comp.title}</h3>
         <p>{comp.facilityDescr}</p>
         <p>{comp.timeStart} - {comp.timeEnd} ({comp.pattern})</p>
