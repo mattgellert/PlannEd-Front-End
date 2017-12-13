@@ -97,7 +97,7 @@ class DirectoryCourseCard extends Component {
           ?
             null
           :
-            <p className="description-short">{this.props.course.description.slice(0,100) + "..."}</p>
+            <p className="description-short">{this.props.course.description ? this.props.course.description.slice(0,100) + "..." : null}</p>
         }
         {this.props.selectedCourse.data ? this.props.selectedCourse.data.crseId === this.props.course.crseId
           ?

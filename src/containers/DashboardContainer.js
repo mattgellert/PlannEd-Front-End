@@ -20,7 +20,6 @@ class DashboardContainer extends Component {
   }
 
   handleSubmit = (event) => {
-    console.log('event create')
     event.preventDefault();
     const selectedSlot = this.props.selectedSlot;
     const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
@@ -56,7 +55,6 @@ class DashboardContainer extends Component {
 
 
   handleSelectEvent = (event) => {
-    console.log('select evnet', event)
     this.props.onSelectEvent(event)
     this.windowListener = document.body.addEventListener("click", (event) => {
       event.target.id !== "event-details-window" ? this.handleCloseEventWindow() : null;
@@ -81,7 +79,6 @@ class DashboardContainer extends Component {
   };
 
   handleEventDetailsUpdate = (event) => {
-      console.log('event update')
     event.preventDefault();
     const eventSelected = this.props.eventSelected.data;
     const updatedEventStart = typeof this.props.selectedSlot.startTime === "string" ? this.props.selectedSlot.startTime : this.props.selectedSlot.startTime.toTimeString().slice(0,5);
@@ -110,7 +107,6 @@ class DashboardContainer extends Component {
        );
      }
 
-     console.log('show assignment to do form?', (this.props.slotSelected && (this.props.selectedForToDo !== 0) && !!this.props.selectedSlot.info))
     return (
       <div className="home-wrapper">
         <MainNavBar children={MainNavChildren}/>

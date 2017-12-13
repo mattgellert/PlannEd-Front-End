@@ -11,7 +11,6 @@ import NavBar from '../components/NavBar';
 class DirectoryContainer extends Component {
 
   slotSelected = (slotInfo) => {
-    console.log("slotSelected", slotInfo)
     this.props.onSelectSlot(slotInfo)
   }
 

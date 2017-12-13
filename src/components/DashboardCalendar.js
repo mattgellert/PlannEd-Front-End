@@ -23,6 +23,7 @@ export default class DashboardCalendar extends Component {
     if (!!this.props.courseFilter) {
       if (this.props.courseFilter === "All Courses" || parseInt(this.props.courseFilter, 10) === event.studentCourseId) {
         if (completedFilter === "Incomplete") {
+          console.log("incomplete?", ((event.eventType === "due date") && !event.completed))
           return (event.eventType === "due date") && !event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
         } else {
           return (event.eventType === "due date") && !!event.completed ? { style: { backgroundColor: color, border: "2px solid #000000", boxShadow: boxShadow } } : { style: { backgroundColor: color, boxShadow: boxShadow } };
@@ -66,8 +67,7 @@ export default class DashboardCalendar extends Component {
       studentAssignmentId: date.studentAssignmentId,
       completed: date.completed
     }));
-    console.log("cal events", calEvents)
-    
+
     !this.props.courseFilter && !!this.props.inDirectory ? calEvents = calEvents.filter(ev => ev.eventType === "course") : null;
     // !!this.props.inMyCourses ? calEvents = calEvents.filter(ev => ev.eventType === "course" ? true : !ev.completed) : null;
     calEvents = calEvents.filter(ev => {
@@ -92,7 +92,7 @@ export default class DashboardCalendar extends Component {
       })
     }
 
-    const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("8/28/2017")
+    const defaultDate = !!this.props.defaultDate ? this.props.defaultDate : new Date("9/04/2017")
     return (
       <div className="dashboard-calendar">
         <BigCalendar

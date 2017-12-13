@@ -28,7 +28,6 @@ class CourseContainer extends Component {
 };
 
 function mapStateToProps(state) {
-  console.log("course container state", state)
   return {
     studentCourses: state.studentCourses,
     selectedStudentCourse: state.selectedStudentCourse,

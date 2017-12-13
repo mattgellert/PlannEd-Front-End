@@ -28,12 +28,10 @@ class CourseListContainer extends Component {
   }
 
   slotSelected = (slotInfo) => {
-    console.log("cal slot selected:",slotInfo)
     this.props.onSelectSlot(slotInfo)
   }
 
   handleSubmit = (event) => {
-    console.log('event create')
     event.preventDefault();
     const selectedSlot = this.props.selectedSlot;
     const toDoTime = `${this.props.selectedSlot.startTime}:${this.props.selectedSlot.endTime}`;
@@ -73,7 +71,6 @@ class CourseListContainer extends Component {
 
     this.props.onSelectEvent(event)
     this.windowListener = document.body.addEventListener("click", (event) => {
-      console.log("event selected", event)
       event.target.id !== "event-details-window" ? this.handleCloseEventWindow() : null;
     });
   }
@@ -96,7 +93,6 @@ class CourseListContainer extends Component {
   };
 
   handleEventDetailsUpdate = (event) => {
-    console.log('event updated description:', this.props.selectedSlot)
     event.preventDefault();
     const eventSelected = this.props.eventSelected.data;
     const updatedEventStart = typeof this.props.selectedSlot.startTime === "string" ? this.props.selectedSlot.startTime : this.props.selectedSlot.startTime.toTimeString().slice(0,5);

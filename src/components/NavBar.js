@@ -29,7 +29,6 @@ class NavBar extends Component {
        prevTab = forcePrevTab;
      }
      if (prevTab) {
-       console.log("***********: ", prevTab, activeTab)
        generateKeyFrames(tabPositions[prevTab], tabPositions[activeTab]);
 
        return {
@@ -38,7 +37,7 @@ class NavBar extends Component {
          animationFillMode: 'forwards'
        };
      } else {
-       return { top: `${tabPositions[activeTab] + 70}px` };
+       return { top: `${tabPositions[activeTab]}px` };
      }
    }
 

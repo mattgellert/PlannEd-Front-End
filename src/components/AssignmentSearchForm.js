@@ -55,7 +55,6 @@ class AssignmentSearchForm extends Component {
     return (
      <div className="assignment-form-container">
        <form className="assignment-form">
-         {console.log("completefilter", this.props.incompleteFilter)}
          Course:
          <div className="form-select-container">
            <select onChange={this.handleCourseChange} className="form-select">

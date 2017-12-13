@@ -14,7 +14,7 @@ const Home = props => {
             <div className="home-title">
              <h1>PlannEd<CalendarIcon/></h1>
             </div>
-            <div clasName="home-title sub">
+            <div className="home-title sub">
              <h2 className="home-title subA">Because A Goal Without A Plan </h2>
              <h2 className="home-title subB"> Is Just A Wish </h2>
             </div>

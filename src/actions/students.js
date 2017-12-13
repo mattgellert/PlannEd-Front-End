@@ -160,6 +160,7 @@ export function fetchDirectoryCourses(semester, subject) { // CHECKED
 };
 
 export function completeAssignment(studentAssignmentId, isParent) { // CHECKED
+  console.log("complete ass")
   return (dispatch) => {
     dispatch({ type: "LOADING" });
     return fetch("http://localhost:3000/api/v1/students/complete_assignment", {
@@ -181,6 +182,7 @@ export function completeAssignment(studentAssignmentId, isParent) { // CHECKED
 };
 
 export function completeSubAssignment(studentAssignmentId, rootAssignmentIds, subAssignmentIds, isParent) { // CHECKED
+  console.log("complete sub ass")
   return (dispatch) => {
     dispatch({ type: "LOADING" });
     return fetch("http://localhost:3000/api/v1/students/complete_assignment", {
@@ -193,20 +195,30 @@ export function completeSubAssignment(studentAssignmentId, rootAssignmentIds, su
     })
       .then(resp => resp.json())
       .then(json => {
-        dispatch({ type: "COMPLETED_SUB_ASSIGNMENT", payload: {
-            rootAssignments: json.rootAssignments,
-            subAssignments: json.subAssignments,
-            ids: json.ids,
-            dueDates: json.dueDates,
-            toDos: json.toDos ///WRITE BACKEND FOR THIS
-          }
-        })
-        dispatch({ type: "CHANGE_ASSIGNMENTS_DISPLAY" })
-      })
+
+        fetch(`http://localhost:3000/api/v1/students/student_assignments?studentId=${json.studentId}`)
+        .then(res => res.json())
+        .then(data => {
+          dispatch({ type: "FETCHED_ASSIGNMENTS", payload: { studentAssignments: data.studentAssignments, dueDates: data.dueDates, courseDates: data.courseDates, toDoItems: data.toDoItems }})
+          dispatch({ type: "CHANGE_ASSIGNMENTS_DISPLAY" })
+        });
+      //   dispatch({ type: "COMPLETED_SUB_ASSIGNMENT", payload: {
+      //       rootAssignments: json.rootAssignments,
+      //       subAssignments: json.subAssignments,
+      //       ids: json.ids,
+      //       dueDates: json.dueDates,
+      //       dueDateEvents: json.dueDateEvents,
+      //       toDos: json.toDos ///WRITE BACKEND FOR THIS
+      //     }
+      //   })
+      //   dispatch({ type: "CHANGE_ASSIGNMENTS_DISPLAY" })
+      // })
+    });
   };
 };
 
 export function completeParent(studentAssignmentId) {
+  console.log("complete parent")
   return (dispatch) => {
     dispatch({ type: "LOADING "});
     return fetch("http://localhost:3000/api/v1/students/complete_parent_assignment", {
@@ -240,14 +252,12 @@ export function hideAssignmentDetails() {
 }
 
 export function deselectAssignment() {
-  console.log("deselect assignment")
   return {
     type: "DESELECT_ASSIGNMENT"
   }
 };
 
 export function deselectSubAssignment(studentAssignmentId) {
-  console.log("deselect sub assignment:", studentAssignmentId)
   return {
     type: "DESELECT_SUB_ASSIGNMENT",
     payload: studentAssignmentId
@@ -572,7 +582,6 @@ export function hideStudentCompDetails() {
 }
 
 export function selectRemoveCourse(studentCourseId) {
-  console.log("select remove course")
   return {
     type: "SELECT_REMOVE_COURSE",
     payload: studentCourseId
@@ -580,7 +589,6 @@ export function selectRemoveCourse(studentCourseId) {
 }
 
 export function deselectRemoveCourse(studentCourseId) {
-  console.log("deselect remove course")
   return {
     type: "DESELECT_REMOVE_COURSE"
   }
@@ -619,7 +627,6 @@ export function seeToDos(studentAssignmentId) {
 
 export function submitCourseColorChange(studentCourseId, color) {
   return (dispatch) => {
-    console.log("submit color change", color)
     dispatch({ type: "LOADING" })
     return fetch("http://localhost:3000/api/v1/students/update_course_color", {
       method: "post",

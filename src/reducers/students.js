@@ -371,17 +371,25 @@ export default function studentReducer(
       const subRootAssignments = action.payload.subAssignments;
       const ids = action.payload.ids;
 
-      const updatedDueDatesFromSub = action.payload.dueDates;
+      const updatedDueDatesFromSubCompleted = action.payload.dueDateEvents.filter(date => date.completed).map(date => date.id);
+      const updatedDueDatesFromSubIncomplete = action.payload.dueDateEvents.filter(date => !date.completed).map(date => date.id);
       const dueDatesWithCompletedSubAssignment = state.calendar.dueDates.map(date => {
-        if (updatedDueDatesFromSub.includes(date.studentAssignmentId)) {
+        if (updatedDueDatesFromSubCompleted.includes(date.id)) {
+        // if (updatedDueDatesFromSub.includes(date.studentAssignmentId)) {
           return {
             ...date,
-            completed: !date.completed
+            completed: true
+          }
+        } else if (updatedDueDatesFromSubIncomplete.includes(date.id)) {
+          return {
+            ...date,
+            completed: false
           }
         } else {
           return date
         }
       }); //DO THIS
+      debugger
 
       const updatedToDosFromSub = action.payload.toDos;
       const toDosWithCompletedSubAssignment = state.calendar.toDoItems.map(todo => {
@@ -464,7 +472,8 @@ export default function studentReducer(
 
        const updatedDueDatesFromParent = action.payload.dueDates;
        const dueDatesWithCompletedParent = state.calendar.dueDates.map(date => {
-         if (updatedDueDatesFromParent.includes(date.studentAssignmentId)) {
+         if (updatedDueDatesFromParent.includes(date.id)) {
+         // if (updatedDueDatesFromParent.includes(date.studentAssignmentId)) {
            return {
              ...date,
              completed: !date.completed
@@ -473,7 +482,7 @@ export default function studentReducer(
            return date
          }
        }); //DO THIS
-
+       // debugger
 
       const updatedToDosFromParent = action.payload.toDos;
       const toDosWithCompletedParent = state.calendar.toDoItems.map(todo => {
@@ -517,7 +526,6 @@ export default function studentReducer(
           }
         }
       } else {
-        console.log("hide sub assignments on show details")
         return {
           ...state,
           selectedAssignment: {
@@ -550,7 +558,6 @@ export default function studentReducer(
         loading: false
       }
     case "HIDE_ASSIGNMENT_DETAILS":
-    console.log("hide assignment details")
       return {
         ...state,
         calendar: {
@@ -679,7 +686,6 @@ export default function studentReducer(
     case "CHANGE_ASSIGNMENTS_DISPLAY":
       let assignmentsDisplay = state.studentAssignments.data;
       let subAssignmentsDisplay = state.selectedAssignment.subAssignments;
-      console.log("sub assignments display before filter", subAssignmentsDisplay)
       switch (state.studentAssignments.completedFilter) {
         case "None":
           break;
@@ -715,7 +721,6 @@ export default function studentReducer(
       later.setDate(later.getDate() + 30);
       const limitEnd = !!state.studentAssignments.limitEnd ? state.studentAssignments.limitEnd : later;
       assignmentsDisplay = assignmentsDisplay.filter(assignment => (new Date(assignment.dueDate)) < limitEnd && (new Date(assignment.dueDate)) > limitStart);
-      console.log("student assignments display", assignmentsDisplay)
       assignmentsDisplay = assignmentsDisplay.filter(assignment => {
          return (typeof assignment.parentStudentAssignmentId !== "number")
       })
@@ -741,7 +746,6 @@ export default function studentReducer(
           }
         }
       } else {
-        console.log("subassignments to display:", subAssignmentsDisplay)
         return {
           ...state,
           calendar: {
@@ -771,7 +775,6 @@ export default function studentReducer(
       }
     case "FILTER_BY_COMPLETED":
       let prevCompletedFilterI = state.studentAssignments.completedFilter;
-      console.log("filter by completed")
       return {
         ...state,
         studentAssignments: {
@@ -782,7 +785,6 @@ export default function studentReducer(
       }
     case "FILTER_BY_INCOMPLETE":
       let prevCompletedFilterII = state.studentAssignments.completedFilter;
-      console.log("filter by incomplete")
       return {
         ...state,
         studentAssignments: {
@@ -884,7 +886,6 @@ export default function studentReducer(
         }
       }
     case "DESC_CHANGE":
-    console.log("desc change", action.payload)
       return {
         ...state,
         selectedSlot: {
@@ -1090,7 +1091,6 @@ export default function studentReducer(
       }
     case "EDIT_SELECTED_EVENT":
       const selectedEvent = state.eventSelected.data;
-      console.log("edit selected event", selectedEvent)
       return {
         ...state,
         eventSelected: {
