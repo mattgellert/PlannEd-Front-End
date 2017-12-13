@@ -5,7 +5,10 @@ import cuid from 'cuid';
 export default class DirectoryCourseList extends Component {
 
   render() {
-    const courses = this.props.courses.map((course, idx) => (
+    const searchTerm = this.props.searchTerm.length > 0 ? this.props.searchTerm : "";
+    const courses = this.props.courses.filter(course => {
+      return course.titleLong.toLowerCase().includes(searchTerm.toLowerCase())
+    }).map((course, idx) => (
       <DirectoryCourseCard key={cuid()} course={course} history={this.props.history}/>
     ))
 

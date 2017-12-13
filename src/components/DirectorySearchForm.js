@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchDirectorySubjects, fetchDirectoryCourses, enterDirectorySubject, enterDirectorySemester } from '../actions/students';
+import { updateSearchTerm, fetchDirectorySubjects, fetchDirectoryCourses, enterDirectorySubject, enterDirectorySemester } from '../actions/students';
 import SearchIcon from './svgs/SearchIcon';
 import cuid from 'cuid';
 
@@ -23,6 +23,10 @@ class DirectorySearchForm extends Component {
 
   handleSubjectChange = (event) => {
     this.props.onUpdateSubject(event.target.value.toUpperCase());
+  };
+
+  handleSearchTermChange = (event) => {
+    this.props.onUpdateSearchTerm(event.target.value);
   };
 
   render() {
@@ -48,6 +52,9 @@ class DirectorySearchForm extends Component {
            {subjectOptions}
          </datalist>
          <button className="button-search" type="submit" value="Search"><SearchIcon /></button>
+         <div className="form-select-container">
+          <input className="course-form-input" type="text" value={this.props.courseSearchTerm} onChange={this.handleSearchTermChange} />
+         </div>
        </form>
      </div>
    )
@@ -76,7 +83,8 @@ function mapStateToProps(state) {
   return {
     directorySubjects: state.directory.subjects,
     selectedSemester: state.selectedSemester,
-    selectedSubject: state.selectedSubject
+    selectedSubject: state.selectedSubject,
+    courseSearchTerm: state.courseSearchTerm
   };
 };
 
@@ -93,6 +101,9 @@ function mapDispatchToProps(dispatch) {
     },
     onUpdateSubject: (subject) => {
       dispatch(enterDirectorySubject(subject));
+    },
+    onUpdateSearchTerm: (term) => {
+      dispatch(updateSearchTerm(term));
     }
   }
 }

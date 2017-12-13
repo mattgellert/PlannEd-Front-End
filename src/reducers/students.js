@@ -35,6 +35,7 @@ export default function studentReducer(
     showDeleteCompletedToDos: false,
     selectedSemester: "",
     selectedSubject: "",
+    courseSearchTerm: "",
     selectedCourse: {
       data: null,
       selectedLEC: null,
@@ -148,6 +149,7 @@ export default function studentReducer(
         showDeleteCompletedToDos: false,
         selectedSemester: "",
         selectedSubject: "",
+        courseSearchTerm: "",
         selectedCourse: {
           data: null,
           selectedLEC: null,
@@ -1132,6 +1134,11 @@ export default function studentReducer(
           toDoItems: toDoItemsWithoutDeleted,
           courses: courseItemsWithoutDeleted
         }
+      }
+    case "UPDATE_SEARCH_TERM":
+      return {
+        ...state,
+        courseSearchTerm: action.payload
       }
       //REFACTOR TO USE FOR SELECTING WHEN CREATING COMPONENT TO DO
     // case "SHOW_STUDENT_COMP_DETAILS":

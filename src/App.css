@@ -118,6 +118,7 @@ h2 {
   border: 1px solid #ddd;
   height: 25px;
   width: 150px;
+  color: white;
 }
 
 .event-form-input {
@@ -376,6 +377,11 @@ h2 {
 
 .signup-form-container {
   font-size: 30px;
+  margin-bottom: 270px;
+}
+
+.signin-form-container {
+  margin-bottom: 270px;
 }
 
 .content-container.home {

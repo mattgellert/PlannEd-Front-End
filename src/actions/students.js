@@ -669,3 +669,10 @@ export function editSelectedEvent() {
     type: "EDIT_SELECTED_EVENT"
   }
 }
+
+export function updateSearchTerm(term) {
+  return {
+    type: "UPDATE_SEARCH_TERM",
+    payload: term
+  }
+}

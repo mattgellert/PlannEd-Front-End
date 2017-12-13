@@ -28,7 +28,7 @@ class DirectoryContainer extends Component {
           <div className="content-wrapper">
             <NavBar {...this.props} activeTab="directory" forcePrevTab="directory" />
             <div className="content-container">
-              <DirectoryCourseList history={this.props.history} courses={this.props.directoryCourses} studentCourses={this.props.studentCourses} student={this.props.student} toggleDirectoryContainer={this.props.toggleDirectoryContainer}/>
+              <DirectoryCourseList searchTerm={this.props.courseSearchTerm} history={this.props.history} courses={this.props.directoryCourses} studentCourses={this.props.studentCourses} student={this.props.student} toggleDirectoryContainer={this.props.toggleDirectoryContainer}/>
               <div className="dashboard-calendar-wrapper main-content">
                 <DashboardCalendar inDirectory={true} defaultDate={this.props.defaultDate} onCalendarClick={this.props.onCalendarClick} calendar={this.props.calendar} {...calProps}/>
               </div>
@@ -57,7 +57,8 @@ function mapStateToProps(state) {
     selectedForToDo: state.selectedForToDo,
     calendarClick: state.calendarClick,
     defaultDate: state.calendar.defaultDate,
-    courseFilter: state.studentAssignments.courseFilter
+    courseFilter: state.studentAssignments.courseFilter,
+    courseSearchTerm: state.courseSearchTerm
     };
 };
 function mapDispatchToProps(dispatch) {

@@ -3,8 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { submitCourseColor, selectCourseColor, addCourse, selectDirectoryCourse, selectDirectoryCourseComponent } from '../actions/students';
 import DirectoryCourseDetails from './DirectoryCourseDetails';
-import { HuePicker } from 'react-color'
-;
+import { HuePicker } from 'react-color';
+
 class DirectoryCourseCard extends Component {
 
   handleAddCourse = (event) => {
