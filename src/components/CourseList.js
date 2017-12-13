@@ -16,6 +16,7 @@ class CourseList extends Component {
     // const selectedCourse = this.props.selectedCourse;
     // const onCourseToChangeColor = this.props.onCourseToChangeColor;
 
+
     const props = this.props;
     const courses = this.props.courses.map(course => {
       // return <CourseCard key={course.studentCourseId} onSubmitCourseColorChange={onSubmitCourseColorChange} onSelectCourseColor={this.props.onSelectCourseColor} onCourseToChangeColor={onCourseToChangeColor} course={course} selectedCourse={selectedCourse} courseToRemove={this.props.courseToRemove} onSelectRemoveCourse={this.props.onSelectRemoveCourse} onDeselectRemoveCourse={this.props.onDeselectRemoveCourse} onRemoveCourse={this.props.onRemoveCourse} onShowStudentCompDetails={onShowStudentCompDetails} onHideStudentCompDetails={onHideStudentCompDetails} selectedStudentCourse={selectedStudentCourse} onSelectStudentCourse={onSelectStudentCourse} onDeselectStudentCourse={onDeselectStudentCourse} onShowStudentCourseDetails={onShowStudentCourseDetails} onHideStudentCourseDetails={onHideStudentCourseDetails}/>

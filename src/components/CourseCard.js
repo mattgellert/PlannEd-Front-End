@@ -5,6 +5,7 @@ import CourseToDo from './CourseToDo';
 import CalendarAddIcon from './svgs/CalendarAddIcon.js';
 import cuid from 'cuid';
 
+
 class CourseCard extends Component {
 
   state = {
@@ -82,6 +83,18 @@ class CourseCard extends Component {
     this.props.onFilterCourseToDoByIncomplete();
   };
 
+  handleChangeCourseColor = () => {
+    this.props.onCourseToChangeColor(this.props.course.studentCourseId)
+  }
+
+  handleCourseColorChange = (event) => {
+    this.props.onSelectCourseColor(event.hex)
+  }
+
+  handleSubmitCourseColorChange = () => {
+    this.props.onSubmitCourseColorChange(this.props.course.studentCourseId, this.props.selectedCourse.courseColor);
+  }
+
   render() {
     const course = this.props.course;
     const selectedStudentCourse = this.props.selectedStudentCourse;
@@ -133,6 +146,7 @@ class CourseCard extends Component {
         </div>
         <button className="courses-button bottom" onClick={this.handleChangeCourseColor}>Change Color</button>
         {!!showColor
+
           ?
             <div>
               <p>Pick a color for your course!</p>

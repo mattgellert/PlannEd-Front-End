@@ -637,8 +637,10 @@ export function submitCourseColorChange(studentCourseId, color) {
       body: JSON.stringify({ studentCourseId, color })
     })
     .then(resp => resp.json())
+
     .then(data => {
       dispatch({ type: "FETCHED_ASSIGNMENTS", payload: { studentAssignments: data.studentAssignments, dueDates: data.dueDates, courseDates: data.courseDates, toDoItems: data.toDoItems }})
+=======
     })
   }
 }
@@ -650,6 +652,7 @@ export function courseToChangeColor(studentCourseId) {
     payload: studentCourseId
   }
 }
+
 
 export function selectEvent(event) {
   return {
@@ -676,3 +679,4 @@ export function updateSearchTerm(term) {
     payload: term
   }
 }
+

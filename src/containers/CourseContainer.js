@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { filterCourseToDoByIncomplete,filterCourseToDoByCompleted, completeCourseToDo, seeToDos, selectForToDo, deselectForToDo, courseToChangeColor, submitCourseColorChange, selectCourseColor, selectRemoveCourse, deselectRemoveCourse, removeCourse, showStudentCompDetails, hideStudentCompDetails, hideStudentCourseDetails, showStudentCourseDetails, selectStudentCourse, deselectStudentCourse } from '../actions/students';
+
 import CourseList from '../components/CourseList';
 
 class CourseContainer extends Component {

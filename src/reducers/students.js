@@ -1042,6 +1042,7 @@ export default function studentReducer(
         courseToRemove: null
       }
     case "UPDATED_COURSES":
+      console.log("updated courses", action.payload)
       return {
         ...state,
         studentCourses: action.payload,
